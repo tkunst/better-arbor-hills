@@ -1,0 +1,244 @@
+<!doctype html>
+<!--
+  RESIDENT LETTER-WRITING TOOL — Phase 0 (static, no backend)
+  Self-owned, zero-backend, works on any static host (incl. GitHub Pages).
+  Companion to: DRAFT-INTERNAL-arbor-hills-letter-writing-tool-recommendation-2026-08-21.md
+  Built 2026-08-21, hardened 2026-08-21 after a mailto-only version dead-ended.
+  NOT PUBLISHED. Publishing is Trisha's call.
+
+  RELIABILITY DESIGN (why this never "does nothing"):
+    - mailto: works only if the device has a registered mail handler (fails for webmail-only desktop users).
+    - So we ALSO offer "Open in Gmail" and "Open in Outlook" web-compose links, which work for browser mail.
+    - And we ALWAYS show the finished letter + addresses on-screen with copy buttons, so there is no dead end.
+    - All letters are sent from the RESIDENT's own account -> constituent authenticity, no deliverability risk.
+
+  BEFORE GOING LIVE:
+    1. Replace the PLACEHOLDER boilerplate in <textarea id="boiler"> with your own final voice.
+    2. Confirm the 9 commissioner emails below (verified 2026-07-10).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Write the Washtenaw County Commissioners</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0; padding: 1.5rem; background: #fbfaf7; color: #1a1a1a;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #17181a; color: #e9e9e9; }
+    input, textarea { background: #212226; color: #e9e9e9; border-color: #3a3b40; }
+    .boiler { background: #1d2733 !important; }
+    .personal { background: #2a2410 !important; }
+    .preview-box { background: #1c1d20 !important; }
+  }
+  .wrap { max-width: 680px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+  .lede { color: #555; margin: 0 0 1.5rem; }
+  @media (prefers-color-scheme: dark) { .lede { color: #a8a8a8; } }
+  fieldset { border: 1px solid #ddd; border-radius: 10px; padding: 1rem 1.1rem 1.2rem; margin: 0 0 1.25rem; }
+  @media (prefers-color-scheme: dark) { fieldset { border-color: #333; } }
+  legend { font-weight: 600; padding: 0 .4rem; }
+  label { display: block; font-weight: 600; margin: .8rem 0 .25rem; font-size: .95rem; }
+  input, textarea { width: 100%; padding: .55rem .65rem; border: 1px solid #ccc; border-radius: 8px; font: inherit; }
+  textarea { resize: vertical; }
+  .row { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .row > div { flex: 1 1 180px; }
+  .boiler { background: #eef4fb; padding: .5rem; border-radius: 8px; }
+  .personal { background: #fdf6e3; padding: .5rem; border-radius: 8px; }
+  .hint { font-weight: 400; font-size: .85rem; color: #666; margin: .15rem 0 0; }
+  @media (prefers-color-scheme: dark) { .hint { color: #9a9a9a; } }
+  .nudge { border-left: 4px solid #d9a400; background: rgba(217,164,0,.10); padding: .7rem .9rem; border-radius: 6px; margin: 1rem 0; font-size: .95rem; }
+  .send-grid { display: flex; gap: .6rem; flex-wrap: wrap; margin: .3rem 0 .2rem; }
+  button, .btn { font: inherit; font-weight: 600; border: 0; border-radius: 8px; padding: .7rem 1.05rem; cursor: pointer; text-decoration: none; display: inline-block; }
+  .primary { background: #1d6f42; color: #fff; }
+  .primary:hover { background: #175935; }
+  .alt { background: #2b5fb3; color: #fff; }
+  .alt:hover { background: #22488a; }
+  .ghost { background: transparent; border: 1px solid #bbb; color: inherit; }
+  .ghost:hover { border-color: #888; }
+  .preview-box { background: #f3f2ee; border-radius: 8px; padding: .5rem; margin-top: .3rem; }
+  #preview { width: 100%; min-height: 150px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .note { font-size: .85rem; color: #666; margin-top: 1.5rem; }
+  @media (prefers-color-scheme: dark) { .note { color: #9a9a9a; } }
+  #status { font-size: .9rem; margin-left: .1rem; align-self: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Write the Washtenaw County Commissioners</h1>
+  <p class="lede">The nine County Commissioners vote on the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. Fill this in, add a line in your own words, then send it to all nine at once, from your own email.</p>
+
+  <p id="counter" hidden style="font-weight:600;color:#1d6f42;margin:0 0 1.25rem"></p>
+
+  <fieldset>
+    <legend>1. About you</legend>
+    <p class="hint">Commissioners weigh letters from the people they represent. Your address shows you are a Washtenaw County resident.</p>
+    <div class="row">
+      <div><label for="fname">First name</label><input id="fname" autocomplete="given-name"></div>
+      <div><label for="lname">Last name</label><input id="lname" autocomplete="family-name"></div>
+    </div>
+    <label for="street">Street address</label><input id="street" autocomplete="street-address">
+    <div class="row">
+      <div><label for="city">City / Township</label><input id="city" autocomplete="address-level2"></div>
+      <div><label for="zip">ZIP</label><input id="zip" autocomplete="postal-code"></div>
+    </div>
+    <label for="email">Your email <span class="hint">(so they can reply to you)</span></label><input id="email" type="email" autocomplete="email">
+  </fieldset>
+
+  <fieldset>
+    <legend>2. Your letter</legend>
+
+    <label for="subject">Subject</label>
+    <input id="subject" value="Please strengthen fire and subsurface-temperature monitoring in the Arbor Hills plan">
+
+    <label for="boiler">Starting text <span class="hint">(edit freely)</span></label>
+    <textarea id="boiler" class="boiler" rows="12">Dear Commissioners,
+
+I am a resident of Washtenaw County writing about the Arbor Hills Landfill. The county has a unique opportunity to set the conditions for this facility's expansion right now, while the MMP minimum siting criteria are being written. The MMPC committee writing that language is led by Theo Eggermont, whom you likely know.
+
+I am asking you to require, as a minimum condition of any approval, continuous wellhead temperature monitoring and a written subsurface-temperature-event and smolder-prevention plan, with an added margin of safety for the two nearest elementary schools. These are basic public-safety protections, and once this plan is approved the opportunity to require them is gone.</textarea>
+
+    <div class="nudge">
+      <strong>Add a sentence or two in your own words below.</strong> Identical form letters get counted and set aside. One honest, personal reason from a real resident is what actually moves a commissioner. Please keep it brief and civil.
+    </div>
+
+    <label for="personal">Your own words</label>
+    <textarea id="personal" class="personal" rows="4" placeholder="For example: why this matters where you live, what you have seen or smelled, who in your family this affects..."></textarea>
+  </fieldset>
+
+  <fieldset>
+    <legend>3. Send it</legend>
+    <p class="hint">Pick whichever matches how you read email. They all send the same letter to all nine commissioners, from your own account.</p>
+    <div class="send-grid">
+      <button class="primary" id="btn-mail" type="button">Open in my email app</button>
+      <a class="btn alt" id="btn-gmail" href="#" target="_blank" rel="noopener">Open in Gmail</a>
+      <a class="btn alt" id="btn-outlook" href="#" target="_blank" rel="noopener">Open in Outlook</a>
+      <span id="status" role="status" aria-live="polite"></span>
+    </div>
+
+    <p class="hint" style="margin-top:1rem"><strong>None of those working?</strong> Copy your letter and the addresses and paste them into a new email yourself:</p>
+    <div class="send-grid">
+      <button class="ghost" id="btn-copyletter" type="button">Copy the letter</button>
+      <button class="ghost" id="btn-copyaddr" type="button">Copy the nine addresses</button>
+    </div>
+    <div class="preview-box">
+      <label for="preview" style="margin-top:.2rem">Your finished letter</label>
+      <textarea id="preview" readonly aria-label="Your finished letter"></textarea>
+    </div>
+  </fieldset>
+
+  <p class="note"><strong>Privacy:</strong> this tool runs entirely in your browser. Your letter is sent from your own email account. Nothing you type here is stored or sent anywhere else.</p>
+
+</div>
+
+<script>
+  // Washtenaw County Board of Commissioners — verified 2026-07-10 (washtenaw.org/217).
+  // Chair (To): Katie Scott. Cc: the other eight.
+  var CHAIR = "scottk@washtenaw.org"; // Katie Scott, Board Chair
+  var CC = [
+    "maciejewskij@washtenaw.org", // D1 Jason Maciejewski
+    "lytec@washtenaw.org",        // D2 Crystal Lyte (host district)
+    "beemans@washtenaw.org",      // D3 Shannon Beeman
+    "sandersc@washtenaw.org",     // D4 Caroline Sanders
+    "hodgej@washtenaw.org",       // D5 Justin D. Hodge
+    "somervillea@washtenaw.org",  // D6 Annie Somerville (YCUA district)
+    "labarrea@washtenaw.org",     // D7 Andy LaBarre
+    "rabhiy@washtenaw.org"        // D8 Yousef Rabhi
+  ];
+  var ALL = [CHAIR].concat(CC);
+
+  // ---- Optional PII-free counter -------------------------------------------
+  // Leave COUNTER_URL = "" to keep the counter OFF (tool works normally, shows nothing).
+  // To turn it on: deploy counter-worker.js to Cloudflare and paste its URL here.
+  // The endpoint stores ONLY a single integer -- no email, name, or IP is kept.
+  // The number reflects letters STARTED (send clicks), de-duped per browser, not confirmed deliveries.
+  var COUNTER_URL = "";
+
+  function loadCount(){
+    if (!COUNTER_URL) return;
+    fetch(COUNTER_URL).then(function(r){ return r.json(); }).then(function(d){
+      showCount(d.count);
+    }).catch(function(){ /* endpoint down: stay hidden, tool still works */ });
+  }
+  function showCount(n){
+    if (typeof n !== "number") return;
+    var el = document.getElementById("counter");
+    el.textContent = "So far, " + n.toLocaleString() + (n === 1 ? " resident has" : " residents have") + " started a letter to the commissioners.";
+    el.hidden = false;
+  }
+  function recordSend(){
+    if (!COUNTER_URL) return;
+    if (localStorage.getItem("ah_letter_counted")) return; // one count per browser
+    localStorage.setItem("ah_letter_counted", "1");
+    fetch(COUNTER_URL, { method: "POST" }).then(function(r){ return r.json(); })
+      .then(function(d){ showCount(d.count); }).catch(function(){});
+  }
+  // --------------------------------------------------------------------------
+
+  function val(id){ return (document.getElementById(id).value || "").trim(); }
+  function flash(msg){ var s = document.getElementById("status"); s.textContent = msg; setTimeout(function(){ if (s.textContent === msg) s.textContent = ""; }, 4000); }
+
+  function subject(){ return val("subject") || "Regarding the Arbor Hills Landfill"; }
+
+  function body(){
+    var boiler = document.getElementById("boiler").value.trim();
+    var personal = val("personal");
+    var name = (val("fname") + " " + val("lname")).trim();
+    var addrLines = [val("street"), [val("city"), val("zip")].filter(Boolean).join(", ")].filter(Boolean);
+    var sig = ["", "Respectfully,", name].concat(addrLines).join("\n");
+    var parts = [boiler];
+    if (personal) parts.push(personal);
+    parts.push(sig);
+    return parts.join("\n\n");
+  }
+
+  // Keep the on-screen preview and the web-compose links continuously in sync,
+  // so there is always a visible, copyable result even if every mail integration fails.
+  function refresh(){
+    document.getElementById("preview").value = body();
+    var su = encodeURIComponent(subject());
+    var bo = encodeURIComponent(body());
+    var to = encodeURIComponent(CHAIR);
+    var cc = encodeURIComponent(CC.join(","));
+    document.getElementById("btn-gmail").href =
+      "https://mail.google.com/mail/?view=cm&fs=1&to=" + to + "&cc=" + cc + "&su=" + su + "&body=" + bo;
+    document.getElementById("btn-outlook").href =
+      "https://outlook.live.com/mail/0/deeplink/compose?to=" + to + "&cc=" + cc + "&subject=" + su + "&body=" + bo;
+  }
+
+  ["subject","boiler","personal","fname","lname","street","city","zip"].forEach(function(id){
+    document.getElementById(id).addEventListener("input", refresh);
+  });
+
+  document.getElementById("btn-mail").addEventListener("click", function(){
+    var href = "mailto:" + encodeURIComponent(CHAIR)
+      + "?cc=" + encodeURIComponent(CC.join(","))
+      + "&subject=" + encodeURIComponent(subject())
+      + "&body=" + encodeURIComponent(body());
+    window.location.href = href;
+    recordSend();
+    flash("If your mail app did not open, use Gmail, Outlook, or Copy below.");
+  });
+
+  // Gmail / Outlook are links that navigate on click; count the intent to send.
+  document.getElementById("btn-gmail").addEventListener("click", recordSend);
+  document.getElementById("btn-outlook").addEventListener("click", recordSend);
+
+  function copy(text, okMsg){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ flash(okMsg); }, function(){ window.prompt("Copy:", text); });
+    } else { window.prompt("Copy:", text); }
+  }
+  document.getElementById("btn-copyletter").addEventListener("click", function(){ copy(body(), "Letter copied."); recordSend(); });
+  document.getElementById("btn-copyaddr").addEventListener("click", function(){ copy(ALL.join(", "), "Copied all nine addresses."); recordSend(); });
+
+  refresh();    // initialize preview + links on load
+  loadCount();  // show the running count if a counter endpoint is configured
+</script>
+</body>
+</html>
