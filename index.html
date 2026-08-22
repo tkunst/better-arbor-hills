@@ -1,10 +1,20 @@
 <!doctype html>
 <!--
-  RESIDENT LETTER-WRITING TOOL — Phase 0 (static, no backend)
+  RESIDENT LETTER-WRITING TOOL: multi-issue (static, no backend)
   Self-owned, zero-backend, works on any static host (incl. GitHub Pages).
   Companion to: DRAFT-INTERNAL-arbor-hills-letter-writing-tool-recommendation-2026-08-21.md
-  Built 2026-08-21, hardened 2026-08-21 after a mailto-only version dead-ended.
-  NOT PUBLISHED. Publishing is Trisha's call.
+  Built 2026-08-21 (single-issue); multi-issue version 2026-08-22.
+  Publishing is Trisha's call.
+
+  WHY MULTI-ISSUE:
+    - Residents pick the demand that matters most to them (fire, drinking water, PFAS,
+      methane, accountability). Each issue carries ONE specific, consistent ask, so many
+      residents send the SAME demand to the same nine commissioners. Volume on a single,
+      identical ask carries more weight than scattered one-offs.
+    - Every letter still opens from the same place and lands the same lever: put the
+      protection into the MMP *minimum* siting criteria now, while they are being written,
+      because a host-community agreement can waive the supplemental conditions but not the
+      minimums.
 
   RELIABILITY DESIGN (why this never "does nothing"):
     - mailto: works only if the device has a registered mail handler (fails for webmail-only desktop users).
@@ -12,15 +22,22 @@
     - And we ALWAYS show the finished letter + addresses on-screen with copy buttons, so there is no dead end.
     - All letters are sent from the RESIDENT's own account -> constituent authenticity, no deliverability risk.
 
+  VOICE: every template body passes the Arbor Hills voice guide: no em-dashes, no "contest,"
+    advocate not adversary, every figure traceable to the primary regulatory record. Templates
+    stay on durable primary-record demands (no time-bound news hooks that expire or misattribute).
+
   BEFORE GOING LIVE:
-    1. Replace the PLACEHOLDER boilerplate in <textarea id="boiler"> with your own final voice.
-    2. Confirm the 9 commissioner emails below (verified 2026-07-10).
+    1. Confirm the nine commissioner emails below (verified 2026-07-10).
+    2. Re-read each template body once against the refutation gate.
+    3. RECIPIENT SWAP (if ever needed): the letters urge the commissioners to press the MMP
+       Committee. To retarget the tool at a different body, edit CHAIR/CC below; the bodies
+       already isolate the "urge the committee" ask so a swap is a small body edit, not a rebuild.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Write the Washtenaw County Commissioners</title>
+<title>Write the Washtenaw County Commissioners about Arbor Hills</title>
 <style>
   :root { color-scheme: light dark; }
   * { box-sizing: border-box; }
@@ -30,10 +47,12 @@
   }
   @media (prefers-color-scheme: dark) {
     body { background: #17181a; color: #e9e9e9; }
-    input, textarea { background: #212226; color: #e9e9e9; border-color: #3a3b40; }
+    input, textarea, select { background: #212226; color: #e9e9e9; border-color: #3a3b40; }
     .boiler { background: #1d2733 !important; }
     .personal { background: #2a2410 !important; }
     .preview-box { background: #1c1d20 !important; }
+    .issue-card { border-color: #333; }
+    .issue-card:has(input:checked) { background: rgba(46,160,90,.14) !important; border-color: #2ea05a !important; }
   }
   .wrap { max-width: 680px; margin: 0 auto; }
   h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
@@ -43,7 +62,7 @@
   @media (prefers-color-scheme: dark) { fieldset { border-color: #333; } }
   legend { font-weight: 600; padding: 0 .4rem; }
   label { display: block; font-weight: 600; margin: .8rem 0 .25rem; font-size: .95rem; }
-  input, textarea { width: 100%; padding: .55rem .65rem; border: 1px solid #ccc; border-radius: 8px; font: inherit; }
+  input, textarea, select { width: 100%; padding: .55rem .65rem; border: 1px solid #ccc; border-radius: 8px; font: inherit; }
   textarea { resize: vertical; }
   .row { display: flex; gap: .75rem; flex-wrap: wrap; }
   .row > div { flex: 1 1 180px; }
@@ -65,18 +84,33 @@
   .note { font-size: .85rem; color: #666; margin-top: 1.5rem; }
   @media (prefers-color-scheme: dark) { .note { color: #9a9a9a; } }
   #status { font-size: .9rem; margin-left: .1rem; align-self: center; }
+  /* Issue picker */
+  .issues { display: grid; gap: .5rem; margin-top: .3rem; }
+  .issue-card { display: flex; gap: .65rem; align-items: flex-start; border: 1px solid #ccc; border-radius: 9px; padding: .65rem .75rem; cursor: pointer; transition: border-color .12s, background .12s; }
+  .issue-card:hover { border-color: #1d6f42; }
+  .issue-card:has(input:checked) { border-color: #1d6f42; background: rgba(29,111,66,.07); }
+  .issue-card input { width: auto; flex: 0 0 auto; margin: .2rem 0 0; accent-color: #1d6f42; }
+  .issue-card .it { font-weight: 600; display: block; }
+  .issue-card .ib { font-weight: 400; font-size: .87rem; color: #666; margin-top: .12rem; }
+  @media (prefers-color-scheme: dark) { .issue-card .ib { color: #9a9a9a; } }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <h1>Write the Washtenaw County Commissioners</h1>
-  <p class="lede">The nine County Commissioners vote on the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. Fill this in, add a line in your own words, then send it to all nine at once, from your own email.</p>
+  <p class="lede">The nine County Commissioners help decide the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. Pick the issue you care about most, add a line in your own words, then send it to all nine at once, from your own email.</p>
 
   <p id="counter" hidden style="font-weight:600;color:#1d6f42;margin:0 0 1.25rem"></p>
 
   <fieldset>
-    <legend>1. About you</legend>
+    <legend>1. Pick your issue</legend>
+    <p class="hint">Each option gives you a ready letter with one clear request. The more residents send the same request, the harder it is to set aside. Choose the one that matters most to you.</p>
+    <div class="issues" id="issues" role="radiogroup" aria-label="Choose the issue for your letter"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>2. About you</legend>
     <p class="hint">Commissioners weigh letters from the people they represent. Your address shows you are a Washtenaw County resident.</p>
     <div class="row">
       <div><label for="fname">First name</label><input id="fname" autocomplete="given-name"></div>
@@ -91,17 +125,13 @@
   </fieldset>
 
   <fieldset>
-    <legend>2. Your letter</legend>
+    <legend>3. Your letter</legend>
 
     <label for="subject">Subject</label>
-    <input id="subject" value="Please strengthen fire and subsurface-temperature monitoring in the Arbor Hills plan">
+    <input id="subject" value="">
 
     <label for="boiler">Starting text <span class="hint">(edit freely)</span></label>
-    <textarea id="boiler" class="boiler" rows="12">Dear Commissioners,
-
-I am a resident of Washtenaw County writing about the Arbor Hills Landfill. The county has a unique opportunity to set the conditions for this facility's expansion right now, while the MMP minimum siting criteria are being written. The MMPC committee writing that language is led by Theo Eggermont, whom you likely know.
-
-I am asking you to require, as a minimum condition of any approval, continuous wellhead temperature monitoring and a written subsurface-temperature-event and smolder-prevention plan, with an added margin of safety for the two nearest elementary schools. These are basic public-safety protections, and once this plan is approved the opportunity to require them is gone.</textarea>
+    <textarea id="boiler" class="boiler" rows="14"></textarea>
 
     <div class="nudge">
       <strong>Add a sentence or two in your own words below.</strong> Identical form letters get counted and set aside. One honest, personal reason from a real resident is what actually moves a commissioner. Please keep it brief and civil.
@@ -112,7 +142,7 @@ I am asking you to require, as a minimum condition of any approval, continuous w
   </fieldset>
 
   <fieldset>
-    <legend>3. Send it</legend>
+    <legend>4. Send it</legend>
     <p class="hint">Pick whichever matches how you read email. They all send the same letter to all nine commissioners, from your own account.</p>
     <div class="send-grid">
       <button class="primary" id="btn-mail" type="button">Open in my email app</button>
@@ -137,7 +167,7 @@ I am asking you to require, as a minimum condition of any approval, continuous w
 </div>
 
 <script>
-  // Washtenaw County Board of Commissioners — verified 2026-07-10 (washtenaw.org/217).
+  // Washtenaw County Board of Commissioners, verified 2026-07-10 (washtenaw.org/217).
   // Chair (To): Katie Scott. Cc: the other eight.
   var CHAIR = "scottk@washtenaw.org"; // Katie Scott, Board Chair
   var CC = [
@@ -151,6 +181,60 @@ I am asking you to require, as a minimum condition of any approval, continuous w
     "rabhiy@washtenaw.org"        // D8 Yousef Rabhi
   ];
   var ALL = [CHAIR].concat(CC);
+
+  // ---- The letters -----------------------------------------------------------
+  // Every letter shares OPEN (the human place + the minimum-criteria lever) and then
+  // states ONE issue-specific request with its primary-record basis. Voice-guide clean:
+  // no em-dashes, no "contest," advocate not adversary, figures traceable to the record.
+  var OPEN =
+    "Dear Commissioners,\n\n" +
+    "I am a resident of Washtenaw County writing about the Arbor Hills Landfill. The county has a real opportunity to set the conditions for this facility right now, while the Materials Management Plan minimum siting criteria are being written. The committee writing that language is led by Theo Eggermont, whom you likely know. The minimum criteria matter because a host community agreement can waive the supplemental conditions but not the minimum ones, so this is the one place these protections become enforceable.\n\n";
+
+  var ISSUES = [
+    {
+      id: "fire",
+      label: "Fire and overheating",
+      blurb: "Continuous fire and temperature monitoring, plus a smolder-prevention plan and an independent expert.",
+      subject: "Please put continuous temperature monitoring in the Arbor Hills minimum criteria",
+      ask:
+        "I am asking you to urge the committee to require, as a minimum condition of any approval, continuous automated temperature monitoring on the gas-extraction wells and a written subsurface-temperature-event and smolder-prevention plan, with an independent, county-selected expert to interpret the record. The site's clearest overheating event, well AHW272R4 at 177 degrees Fahrenheit, was only reconstructed months later from a semi-annual report, and 28 wells sat at or above 131 degrees in 2025. Monthly single readings cannot catch an event that begins the week after a sampling round, and the operator's at-depth temperature profiling has not been filed since early 2023. Once this plan is approved, the opportunity to require these protections is gone."
+    },
+    {
+      id: "water",
+      label: "Drinking water",
+      blurb: "Twice-yearly testing of the nearest private wells, and municipal water for those homes and Salem Elementary.",
+      subject: "Please put drinking-water protection in the Arbor Hills minimum criteria",
+      ask:
+        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the private residential wells nearest the landfill be tested for contamination twice a year with the results published, and that any expansion extend municipal water to those homes and to Salem Elementary at the operator's expense before waste placement begins. The homes closest to the site were last sampled in February 2020 and not since, while Salem Elementary's own supply a short distance away is tested about once a year and comes back clean. The families carrying this landfill's burden should get at least the testing the school already receives, and the water main that roughly 35 million dollars in state grants helped bring to a future subdivision should be extended to the people who live here now. Once this plan is approved, the chance to require these protections is gone."
+    },
+    {
+      id: "pfas",
+      label: "PFAS transparency and no repeat bypass",
+      blurb: "Publish the PFAS data already collected, and prove backup pretreatment so a bypass never happens again.",
+      subject: "Please put PFAS transparency and no-bypass in the Arbor Hills minimum criteria",
+      ask:
+        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the PFAS groundwater data the 2023 Consent Order already collects be published quarterly in a public place, and that the operator prove backup pretreatment capacity so a maintenance event can never again force a PFAS bypass. On March 25, 2026, the operator intentionally bypassed leachate PFAS pretreatment for four hours and sent PFOS into the public sewer at 18,000 nanograms per liter against a 170 limit, and it was caught by a sample rather than by any instrument. The PFAS results are already generated and reported to the state, so the only open question is public access. Once this plan is approved, the chance to require these protections is gone."
+    },
+    {
+      id: "methane",
+      label: "Methane cut at the source",
+      blurb: "Cut methane at the source with a gas-collection-system redesign, not only at the flare.",
+      subject: "Please put methane reduction at the source in the Arbor Hills minimum criteria",
+      ask:
+        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the operator cut methane at the source rather than only at the flare, including a gas-collection-system redesign on an enforceable timeline and modern cover, with routine surface scanning to find and repair leaks before they escape. The state's June 2026 inspection found about 9,100 standard cubic feet per minute of gas collected against about 10,960 modeled, which points to significant fugitive emissions, alongside 75 surface-methane exceedances. A flare or the renewable-gas plant cannot reduce methane that never reaches them. Once this plan is approved, the chance to require this is gone."
+    },
+    {
+      id: "accountability",
+      label: "Notification and accountability",
+      blurb: "Notify the community and every commissioner when problems occur, with a real county consequence.",
+      subject: "Please put notification and accountability in the Arbor Hills minimum criteria",
+      ask:
+        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the community be notified when an elevated-temperature event or a violation occurs, and that every county commissioner receive a copy of every violation notice with its photo attachments. Because a county cannot revoke a state operating permit, I also ask that the host community agreement let the county suspend that agreement when serious or repeated violations continue after the state has already acted. The site carries about 1.12 million dollars in verified fines across four enforcement threads, and the state logs roughly 100 odor complaints a month, yet the county's own commissioners do not automatically receive the violation record. Once this plan is approved, the chance to build in this accountability is gone."
+    }
+  ];
+
+  function issueById(id){ for (var i=0;i<ISSUES.length;i++){ if (ISSUES[i].id === id) return ISSUES[i]; } return ISSUES[0]; }
+  function boilerFor(issue){ return OPEN + issue.ask; }
 
   // ---- Optional PII-free counter -------------------------------------------
   // Leave COUNTER_URL = "" to keep the counter OFF (tool works normally, shows nothing).
@@ -211,6 +295,35 @@ I am asking you to require, as a minimum condition of any approval, continuous w
       "https://outlook.live.com/mail/0/deeplink/compose?to=" + to + "&cc=" + cc + "&subject=" + su + "&body=" + bo;
   }
 
+  // Selecting an issue swaps the Subject + Starting text. The resident's own words
+  // (a separate field) are preserved across issue switches on purpose.
+  function selectIssue(id){
+    var issue = issueById(id);
+    document.getElementById("subject").value = issue.subject;
+    document.getElementById("boiler").value = boilerFor(issue);
+    refresh();
+  }
+
+  function renderIssues(){
+    var container = document.getElementById("issues");
+    ISSUES.forEach(function(issue, idx){
+      var lab = document.createElement("label");
+      lab.className = "issue-card";
+      var input = document.createElement("input");
+      input.type = "radio";
+      input.name = "issue";
+      input.value = issue.id;
+      if (idx === 0) input.checked = true;
+      input.addEventListener("change", function(){ selectIssue(issue.id); });
+      var txt = document.createElement("div");
+      var t = document.createElement("span"); t.className = "it"; t.textContent = issue.label;
+      var b = document.createElement("span"); b.className = "ib"; b.textContent = issue.blurb;
+      txt.appendChild(t); txt.appendChild(b);
+      lab.appendChild(input); lab.appendChild(txt);
+      container.appendChild(lab);
+    });
+  }
+
   ["subject","boiler","personal","fname","lname","street","city","zip"].forEach(function(id){
     document.getElementById(id).addEventListener("input", refresh);
   });
@@ -237,8 +350,9 @@ I am asking you to require, as a minimum condition of any approval, continuous w
   document.getElementById("btn-copyletter").addEventListener("click", function(){ copy(body(), "Letter copied."); recordSend(); });
   document.getElementById("btn-copyaddr").addEventListener("click", function(){ copy(ALL.join(", "), "Copied all nine addresses."); recordSend(); });
 
-  refresh();    // initialize preview + links on load
-  loadCount();  // show the running count if a counter endpoint is configured
+  renderIssues();          // build the issue picker
+  selectIssue(ISSUES[0].id); // load the default letter (fire) into subject + starting text
+  loadCount();             // show the running count if a counter endpoint is configured
 </script>
 </body>
 </html>
