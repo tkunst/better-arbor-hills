@@ -9,7 +9,7 @@
   WHY MULTI-ISSUE:
     - Residents pick the demand that matters most to them (fire, drinking water, PFAS,
       methane, accountability). Each issue carries ONE specific, consistent ask, so many
-      residents send the SAME demand to the same nine commissioners. Volume on a single,
+      residents send the SAME demand to the same set of officials. Volume on a single,
       identical ask carries more weight than scattered one-offs.
     - Every letter still opens from the same place and lands the same lever: put the
       protection into the MMP *minimum* siting criteria now, while they are being written,
@@ -99,7 +99,7 @@
 <div class="wrap">
 
   <h1>Write the Washtenaw County Commissioners</h1>
-  <p class="lede">The nine County Commissioners help decide the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. Pick the issue you care about most, add a line in your own words, then send it to all nine at once, from your own email.</p>
+  <p class="lede">The nine County Commissioners help decide the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. Pick the issue you care about most, add a line in your own words, then send it to the county commissioners and state legislators at once, from your own email.</p>
 
   <p id="counter" hidden style="font-weight:600;color:#1d6f42;margin:0 0 1.25rem"></p>
 
@@ -143,7 +143,7 @@
 
   <fieldset>
     <legend>4. Send it</legend>
-    <p class="hint">Pick whichever matches how you read email. They all send the same letter to all nine commissioners, from your own account.</p>
+    <p class="hint">Pick whichever matches how you read email. They all send the same letter to the county commissioners and state legislators, from your own account.</p>
     <div class="send-grid">
       <button class="primary" id="btn-mail" type="button">Open in my email app</button>
       <a class="btn alt" id="btn-gmail" href="#" target="_blank" rel="noopener">Open in Gmail</a>
@@ -154,7 +154,7 @@
     <p class="hint" style="margin-top:1rem"><strong>None of those working?</strong> Copy your letter and the addresses and paste them into a new email yourself:</p>
     <div class="send-grid">
       <button class="ghost" id="btn-copyletter" type="button">Copy the letter</button>
-      <button class="ghost" id="btn-copyaddr" type="button">Copy the nine addresses</button>
+      <button class="ghost" id="btn-copyaddr" type="button">Copy all the addresses</button>
     </div>
     <div class="preview-box">
       <label for="preview" style="margin-top:.2rem">Your finished letter</label>
@@ -184,14 +184,21 @@
     "labarrea@washtenaw.org",     // D7 Andy LaBarre
     "rabhiy@washtenaw.org"        // D8 Yousef Rabhi
   ];
-  var ALL = [CHAIR].concat(CC);
+  // State legislators, added to every send (Trisha, 2026-08-22): the SB 818 sponsors +
+  // the host-area representative. They are copied on the resident's letter to the county.
+  var LEGISLATORS = [
+    "senrbayer@senate.michigan.gov", // Sen. Rosemary Bayer (SD13) - SB 818 lead sponsor
+    "sensshink@senate.michigan.gov", // Sen. Sue Shink (SD14) - host district, SB 818 co-sponsor
+    "jasonmorgan@house.mi.gov"       // Rep. Jason Morgan (HD23) - host township + near neighbors
+  ];
+  var ALL = [CHAIR].concat(CC).concat(LEGISLATORS);
 
   // ---- The letters -----------------------------------------------------------
   // Every letter shares OPEN (the human place + the minimum-criteria lever) and then
   // states ONE issue-specific request with its primary-record basis. Voice-guide clean:
   // no em-dashes, no "contest," advocate not adversary, figures traceable to the record.
   var OPEN =
-    "Dear Commissioners,\n\n" +
+    "Dear Commissioners and Legislators,\n\n" +
     "I am a resident of Washtenaw County writing about the Arbor Hills Landfill. The county has a real opportunity to set the conditions for this facility right now, while the Materials Management Plan minimum siting criteria are being written. The committee writing that language is led by Theo Eggermont, whom you likely know. The minimum criteria matter because a host community agreement can waive the supplemental conditions but not the minimum ones, so this is the one place these protections become enforceable.\n\n";
 
   var ISSUES = [
@@ -308,7 +315,7 @@
     var su = encodeURIComponent(subject());
     var bo = encodeURIComponent(body());
     var to = encodeURIComponent(CHAIR);
-    var cc = encodeURIComponent(CC.join(","));
+    var cc = encodeURIComponent(CC.concat(LEGISLATORS).join(","));
     document.getElementById("btn-gmail").href =
       "https://mail.google.com/mail/?view=cm&fs=1&to=" + to + "&cc=" + cc + "&su=" + su + "&body=" + bo;
     document.getElementById("btn-outlook").href =
@@ -350,7 +357,7 @@
 
   document.getElementById("btn-mail").addEventListener("click", function(){
     var href = "mailto:" + encodeURIComponent(CHAIR)
-      + "?cc=" + encodeURIComponent(CC.join(","))
+      + "?cc=" + encodeURIComponent(CC.concat(LEGISLATORS).join(","))
       + "&subject=" + encodeURIComponent(subject())
       + "&body=" + encodeURIComponent(body());
     window.location.href = href;
@@ -368,7 +375,7 @@
     } else { window.prompt("Copy:", text); }
   }
   document.getElementById("btn-copyletter").addEventListener("click", function(){ copy(body(), "Letter copied."); recordSend(); });
-  document.getElementById("btn-copyaddr").addEventListener("click", function(){ copy(ALL.join(", "), "Copied all nine addresses."); recordSend(); });
+  document.getElementById("btn-copyaddr").addEventListener("click", function(){ copy(ALL.join(", "), "Copied all the addresses."); recordSend(); });
 
   renderIssues();          // build the issue picker
   selectIssue(ISSUES[0].id); // load the default letter (fire) into subject + starting text
