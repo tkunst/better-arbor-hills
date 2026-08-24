@@ -57,8 +57,9 @@ ok('DOM text set via textContent (not raw HTML)', /\.textContent\s*=/.test(html)
 const visibleEmDash = htmlNB.split('\n').some(l => /—|&mdash;/.test(l) && !/^\s*\/\//.test(l));
 ok('no em-dash in user-visible text', !visibleEmDash);
 
-// --- Signup ships dormant; email field was removed ---
-ok('SIGNUP_FORM_URL ships empty (dormant)', /var SIGNUP_FORM_URL = "";/.test(html));
+// --- Signup is empty (dormant) or a valid https Google Form URL; email field was removed ---
+ok('SIGNUP_FORM_URL is empty or a valid https Google Form URL',
+   /var SIGNUP_FORM_URL = "(|https:\/\/(forms\.gle|docs\.google\.com\/forms)\/[^"]+)";/.test(html));
 ok('the unused "Your email" field is gone', !/id="email"/.test(html));
 
 console.log(`\n${pass} passed, ${fail} failed`);

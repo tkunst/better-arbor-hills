@@ -307,9 +307,9 @@
   // to get exactly one blank line between each paragraph.
   function letterBody(rot){ return [OPEN.trim(), FIRE.ask, rot.fact + " " + FIRE.close].join("\n\n"); }
 
-  // Signup: dormant until a Google Form owned by kunst.trisha@gmail.com is pasted here.
-  // Empty string keeps the "Get updates" control hidden and the tool fully working.
-  var SIGNUP_FORM_URL = "";
+  // Signup: a Google Form owned by kunst.trisha@gmail.com. An empty string keeps the
+  // "Get updates" control hidden; this live URL shows it in the thank-you panel after a send.
+  var SIGNUP_FORM_URL = "https://forms.gle/rqtwv47eifd2xLZr9";
 
   // ---- Optional PII-free counter -------------------------------------------
   // Leave COUNTER_URL = "" to keep the counter OFF (tool works normally, shows nothing).
