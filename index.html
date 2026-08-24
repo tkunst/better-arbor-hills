@@ -1,20 +1,20 @@
 <!doctype html>
 <!--
-  RESIDENT LETTER-WRITING TOOL: multi-issue (static, no backend)
+  RESIDENT LETTER-WRITING TOOL: single fixed letter (static, no backend)
   Self-owned, zero-backend, works on any static host (incl. GitHub Pages).
   Companion to: DRAFT-INTERNAL-arbor-hills-letter-writing-tool-recommendation-2026-08-21.md
-  Built 2026-08-21 (single-issue); multi-issue version 2026-08-22.
+  Built 2026-08-21 (single-issue); multi-issue 2026-08-22; rotating fire-only letter
+  2026-08-23; single fixed Bloomberg/independent-oversight letter 2026-08-24 (Trisha:
+  "Make it only the one letter. Not variations."). History of the multi-issue and
+  rotation designs lives in git, not in this file.
   Publishing is Trisha's call.
 
-  WHY MULTI-ISSUE:
-    - Residents pick the demand that matters most to them (fire, drinking water, PFAS,
-      methane, accountability). Each issue carries ONE specific, consistent ask, so many
-      residents send the SAME demand to the same set of officials. Volume on a single,
-      identical ask carries more weight than scattered one-offs.
-    - Every letter still opens from the same place and lands the same lever: put the
-      protection into the MMP *minimum* siting criteria now, while they are being written,
-      because a host-community agreement can waive the supplemental conditions but not the
-      minimums.
+  THE LETTER: built around the Aug. 20, 2026 Bloomberg Businessweek national investigation
+  (Arbor Hills appears on its map) and the site's own March 14, 2025 AHW272R4 chemistry
+  panel. Every letter still opens from the same place and lands the same lever: put the
+  protection into the MMP *minimum* siting criteria now, while they are being written,
+  because a host-community agreement can waive the supplemental conditions but not the
+  minimums. See set-brief-2026-h1.html for the fuller, sourced version of this evidence.
 
   RELIABILITY DESIGN (why this never "does nothing"):
     - mailto: works only if the device has a registered mail handler (fails for webmail-only desktop users).
@@ -51,7 +51,6 @@
     .boiler { background: #1d2733 !important; }
     .personal { background: #2a2410 !important; }
     .preview-box { background: #1c1d20 !important; }
-    .rot-bar { background: #1d2733 !important; }
     .thanks { background: #14301f !important; border-color: #2ea05a !important; }
     .issue-card { border-color: #333; }
     .issue-card:has(input:checked) { background: rgba(46,160,90,.14) !important; border-color: #2ea05a !important; }
@@ -95,11 +94,6 @@
   .issue-card .it { font-weight: 600; display: block; }
   .issue-card .ib { font-weight: 400; font-size: .87rem; color: #666; margin-top: .12rem; }
   @media (prefers-color-scheme: dark) { .issue-card .ib { color: #9a9a9a; } }
-  /* Rotation bar */
-  .rot-bar { display: flex; gap: .65rem; align-items: center; flex-wrap: wrap; background: #eef4fb; border-radius: 8px; padding: .55rem .7rem; margin: 0 0 .5rem; }
-  .rot-bar .rt { font-size: .88rem; color: #555; flex: 1 1 220px; }
-  @media (prefers-color-scheme: dark) { .rot-bar .rt { color: #a8a8a8; } }
-  .rot-bar button { padding: .5rem .85rem; font-size: .9rem; }
   /* Thank-you */
   .thanks { display: none; border: 1px solid #1d6f42; background: #e8f5ee; border-radius: 10px; padding: 1rem 1.1rem; margin: 0 0 1.25rem; }
   .thanks.show { display: block; }
@@ -111,7 +105,7 @@
 <div class="wrap">
 
   <h1>Write the Washtenaw County Commissioners</h1>
-  <p class="lede">The nine County Commissioners help decide the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. This letter asks them to protect against the landfill's fire and overheating risk. Add a line in your own words, then send it to the county commissioners and state legislators at once, from your own email.</p>
+  <p class="lede">The nine County Commissioners help decide the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. This letter points to Bloomberg's national investigation and the site's own monitoring record to ask for independent oversight and automatic public disclosure, not assurances that depend on what the operator chooses to submit. Add a line in your own words, then send it to the county commissioners and state legislators at once, from your own email.</p>
 
   <p id="counter" hidden style="font-weight:600;color:#1d6f42;margin:0 0 1.25rem"></p>
 
@@ -137,11 +131,6 @@
 
   <fieldset>
     <legend>2. Your letter</legend>
-
-    <div class="rot-bar">
-      <span class="rt">This letter highlights one fact about the fire risk. Show a different version, or edit it below. The words are yours.</span>
-      <button class="ghost" id="btn-shuffle" type="button">Show a different version</button>
-    </div>
 
     <label for="subject">Subject</label>
     <input id="subject" value="">
@@ -210,102 +199,37 @@
   ];
   var ALL = [CHAIR].concat(CC).concat(LEGISLATORS);
 
-  // ---- The letters -----------------------------------------------------------
-  // Every letter shares OPEN (the human place + the minimum-criteria lever) and then
-  // states ONE issue-specific request with its primary-record basis. Voice-guide clean:
-  // no em-dashes, no "contest," advocate not adversary, figures traceable to the record.
-  var OPEN =
+  // ---- The letter -------------------------------------------------------------
+  // Single fixed letter (Trisha, 2026-08-24): no rotation, no issue picker. The Bloomberg
+  // SET-audience-brief letter, built around the Aug. 20, 2026 Bloomberg Businessweek
+  // investigation + the March 14, 2025 AHW272R4 chemistry panel. LETTER_TEXT ends right
+  // before the signature; body() appends personal words + "Respectfully," + name/address.
+  // Voice-guide clean: no em-dashes, advocate not adversary, every figure traceable to the
+  // record (see the SET evidence brief, set-brief-2026-h1.html, for full sourcing).
+  var LETTER_SUBJECT = "Please require independent oversight and automatic disclosure at Arbor Hills";
+
+  // Bloomberg gift link expires 2026-08-27 (subscriber-gifted access token, ~1 week TTL).
+  // Swap for a fresh gift link, or the plain (paywalled) article URL, once this one dies:
+  // https://www.bloomberg.com/features/2026-america-overheating-landfills/
+  var BLOOMBERG_GIFT_URL = "https://www.bloomberg.com/features/2026-america-overheating-landfills/?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2UiOiJTdWJzY3JpYmVyR2lmdGVkQXJ0aWNsZSIsImlhdCI6MTc4NzI0NTQ1MiwiZXhwIjoxNzg3ODUwMjUyLCJhcnRpY2xlSWQiOiJUSzI5ME9LSVAzSjMwMCIsImJjb25uZWN0SWQiOiI3MDUwQURBMTNDMkM0MEE3OTM1MjBENTcwRTc2QThENiJ9.AfT2lGSCCOT82sxSPPW0jEVBWIWVuw4LoR7CEwaW2Xo&leadSource=article-gifting";
+  var FCF_URL = "https://www.fullcirclefuture.org/toohottoignore";
+
+  var LETTER_TEXT =
     "Dear Commissioners and Legislators,\n\n" +
-    "I am a resident of Washtenaw County writing about the Arbor Hills Landfill. The county has a real opportunity to set the conditions for this facility right now, while the Materials Management Plan minimum siting criteria are being written. The committee writing that language is led by Theo Eggermont, whom you likely know. The minimum criteria matter because Salem Township, the township that hosts the landfill, can waive the supplemental conditions by granting the operator host-community approval, but it cannot waive the minimum ones. That makes the minimum criteria the one place these protections become enforceable.\n\n";
-
-  // Phase 1: the FIRE letter only (see the FIRE object below). The full multi-issue
-  // ISSUES array is preserved verbatim in the PHASE 2 comment block just below, so
-  // going multi-issue again is a restore, not a rewrite.
-  /* PHASE 2 -- original multi-issue data, preserved verbatim. To restore, re-introduce
-     this ISSUES array plus the issue-picker markup and renderIssues/selectIssue from git
-     history; each issue then gets the same paragraph-3 rotation treatment as fire.
-  var ISSUES = [
-    {
-      id: "fire",
-      label: "Fire and overheating",
-      blurb: "Continuous fire and temperature monitoring, plus a smolder-prevention plan and an independent expert.",
-      subject: "Please put continuous temperature monitoring in the Arbor Hills minimum criteria",
-      ask:
-        "I am asking you to urge the committee to require, as a minimum condition of any approval, continuous automated temperature monitoring on the gas-extraction wells and a written subsurface-temperature-event and smolder-prevention plan, with an independent, county-selected expert to interpret the record. The site's clearest overheating event, well AHW272R4 at 177 degrees Fahrenheit, was only reconstructed months later from a semi-annual report, and 28 wells sat at or above 131 degrees in 2025. Monthly single readings cannot catch an event that begins the week after a sampling round, and the operator's at-depth temperature profiling has not been filed since early 2023. Once this plan is approved, the opportunity to require these protections is gone."
-    },
-    {
-      id: "water",
-      label: "Drinking water",
-      blurb: "Twice-yearly testing of the nearest private wells, and municipal water for those homes and Salem Elementary.",
-      subject: "Please put drinking-water protection in the Arbor Hills minimum criteria",
-      ask:
-        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the private residential wells nearest the landfill be tested for contamination twice a year with the results published, and that any expansion extend municipal water to those homes and to Salem Elementary at the operator's expense before waste placement begins. The homes closest to the site were last sampled in February 2020 and not since, while Salem Elementary's own supply a short distance away is tested about once a year and comes back clean. The families carrying this landfill's burden should get at least the testing the school already receives, and the water main that roughly 35 million dollars in state grants helped bring to a future subdivision should be extended to the people who live here now. Once this plan is approved, the chance to require these protections is gone."
-    },
-    {
-      id: "pfas",
-      label: "PFAS transparency and no repeat bypass",
-      blurb: "Publish the PFAS data already collected, and prove backup pretreatment so a bypass never happens again.",
-      subject: "Please put PFAS transparency and no-bypass in the Arbor Hills minimum criteria",
-      ask:
-        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the PFAS groundwater data the 2023 Consent Order already collects be published quarterly in a public place, and that the operator prove backup pretreatment capacity so a maintenance event can never again force a PFAS bypass. On March 25, 2026, the operator intentionally bypassed leachate PFAS pretreatment for four hours and sent PFOS into the public sewer at 18,000 nanograms per liter against a 170 limit, and it was caught by a sample rather than by any instrument. The PFAS results are already generated and reported to the state, so the only open question is public access. Once this plan is approved, the chance to require these protections is gone."
-    },
-    {
-      id: "methane",
-      label: "Methane cut at the source",
-      blurb: "Cut methane at the source, not only at the flare, with a gas-collection-system redesign.",
-      subject: "Please put methane reduction at the source in the Arbor Hills minimum criteria",
-      ask:
-        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the operator cut methane at the source rather than only at the flare, including a gas-collection-system redesign on an enforceable timeline and modern cover, with routine surface scanning to find and repair leaks before they escape. The state's June 2026 inspection found about 9,100 standard cubic feet per minute of gas collected against about 10,960 modeled, which points to significant fugitive emissions, alongside 75 surface-methane exceedances. A flare or the renewable-gas plant cannot reduce methane that never reaches them. Once this plan is approved, the chance to require this is gone."
-    },
-    {
-      id: "accountability",
-      label: "Notification and accountability",
-      blurb: "Notify the community and every commissioner when problems occur, with a real county consequence.",
-      subject: "Please put notification and accountability in the Arbor Hills minimum criteria",
-      ask:
-        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the community be notified when an elevated-temperature event or a violation occurs, and that every county commissioner receive a copy of every violation notice with its photo attachments. Because a county cannot revoke a state operating permit, I also ask that the host community agreement let the county suspend that agreement when serious or repeated violations continue after the state has already acted. The site carries about 1.12 million dollars in verified fines across four enforcement threads, and the state logs roughly 100 odor complaints a month, yet the county's own commissioners do not automatically receive the violation record. Once this plan is approved, the chance to build in this accountability is gone."
-    },
-    {
-      id: "wetlands",
-      label: "Wetlands and the expansion",
-      blurb: "If the landfill expands, require real downstream wetland restoration with permanent protection.",
-      subject: "Please put real wetland protection in the Arbor Hills minimum criteria",
-      ask:
-        "I am asking you to urge the committee to require, as a minimum condition of any approval, that any wetland or stream impact from an expansion be compensated by genuine restoration in the same Johnson Creek watershed, sited downstream where the community actually bears the impact and protected by a recorded permanent conservation easement rather than a promise to protect the land at some later date. GFL's own expansion filing proposes to fill 33.29 acres of regulated wetland and to build its 64.49 acres of replacement wetland on a site about a mile west that Salem Township suggested and would also use as a township park. Restoration should follow the harm downstream into the Johnson Creek corridor, the Rouge watershed's only coldwater trout stream, with independent review of whether it truly replaces what is lost. Once this plan is approved, the chance to require that is gone."
-    },
-    {
-      id: "sixmile",
-      label: "Keep Six Mile Road open",
-      blurb: "Keep the public Six Mile Road open. No quiet road closure to enlarge the landfill.",
-      subject: "Please protect the public Six Mile Road in the Arbor Hills minimum criteria",
-      ask:
-        "I am asking you to urge the committee to require, as a minimum condition of any approval, that the public Six Mile Road right-of-way between Napier Road and Chubb Road stay open, and that no vacation or closure of that road to enlarge the landfill be allowed to ride through inside a plan approval. Six Mile Road is a Washtenaw County primary road, classified that way by the county's own road commission. GFL's own expansion filing considers removing Six Mile Road, among its alternatives, to create continuous landfill airspace, so this is not a hypothetical concern. Closing a public county road to enlarge a landfill is a hard-to-reverse step that should never happen quietly, and any such proposal should stand on its own public process with its own notice and comment. Once this plan is approved, the chance to require that is gone."
-    }
-  ];
-  */
-
-  // Phase 1 letter. Paragraph 1 is OPEN (above). Paragraph 2 is FIRE.ask (static).
-  // Paragraph 3 is a ROTATING supporting fact plus FIRE.close, and the subject rotates
-  // with it. Facts are traceable to the primary regulatory record; never add a fact
-  // without a source. FIRE.ask + the two starter facts are split verbatim from the
-  // original fire "ask" preserved in the PHASE 2 comment above.
-  var FIRE = {
-    ask: "I am asking you to urge the committee to require, as a minimum condition of any approval, continuous automated temperature monitoring on the gas-extraction wells and a written subsurface-temperature-event and smolder-prevention plan, with an independent, county-selected expert to interpret the record.",
-    close: "Once this plan is approved, the opportunity to require these protections is gone.",
-    rotations: [
-      { subject: "Please put continuous temperature monitoring in the Arbor Hills minimum criteria",
-        fact: "The site's clearest overheating event, well AHW272R4 at 177 degrees Fahrenheit, was only reconstructed months later from a semi-annual report, and 28 wells sat at or above 131 degrees in 2025." },
-      { subject: "Monthly temperature spot checks are not enough at Arbor Hills",
-        fact: "Monthly single readings cannot catch an event that begins the week after a sampling round, and the operator's at-depth temperature profiling has not been filed since early 2023." }
-      // -- TRISHA: paste additional {subject, fact} pairs below. Each fact must trace to the
-      //    primary regulatory record. Voice guide: no em-dashes, advocate not adversary.
-      //  { subject: "", fact: "" },
-    ]
-  };
-
-  // OPEN keeps a trailing blank line from its original design, so trim before joining
-  // to get exactly one blank line between each paragraph.
-  function letterBody(rot){ return [OPEN.trim(), FIRE.ask, rot.fact + " " + FIRE.close].join("\n\n"); }
+    "On August 20, Bloomberg Businessweek published a national investigation into dangerously overheating landfills. Arbor Hills appeared on its map of facilities displaying signs of abnormal heat. As a Washtenaw County resident and voter, I am asking you to ensure that our County responds with enforceable protections, not assurances that depend on what the landfill operator chooses or is required to submit.\n\n" +
+    "You can read the gifted Bloomberg investigation here: " + BLOOMBERG_GIFT_URL + ". Arbor Hills and our local context is covered more extensively at Full Circle Future's Too Hot to Ignore: " + FCF_URL + ".\n\n" +
+    "The timing is critical. Washtenaw County is now writing the minimum siting criteria for its Materials Management Plan. Salem Township may waive supplemental criteria through host-community approval, but it cannot waive the County's minimum criteria. Protections left out now may be unavailable when an expansion application is considered.\n\n" +
+    "The monitoring record shows why monthly snapshots and operator-controlled disclosure are inadequate. On March 14, 2025, gas well AHW272R4 reached 177 degrees F, above the 165 degrees F trigger for downhole temperature measurements. At approximately the same time, reported methane was about 8%, oxygen about 7% and carbon monoxide about 150 parts per million. That combination of high temperature, sharply depressed methane, elevated oxygen and carbon monoxide matches the classic warning pattern experts describe for a possible developing subsurface elevated-temperature event, although it does not by itself confirm that one occurred.\n\n" +
+    "EGLE has confirmed that a well exceeding the trigger was still required to undergo downhole measurements. But those records did not have to be submitted unless EGLE specifically requested them. EGLE says it did not request the recent records and does not have them.\n\n" +
+    "GFL's August 7 response adds another reason for independent review. The company said the suspected anomalies were too deep for direct visual inspection. Although that does not mean the wellheads were too hot to approach or that downhole measurements were impossible, it confirms that the underground conditions could not be verified by sight. GFL identified downhole profiles at wells 294R and 328R, but its response did not identify one at AHW272R4.\n\n" +
+    "Please require the following as minimum, non-waivable conditions of any expansion approval:\n\n" +
+    "Continuous automated wellhead temperature and pressure or vacuum monitoring, with predetermined alerts and action levels.\n\n" +
+    "Standardized monitoring of methane, carbon dioxide, oxygen, carbon monoxide, hydrogen, hydrogen sulfide, nitrogen, balance gas and temperature at every gas well, with at least weekly full-gas monitoring after a warning sign or trigger.\n\n" +
+    "Automatic submission and public disclosure of triggered downhole measurements, the full depth reached, obstruction notes, laboratory gas testing, exceedances, corrective actions and monitoring results.\n\n" +
+    "Prompt repair or replacement of any well that cannot be profiled completely, or use of an independently approved alternative method that can characterize conditions at depth.\n\n" +
+    "A formal Subsurface Elevated Temperature Event Plan and Smolder Prevention Plan, and no approval of an operating temperature above 160 degrees F without a documented corrective-action plan.\n\n" +
+    "Independent technical review of the complete monitoring record and completed 2026 gas-collection-system design. The expert must be selected, retained and paid directly by Washtenaw County or the State of Michigan - not by the landfill operator - and the findings must be public.\n\n" +
+    "Washtenaw County should not have to discover critical records only after deciding to ask for them. Please use the authority available now to require early detection, automatic disclosure and genuinely independent oversight.";
 
   // Signup: a Google Form owned by kunst.trisha@gmail.com. An empty string keeps the
   // "Get updates" control hidden; this live URL shows it in the thank-you panel after a send.
@@ -371,29 +295,11 @@
       "https://outlook.live.com/mail/0/deeplink/compose?to=" + to + "&cc=" + cc + "&subject=" + su + "&body=" + bo;
   }
 
-  // ---- Rotation: pick a paired {subject, fact} and show it (editable). ---------
-  // The resident SEES the selected version and can re-roll it (shuffle) or edit it.
-  // Their own words (a separate field) are preserved across shuffles on purpose.
-  var curRot = -1;
-  function applyRotation(i){
-    var rot = FIRE.rotations[i];
-    if (!rot) return; // defensive: never blank the tool if the rotations list is emptied by a future edit
-    curRot = i;
-    document.getElementById("subject").value = rot.subject;
-    document.getElementById("boiler").value = letterBody(rot);
+  // ---- Load the letter into the form (editable) --------------------------------
+  function loadLetter(){
+    document.getElementById("subject").value = LETTER_SUBJECT;
+    document.getElementById("boiler").value = LETTER_TEXT;
     refresh();
-  }
-  function initialRotation(){
-    var n = FIRE.rotations.length;
-    var m = /[?&]rot=(\d+)/.exec(location.search); // optional deep-link to a version
-    if (m) { var i = parseInt(m[1], 10); if (i >= 0 && i < n) return i; }
-    return Math.floor(Math.random() * n);
-  }
-  function shuffleRotation(){
-    var n = FIRE.rotations.length;
-    if (n < 2) return;
-    var i; do { i = Math.floor(Math.random() * n); } while (i === curRot);
-    applyRotation(i);
   }
 
   // ---- Thank-you + optional signup (shown after a send) ------------------------
@@ -414,7 +320,6 @@
   ["subject","boiler","personal","fname","lname","street","city","zip"].forEach(function(id){
     document.getElementById(id).addEventListener("input", refresh);
   });
-  document.getElementById("btn-shuffle").addEventListener("click", shuffleRotation);
 
   document.getElementById("btn-mail").addEventListener("click", function(){
     var href = "mailto:" + encodeURIComponent(CHAIR)
@@ -438,7 +343,7 @@
   document.getElementById("btn-copyletter").addEventListener("click", function(){ copy(body(), "Letter copied."); recordSend(); });
   document.getElementById("btn-copyaddr").addEventListener("click", function(){ copy(ALL.join(", "), "Copied all the addresses."); recordSend(); });
 
-  applyRotation(initialRotation()); // load a fire letter (a rotation) into subject + text
+  loadLetter(); // load the (single, fixed) letter into subject + text
   loadCount();                      // show the running count if a counter endpoint is configured
 </script>
 </body>

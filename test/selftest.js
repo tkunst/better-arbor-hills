@@ -15,36 +15,29 @@ function ok(name, cond) {
   else { fail++; console.log('  FAIL  ' + name); }
 }
 
-// --- Composition: letter = P1(OPEN) + "\n\n" + P2(ask) + "\n\n" + P3(fact + " " + close) ---
-// Asserted by matching letterBody's exact source rather than executing it.
-ok('letterBody composes OPEN + ask + (fact + close), joined by single blank lines',
-   html.includes('return [OPEN.trim(), FIRE.ask, rot.fact + " " + FIRE.close].join("\\n\\n"); }'));
+// --- Composition: single fixed letter, no rotation (Trisha, 2026-08-24) ---
+ok('LETTER_SUBJECT and LETTER_TEXT are defined',
+   /var LETTER_SUBJECT\s*=/.test(htmlNB) && /var LETTER_TEXT\s*=/.test(htmlNB));
+ok('no rotation/issue-picker identifiers remain live',
+   !/\b(OPEN|FIRE|ISSUES|applyRotation|initialRotation|shuffleRotation|curRot)\b/.test(htmlNB));
 
 // --- Paragraph content (traceable-to-record anchors) ---
-ok('P1 (OPEN) names the minimum-criteria lever + Theo Eggermont',
-   html.includes('minimum siting criteria') && html.includes('Theo Eggermont'));
-ok('P2 (ask) is the static temperature-monitoring ask',
-   /ask:\s*"I am asking you to urge the committee[^"]*continuous automated temperature monitoring/.test(htmlNB));
-ok('close line is present and static',
-   html.includes('close: "Once this plan is approved, the opportunity to require these protections is gone."'));
+ok('names the minimum siting criteria lever',
+   html.includes('minimum siting criteria'));
+ok('cites the Bloomberg investigation and gift link',
+   html.includes('Bloomberg Businessweek') && html.includes('BLOOMBERG_GIFT_URL'));
+ok('cites Full Circle Future',
+   html.includes('Too Hot to Ignore') && html.includes('FCF_URL'));
+ok('states the March 14, 2025 AHW272R4 chemistry panel',
+   html.includes('March 14, 2025') && html.includes('AHW272R4') && html.includes('177 degrees F'));
+ok('the independent-review condition requires county/state selection and payment, not the operator',
+   html.includes('selected, retained and paid directly by Washtenaw County or the State of Michigan'));
 
-// --- Rotations: extract the FIRE.rotations block and check pairing/distinctness ---
-// Extract from block-comment-stripped source, and drop `//` line comments so the commented
-// TRISHA placeholder ({subject:"",fact:""}) is ignored.
-const rotBlock = ((htmlNB.match(/rotations:\s*\[([\s\S]*?)\n\s*\]\s*\n\s*\};/) || [, ''])[1])
-  .replace(/\/\/[^\n]*/g, '');
-const subjects = [...rotBlock.matchAll(/subject:\s*"((?:[^"\\]|\\.)*)"/g)].map(m => m[1]);
-const facts = [...rotBlock.matchAll(/fact:\s*"((?:[^"\\]|\\.)*)"/g)].map(m => m[1]);
-ok('at least 2 rotations', subjects.length >= 2 && facts.length >= 2);
-ok('subjects and facts are paired 1:1', subjects.length === facts.length);
-ok('every subject and fact is non-empty', subjects.every(Boolean) && facts.every(Boolean));
-ok('subjects are distinct', new Set(subjects).size === subjects.length);
-ok('facts are distinct', new Set(facts).size === facts.length);
-
-// --- Phase 1: fire only (the multi-issue ISSUES array must be commented out) ---
-ok('no live ISSUES array (fire-only Phase 1)', !/^\s*var ISSUES\s*=/m.test(htmlNB));
-ok('rotation engine is wired at load', /applyRotation\(initialRotation\(\)\)/.test(htmlNB));
-ok('shuffle control is wired', /getElementById\("btn-shuffle"\)\.addEventListener/.test(htmlNB));
+// --- Loader: the single letter is wired at load ---
+ok('loadLetter() sets subject + boiler from the fixed constants',
+   /function loadLetter\(\)\{[\s\S]*?LETTER_SUBJECT[\s\S]*?LETTER_TEXT[\s\S]*?\}/.test(htmlNB));
+ok('loadLetter is called at load', /\bloadLetter\(\);/.test(htmlNB));
+ok('no shuffle control remains', !/btn-shuffle/.test(html));
 
 // --- Security invariants (CLAUDE.md) ---
 ok('compose URLs encodeURIComponent the subject and body',
