@@ -51,6 +51,8 @@
     .boiler { background: #1d2733 !important; }
     .personal { background: #2a2410 !important; }
     .preview-box { background: #1c1d20 !important; }
+    .rot-bar { background: #1d2733 !important; }
+    .thanks { background: #14301f !important; border-color: #2ea05a !important; }
     .issue-card { border-color: #333; }
     .issue-card:has(input:checked) { background: rgba(46,160,90,.14) !important; border-color: #2ea05a !important; }
   }
@@ -93,24 +95,34 @@
   .issue-card .it { font-weight: 600; display: block; }
   .issue-card .ib { font-weight: 400; font-size: .87rem; color: #666; margin-top: .12rem; }
   @media (prefers-color-scheme: dark) { .issue-card .ib { color: #9a9a9a; } }
+  /* Rotation bar */
+  .rot-bar { display: flex; gap: .65rem; align-items: center; flex-wrap: wrap; background: #eef4fb; border-radius: 8px; padding: .55rem .7rem; margin: 0 0 .5rem; }
+  .rot-bar .rt { font-size: .88rem; color: #555; flex: 1 1 220px; }
+  @media (prefers-color-scheme: dark) { .rot-bar .rt { color: #a8a8a8; } }
+  .rot-bar button { padding: .5rem .85rem; font-size: .9rem; }
+  /* Thank-you */
+  .thanks { display: none; border: 1px solid #1d6f42; background: #e8f5ee; border-radius: 10px; padding: 1rem 1.1rem; margin: 0 0 1.25rem; }
+  .thanks.show { display: block; }
+  .thanks strong { font-size: 1.05rem; }
+  .signup { margin-top: .6rem; font-size: .95rem; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <h1>Write the Washtenaw County Commissioners</h1>
-  <p class="lede">The nine County Commissioners help decide the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. Pick the issue you care about most, add a line in your own words, then send it to the county commissioners and state legislators at once, from your own email.</p>
+  <p class="lede">The nine County Commissioners help decide the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. This letter asks them to protect against the landfill's fire and overheating risk. Add a line in your own words, then send it to the county commissioners and state legislators at once, from your own email.</p>
 
   <p id="counter" hidden style="font-weight:600;color:#1d6f42;margin:0 0 1.25rem"></p>
 
-  <fieldset>
-    <legend>1. Pick your issue</legend>
-    <p class="hint">Each option gives you a ready letter with one clear request. The more residents send the same request, the harder it is to set aside. Choose the one that matters most to you.</p>
-    <div class="issues" id="issues" role="radiogroup" aria-label="Choose the issue for your letter"></div>
-  </fieldset>
+  <div class="thanks" id="thankyou">
+    <strong>Thank you for writing the board.</strong>
+    <p style="margin:.4rem 0 0">Your letter is on its way from your own email. Every letter helps get these protections written into the minimum criteria while there is still time.</p>
+    <p class="signup" id="signup" hidden style="margin-top:.6rem"></p>
+  </div>
 
   <fieldset>
-    <legend>2. About you</legend>
+    <legend>1. About you</legend>
     <p class="hint">Commissioners weigh letters from the people they represent. Your address shows you are a Washtenaw County resident.</p>
     <div class="row">
       <div><label for="fname">First name</label><input id="fname" autocomplete="given-name"></div>
@@ -121,17 +133,21 @@
       <div><label for="city">City / Township</label><input id="city" autocomplete="address-level2"></div>
       <div><label for="zip">ZIP</label><input id="zip" autocomplete="postal-code"></div>
     </div>
-    <label for="email">Your email <span class="hint">(so they can reply to you)</span></label><input id="email" type="email" autocomplete="email">
   </fieldset>
 
   <fieldset>
-    <legend>3. Your letter</legend>
+    <legend>2. Your letter</legend>
+
+    <div class="rot-bar">
+      <span class="rt">This letter highlights one fact about the fire risk. Show a different version, or edit it below. The words are yours.</span>
+      <button class="ghost" id="btn-shuffle" type="button">Show a different version</button>
+    </div>
 
     <label for="subject">Subject</label>
     <input id="subject" value="">
 
-    <label for="boiler">Starting text <span class="hint">(edit freely)</span></label>
-    <textarea id="boiler" class="boiler" rows="14"></textarea>
+    <label for="boiler">Your letter <span class="hint">(edit freely)</span></label>
+    <textarea id="boiler" class="boiler" rows="20"></textarea>
 
     <div class="nudge">
       <strong>Add a sentence or two in your own words below.</strong> Identical form letters get counted and set aside. One honest, personal reason from a real resident is what actually moves a commissioner. Please keep it brief and civil.
@@ -142,7 +158,7 @@
   </fieldset>
 
   <fieldset>
-    <legend>4. Send it</legend>
+    <legend>3. Send it</legend>
     <p class="hint">Pick whichever matches how you read email. They all send the same letter to the county commissioners and state legislators, from your own account.</p>
     <div class="send-grid">
       <button class="primary" id="btn-mail" type="button">Open in my email app</button>
@@ -202,6 +218,12 @@
     "Dear Commissioners and Legislators,\n\n" +
     "I am a resident of Washtenaw County writing about the Arbor Hills Landfill. The county has a real opportunity to set the conditions for this facility right now, while the Materials Management Plan minimum siting criteria are being written. The committee writing that language is led by Theo Eggermont, whom you likely know. The minimum criteria matter because Salem Township, the township that hosts the landfill, can waive the supplemental conditions by granting the operator host-community approval, but it cannot waive the minimum ones. That makes the minimum criteria the one place these protections become enforceable.\n\n";
 
+  // Phase 1: the FIRE letter only (see the FIRE object below). The full multi-issue
+  // ISSUES array is preserved verbatim in the PHASE 2 comment block just below, so
+  // going multi-issue again is a restore, not a rewrite.
+  /* PHASE 2 -- original multi-issue data, preserved verbatim. To restore, re-introduce
+     this ISSUES array plus the issue-picker markup and renderIssues/selectIssue from git
+     history; each issue then gets the same paragraph-3 rotation treatment as fire.
   var ISSUES = [
     {
       id: "fire",
@@ -260,9 +282,34 @@
         "I am asking you to urge the committee to require, as a minimum condition of any approval, that the public Six Mile Road right-of-way between Napier Road and Chubb Road stay open, and that no vacation or closure of that road to enlarge the landfill be allowed to ride through inside a plan approval. Six Mile Road is a Washtenaw County primary road, classified that way by the county's own road commission. GFL's own expansion filing considers removing Six Mile Road, among its alternatives, to create continuous landfill airspace, so this is not a hypothetical concern. Closing a public county road to enlarge a landfill is a hard-to-reverse step that should never happen quietly, and any such proposal should stand on its own public process with its own notice and comment. Once this plan is approved, the chance to require that is gone."
     }
   ];
+  */
 
-  function issueById(id){ for (var i=0;i<ISSUES.length;i++){ if (ISSUES[i].id === id) return ISSUES[i]; } return ISSUES[0]; }
-  function boilerFor(issue){ return OPEN + issue.ask; }
+  // Phase 1 letter. Paragraph 1 is OPEN (above). Paragraph 2 is FIRE.ask (static).
+  // Paragraph 3 is a ROTATING supporting fact plus FIRE.close, and the subject rotates
+  // with it. Facts are traceable to the primary regulatory record; never add a fact
+  // without a source. FIRE.ask + the two starter facts are split verbatim from the
+  // original fire "ask" preserved in the PHASE 2 comment above.
+  var FIRE = {
+    ask: "I am asking you to urge the committee to require, as a minimum condition of any approval, continuous automated temperature monitoring on the gas-extraction wells and a written subsurface-temperature-event and smolder-prevention plan, with an independent, county-selected expert to interpret the record.",
+    close: "Once this plan is approved, the opportunity to require these protections is gone.",
+    rotations: [
+      { subject: "Please put continuous temperature monitoring in the Arbor Hills minimum criteria",
+        fact: "The site's clearest overheating event, well AHW272R4 at 177 degrees Fahrenheit, was only reconstructed months later from a semi-annual report, and 28 wells sat at or above 131 degrees in 2025." },
+      { subject: "Monthly temperature spot checks are not enough at Arbor Hills",
+        fact: "Monthly single readings cannot catch an event that begins the week after a sampling round, and the operator's at-depth temperature profiling has not been filed since early 2023." }
+      // -- TRISHA: paste additional {subject, fact} pairs below. Each fact must trace to the
+      //    primary regulatory record. Voice guide: no em-dashes, advocate not adversary.
+      //  { subject: "", fact: "" },
+    ]
+  };
+
+  // OPEN keeps a trailing blank line from its original design, so trim before joining
+  // to get exactly one blank line between each paragraph.
+  function letterBody(rot){ return [OPEN.trim(), FIRE.ask, rot.fact + " " + FIRE.close].join("\n\n"); }
+
+  // Signup: dormant until a Google Form owned by kunst.trisha@gmail.com is pasted here.
+  // Empty string keeps the "Get updates" control hidden and the tool fully working.
+  var SIGNUP_FORM_URL = "";
 
   // ---- Optional PII-free counter -------------------------------------------
   // Leave COUNTER_URL = "" to keep the counter OFF (tool works normally, shows nothing).
@@ -284,6 +331,7 @@
     el.hidden = false;
   }
   function recordSend(){
+    showThanks();
     if (!COUNTER_URL) return;
     if (localStorage.getItem("ah_letter_counted")) return; // one count per browser
     localStorage.setItem("ah_letter_counted", "1");
@@ -323,38 +371,49 @@
       "https://outlook.live.com/mail/0/deeplink/compose?to=" + to + "&cc=" + cc + "&subject=" + su + "&body=" + bo;
   }
 
-  // Selecting an issue swaps the Subject + Starting text. The resident's own words
-  // (a separate field) are preserved across issue switches on purpose.
-  function selectIssue(id){
-    var issue = issueById(id);
-    document.getElementById("subject").value = issue.subject;
-    document.getElementById("boiler").value = boilerFor(issue);
+  // ---- Rotation: pick a paired {subject, fact} and show it (editable). ---------
+  // The resident SEES the selected version and can re-roll it (shuffle) or edit it.
+  // Their own words (a separate field) are preserved across shuffles on purpose.
+  var curRot = -1;
+  function applyRotation(i){
+    curRot = i;
+    var rot = FIRE.rotations[i];
+    document.getElementById("subject").value = rot.subject;
+    document.getElementById("boiler").value = letterBody(rot);
     refresh();
   }
+  function initialRotation(){
+    var n = FIRE.rotations.length;
+    var m = /[?&]rot=(\d+)/.exec(location.search); // optional deep-link to a version
+    if (m) { var i = parseInt(m[1], 10); if (i >= 0 && i < n) return i; }
+    return Math.floor(Math.random() * n);
+  }
+  function shuffleRotation(){
+    var n = FIRE.rotations.length;
+    if (n < 2) return;
+    var i; do { i = Math.floor(Math.random() * n); } while (i === curRot);
+    applyRotation(i);
+  }
 
-  function renderIssues(){
-    var container = document.getElementById("issues");
-    ISSUES.forEach(function(issue, idx){
-      var lab = document.createElement("label");
-      lab.className = "issue-card";
-      var input = document.createElement("input");
-      input.type = "radio";
-      input.name = "issue";
-      input.value = issue.id;
-      if (idx === 0) input.checked = true;
-      input.addEventListener("change", function(){ selectIssue(issue.id); });
-      var txt = document.createElement("div");
-      var t = document.createElement("span"); t.className = "it"; t.textContent = issue.label;
-      var b = document.createElement("span"); b.className = "ib"; b.textContent = issue.blurb;
-      txt.appendChild(t); txt.appendChild(b);
-      lab.appendChild(input); lab.appendChild(txt);
-      container.appendChild(lab);
-    });
+  // ---- Thank-you + optional signup (shown after a send) ------------------------
+  function showThanks(){
+    document.getElementById("thankyou").classList.add("show");
+    var s = document.getElementById("signup");
+    if (SIGNUP_FORM_URL && s.hidden) {
+      var a = document.createElement("a");
+      a.href = SIGNUP_FORM_URL; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "Get updates from the monitor";
+      s.textContent = "Want to know what the state files next? ";
+      s.appendChild(a);
+      s.hidden = false;
+    }
+    try { document.getElementById("thankyou").scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
   }
 
   ["subject","boiler","personal","fname","lname","street","city","zip"].forEach(function(id){
     document.getElementById(id).addEventListener("input", refresh);
   });
+  document.getElementById("btn-shuffle").addEventListener("click", shuffleRotation);
 
   document.getElementById("btn-mail").addEventListener("click", function(){
     var href = "mailto:" + encodeURIComponent(CHAIR)
@@ -378,9 +437,8 @@
   document.getElementById("btn-copyletter").addEventListener("click", function(){ copy(body(), "Letter copied."); recordSend(); });
   document.getElementById("btn-copyaddr").addEventListener("click", function(){ copy(ALL.join(", "), "Copied all the addresses."); recordSend(); });
 
-  renderIssues();          // build the issue picker
-  selectIssue(ISSUES[0].id); // load the default letter (fire) into subject + starting text
-  loadCount();             // show the running count if a counter endpoint is configured
+  applyRotation(initialRotation()); // load a fire letter (a rotation) into subject + text
+  loadCount();                      // show the running count if a counter endpoint is configured
 </script>
 </body>
 </html>
