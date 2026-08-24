@@ -5,6 +5,9 @@
 const fs = require('fs');
 const path = require('path');
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+// index.html with /* */ block comments stripped, so content checks validate LIVE code, not
+// the preserved PHASE 2 comment (which contains the original issue text verbatim).
+const htmlNB = html.replace(/\/\*[\s\S]*?\*\//g, '');
 
 let pass = 0, fail = 0;
 function ok(name, cond) {
@@ -21,13 +24,14 @@ ok('letterBody composes OPEN + ask + (fact + close), joined by single blank line
 ok('P1 (OPEN) names the minimum-criteria lever + Theo Eggermont',
    html.includes('minimum siting criteria') && html.includes('Theo Eggermont'));
 ok('P2 (ask) is the static temperature-monitoring ask',
-   /ask:\s*"I am asking you to urge the committee[^"]*continuous automated temperature monitoring/.test(html));
+   /ask:\s*"I am asking you to urge the committee[^"]*continuous automated temperature monitoring/.test(htmlNB));
 ok('close line is present and static',
    html.includes('close: "Once this plan is approved, the opportunity to require these protections is gone."'));
 
 // --- Rotations: extract the FIRE.rotations block and check pairing/distinctness ---
-// Strip `//` line comments so the commented TRISHA placeholder ({subject:"",fact:""}) is ignored.
-const rotBlock = ((html.match(/rotations:\s*\[([\s\S]*?)\n\s*\]\s*\n\s*\};/) || [, ''])[1])
+// Extract from block-comment-stripped source, and drop `//` line comments so the commented
+// TRISHA placeholder ({subject:"",fact:""}) is ignored.
+const rotBlock = ((htmlNB.match(/rotations:\s*\[([\s\S]*?)\n\s*\]\s*\n\s*\};/) || [, ''])[1])
   .replace(/\/\/[^\n]*/g, '');
 const subjects = [...rotBlock.matchAll(/subject:\s*"((?:[^"\\]|\\.)*)"/g)].map(m => m[1]);
 const facts = [...rotBlock.matchAll(/fact:\s*"((?:[^"\\]|\\.)*)"/g)].map(m => m[1]);
@@ -38,10 +42,9 @@ ok('subjects are distinct', new Set(subjects).size === subjects.length);
 ok('facts are distinct', new Set(facts).size === facts.length);
 
 // --- Phase 1: fire only (the multi-issue ISSUES array must be commented out) ---
-const noComments = html.replace(/\/\*[\s\S]*?\*\//g, '');
-ok('no live ISSUES array (fire-only Phase 1)', !/^\s*var ISSUES\s*=/m.test(noComments));
-ok('rotation engine is wired at load', /applyRotation\(initialRotation\(\)\)/.test(noComments));
-ok('shuffle control is wired', /getElementById\("btn-shuffle"\)\.addEventListener/.test(noComments));
+ok('no live ISSUES array (fire-only Phase 1)', !/^\s*var ISSUES\s*=/m.test(htmlNB));
+ok('rotation engine is wired at load', /applyRotation\(initialRotation\(\)\)/.test(htmlNB));
+ok('shuffle control is wired', /getElementById\("btn-shuffle"\)\.addEventListener/.test(htmlNB));
 
 // --- Security invariants (CLAUDE.md) ---
 ok('compose URLs encodeURIComponent the subject and body',
@@ -50,8 +53,8 @@ ok('no innerHTML assignment anywhere', !/\.innerHTML\s*=/.test(html));
 ok('no insertAdjacentHTML / document.write', !/insertAdjacentHTML|document\.write/.test(html));
 ok('DOM text set via textContent (not raw HTML)', /\.textContent\s*=/.test(html));
 
-// --- Voice: no em-dash in user-visible text (allowed only in // or /* comment lines) ---
-const visibleEmDash = html.split('\n').some(l => /—|&mdash;/.test(l) && !/^\s*(\/\/|\/\*|\*)/.test(l));
+// --- Voice: no em-dash in user-visible text (block comments already stripped; drop // lines too) ---
+const visibleEmDash = htmlNB.split('\n').some(l => /—|&mdash;/.test(l) && !/^\s*\/\//.test(l));
 ok('no em-dash in user-visible text', !visibleEmDash);
 
 // --- Signup ships dormant; email field was removed ---

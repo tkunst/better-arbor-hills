@@ -376,8 +376,9 @@
   // Their own words (a separate field) are preserved across shuffles on purpose.
   var curRot = -1;
   function applyRotation(i){
-    curRot = i;
     var rot = FIRE.rotations[i];
+    if (!rot) return; // defensive: never blank the tool if the rotations list is emptied by a future edit
+    curRot = i;
     document.getElementById("subject").value = rot.subject;
     document.getElementById("boiler").value = letterBody(rot);
     refresh();
@@ -401,7 +402,7 @@
     var s = document.getElementById("signup");
     if (SIGNUP_FORM_URL && s.hidden) {
       var a = document.createElement("a");
-      a.href = SIGNUP_FORM_URL; a.target = "_blank"; a.rel = "noopener";
+      a.href = SIGNUP_FORM_URL; a.target = "_blank"; a.rel = "noopener noreferrer";
       a.textContent = "Get updates from the monitor";
       s.textContent = "Want to know what the state files next? ";
       s.appendChild(a);
