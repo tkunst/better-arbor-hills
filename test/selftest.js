@@ -24,8 +24,10 @@ ok('no rotation/issue-picker identifiers remain live',
 // --- Paragraph content (traceable-to-record anchors) ---
 ok('names the minimum siting criteria lever',
    html.includes('minimum siting criteria'));
-ok('cites the Bloomberg investigation and gift link',
-   html.includes('Bloomberg Businessweek') && html.includes('BLOOMBERG_GIFT_URL'));
+ok('cites the Bloomberg investigation',
+   html.includes('Bloomberg Businessweek') && html.includes('BLOOMBERG_URL'));
+ok('links the SET evidence brief',
+   html.includes('SET_BRIEF_URL') && html.includes('set-brief-2026-h1.html'));
 ok('cites Full Circle Future',
    html.includes('Too Hot to Ignore') && html.includes('FCF_URL'));
 ok('states the March 14, 2025 AHW272R4 chemistry panel',
