@@ -14,7 +14,11 @@
   html,body{margin:0;height:100%}
   body{display:flex;flex-direction:column;height:100vh;background:var(--bg);color:var(--ink);
     font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
-  header{padding:12px 20px 9px;border-bottom:1px solid var(--line);flex:0 0 auto}
+  header{padding:12px 20px 9px;border-bottom:1px solid var(--line);flex:0 0 auto;display:flex;align-items:center;gap:16px}
+  .head-text{flex:1 1 auto;min-width:0}
+  .cta{flex:0 0 auto;background:#27ae60;color:#fff;font-weight:700;font-size:14px;text-decoration:none;
+    padding:10px 16px;border-radius:8px;white-space:nowrap;box-shadow:0 1px 8px rgba(0,0,0,.4);line-height:1}
+  .cta:hover{background:#2ecc71}
   h1{margin:0;font-size:19px}
   .sub{color:var(--muted);font-size:13px;margin-top:3px;max-width:940px}
   .controls{display:flex;flex-wrap:wrap;gap:8px 16px;padding:9px 20px;border-bottom:1px solid var(--line);
@@ -63,6 +67,7 @@
 </head>
 <body>
 <header>
+  <div class="head-text">
   <h1>Arbor Hills: two persistent thermal clusters</h1>
   <div class="sub">The elevated-temperature wells (&ge;131&deg;F) fall into two persistent clusters:
   <b class="east">an eastern hot core</b> and <b class="west">a western warm field</b>, about 1,020&ndash;1,050&nbsp;ft apart.
@@ -70,6 +75,8 @@
   The <b class="west">western field</b> grows after 2023 but never overtakes it.
   Marker size is the same scale in both clusters: a <b class="east">red</b> and an <b class="west">orange</b> dot of the same diameter are at the same temperature, just in different clusters.
   Temperatures are the operator's own EGLE-filed wellhead readings.</div>
+  </div>
+  <a class="cta" href="../index.html">&#9993;&#65039; Write your commissioners</a>
 </header>
 
 <div class="controls">
