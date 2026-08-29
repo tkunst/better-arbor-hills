@@ -70,9 +70,8 @@
   <div class="head-text">
   <h1>Arbor Hills: two persistent thermal clusters</h1>
   <div class="sub">The elevated-temperature wells (&ge;131&deg;F) fall into two persistent clusters:
-  <b class="east">an eastern hot core</b> and <b class="west">a western warm field</b>, about 1,020&ndash;1,050&nbsp;ft apart.
-  Stepping through the years, the <b class="east">eastern hot core</b> stays the larger and hotter cluster in every year.
-  The <b class="west">western field</b> grows after 2023 but never overtakes it.
+  <b class="east">an eastern hot core</b> and <b class="west">a western warm field</b>. Their nearest wells now sit about 460&nbsp;ft apart.
+  Stepping through the years, the <b class="east">eastern hot core</b> stays the larger and hotter cluster; the <b class="west">western field</b> grows after 2023, narrowing the edge-to-edge gap between them.
   Marker size is the same scale in both clusters: a <b class="east">red</b> and an <b class="west">orange</b> dot of the same diameter are at the same temperature, just in different clusters.
   Temperatures are the operator's own EGLE-filed wellhead readings.</div>
   </div>
@@ -120,7 +119,7 @@
         <span class="big east" id="eN">–</span></div>
       <div class="row"><span><span class="pill dot-west"></span>Western warm field</span>
         <span class="big west" id="wN">–</span></div>
-      <div class="row"><span>Centroid separation</span><span id="sep">–</span></div>
+      <div class="row"><span>Edge-to-edge gap</span><span id="sep">–</span></div>
       <div class="row"><span class="largest" id="largest"></span></div>
     </div>
     <div class="stat">
@@ -132,7 +131,7 @@
       <div><span class="pill dot-east"></span>Eastern cluster (hot core)</div>
       <div><span class="pill dot-west"></span>Western cluster (warm field)</div>
       <div><span class="pill dot-ctx"></span>Other located wells (context)</div>
-      <div>★ label = cluster centroid</div>
+      <div>dashed line = edge-to-edge gap (the nearest wells of the two clusters)</div>
       <div><span style="color:#7fd1ff">blue dot</span> = perimeter air monitor</div>
       <div><span style="color:#7fd1ff">labeled blue dot</span> = school air monitor (Ridge Wood, on school property)</div>
       <div><span style="color:#22e0ef">▭ cyan</span> = GFL-owned parcel (305 ac) &nbsp;·&nbsp; <span style="color:#e05cc8">▭ magenta</span> = Salem Twp-owned (164 ac)</div>
@@ -217,9 +216,17 @@ function build(){
   const shown = RUN.wells.filter(w => (w.cluster==="east"||w.cluster==="west") && wellVal(w,yi) >= thr);
   const eastWells = shown.filter(w=>w.cluster==="east");
   const westWells = shown.filter(w=>w.cluster==="west");
-  const eC = eastWells.length ? centroidOf(eastWells) : null;
+  const eC = eastWells.length ? centroidOf(eastWells) : null;  // cluster-label anchors only
   const wC = westWells.length ? centroidOf(westWells) : null;
-  const sep = (eC && wC) ? Math.round(feetBetween(eC, wC)) : null;
+  // edge-to-edge gap: the nearest east well to the nearest west well
+  let gap = null, gapPair = null;
+  if(eastWells.length && westWells.length){
+    for(const e of eastWells) for(const w of westWells){
+      const d = feetBetween([e.lat,e.lon],[w.lat,w.lon]);
+      if(gap===null || d<gap){ gap=d; gapPair=[[e.lat,e.lon],[w.lat,w.lon]]; }
+    }
+    gap = Math.round(gap);
+  }
   const eN = eastWells.length, wN = westWells.length;
   const largest = eN>=wN ? "east" : "west";
 
@@ -278,25 +285,25 @@ function build(){
   }
   drawHot(westWells,"#f0932b");
   drawHot(eastWells,"#e23d3d");
-  // centroid connector + labels
-  if(eC && wC){
-    const line = L.polyline([[eC[0],eC[1]],[wC[0],wC[1]]],
-      {color:"#ffffff",weight:1.5,opacity:0.7,dashArray:"4 5",interactive:true}).addTo(overlay);
-    if(sep) line.bindTooltip(sep+" ft apart",{className:"sep-label",permanent:true,direction:"center"});
+  // edge-to-edge connector: nearest east well <-> nearest west well
+  if(gapPair){
+    const line = L.polyline(gapPair,
+      {color:"#ffffff",weight:1.5,opacity:0.85,dashArray:"4 5",interactive:true}).addTo(overlay);
+    line.bindTooltip(gap+" ft apart (nearest wells)",{className:"sep-label",permanent:true,direction:"center"});
   }
-  function centroidMark(c,color,cls,label){ if(!c) return;
-    const m = L.circleMarker([c[0],c[1]],{radius:9,color:"#ffffff",weight:2,
-      fillColor:color,fillOpacity:1}).addTo(overlay);
-    m.bindTooltip(label,{className:"centroid-label "+cls,permanent:true,direction:"top",offset:[0,-6]});
+  // cluster name labels (text only, placed at the cluster centre)
+  function clusterLabel(c,cls,label){ if(!c) return;
+    const m = L.circleMarker([c[0],c[1]],{radius:0.1,opacity:0,fillOpacity:0,interactive:false}).addTo(overlay);
+    m.bindTooltip(label,{className:"centroid-label "+cls,permanent:true,direction:"center"});
   }
-  centroidMark(eC,"#e23d3d","east","★ East core");
-  centroidMark(wC,"#f0932b","west","★ West field");
+  clusterLabel(eC,"east","East core");
+  clusterLabel(wC,"west","West field");
 
   // side panel
   document.getElementById("scope").textContent = overall ? `Overall: wells ≥${thr}°F ever` : `${yr}: wells ≥${thr}°F that year`;
   document.getElementById("eN").textContent = eN;
   document.getElementById("wN").textContent = wN;
-  document.getElementById("sep").textContent = sep ? sep+" ft" : "n/a";
+  document.getElementById("sep").textContent = gap ? gap+" ft" : "n/a";
   const lg = document.getElementById("largest");
   lg.textContent = (eN||wN) ? `Largest cluster this view: ${largest==="east"?"Eastern":"Western"}` : "";
   lg.style.color = largest==="east" ? "#e23d3d" : "#f0932b";
