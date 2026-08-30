@@ -43,6 +43,9 @@
   .seg button.on{background:var(--accent);color:#04121e;font-weight:600}
   #copylink{background:transparent;color:var(--accent);border:1px solid var(--line);border-radius:7px;padding:5px 11px;font-size:13px;cursor:pointer}
   #copylink:hover{border-color:var(--accent)}
+  #panelToggle{background:transparent;color:var(--accent);border:1px solid var(--line);border-radius:7px;padding:5px 11px;font-size:13px;cursor:pointer;display:none}
+  #panelToggle:hover{border-color:var(--accent)}
+  #panelToggle.on{background:var(--accent);color:#04121e;font-weight:600}
   input[type=range]{width:230px;accent-color:var(--accent)}
   #yearlab{min-width:66px;font-weight:600;color:var(--ink)}
   .wrap{flex:1 1 auto;display:flex;min-height:0}
@@ -77,6 +80,18 @@
   .monitor-label{background:rgba(10,14,20,.82);border:0;color:#7fd1ff;font-weight:700;font-size:12px;padding:1px 6px;border-radius:5px;white-space:nowrap}
   .leaflet-tooltip.monitor-label::before{display:none}
   .leaflet-tooltip.school-label::before{display:none}
+  /* mobile: stack the CTA below the heading (and above the map);
+     collapse the sidebar into an off-canvas panel toggled by #panelToggle */
+  @media (max-width:640px){
+    header{flex-direction:column;align-items:stretch;gap:10px}
+    .cta{text-align:center}
+    .wrap{position:relative}
+    aside{position:absolute;top:0;right:0;bottom:0;width:min(320px,86vw);
+      transform:translateX(100%);transition:transform .25s ease;z-index:1200;
+      box-shadow:-6px 0 20px rgba(0,0,0,.55)}
+    aside.open{transform:translateX(0)}
+    #panelToggle{display:inline-block}
+  }
 </style>
 <link rel="icon" type="image/svg+xml" href="/better-arbor-hills/favicon.svg">
 <link rel="icon" href="/better-arbor-hills/favicon.ico" sizes="any">
@@ -85,11 +100,8 @@
 <header>
   <div class="head-text">
   <h1>Arbor Hills: two persistent thermal clusters</h1>
-  <div class="sub">The elevated-temperature wells (&ge;131&deg;F) fall into two persistent clusters:
-  <b class="east">an eastern hot core</b> and <b class="west">a western warm field</b>. Their nearest wells now sit about 460&nbsp;ft apart.
-  Stepping through the years, the <b class="east">eastern hot core</b> stays the larger and hotter cluster; the <b class="west">western field</b> grows after 2023, narrowing the edge-to-edge gap between them.
-  Marker size is the same scale in both clusters: a <b class="east">red</b> and an <b class="west">orange</b> dot of the same diameter are at the same temperature, just in different clusters.
-  Temperatures are the operator's own EGLE-filed wellhead readings.</div>
+  <div class="sub">The operator's own EGLE-filed wellhead readings show the elevated-temperature wells (&ge;131&deg;F) falling into two persistent clusters: <b class="east">an eastern hot core</b> and <b class="west">a western warm field</b>.
+  Their nearest wells now sit about 460&nbsp;ft apart, a gap the growing <b class="west">western field</b> narrows after 2023 while the <b class="east">eastern core</b> stays the larger and hotter.</div>
   </div>
   <a class="cta" href="../index.html" target="_blank" rel="noopener">&#9993;&#65039; Write your commissioners</a>
 </header>
@@ -113,8 +125,8 @@
   </div>
   <div class="ctl">Other wells
     <span class="seg" id="ctx">
-      <button data-ctx="on" class="on">On</button>
-      <button data-ctx="off">Off</button>
+      <button data-ctx="on">On</button>
+      <button data-ctx="off" class="on">Off</button>
     </span>
   </div>
   <div class="ctl">Expansion parcel
@@ -123,7 +135,7 @@
       <button data-exp="off">Off</button>
     </span>
   </div>
-  <div class="ctl" style="margin-left:auto"><button id="copylink">🔗 Copy view link</button></div>
+  <div class="ctl" style="margin-left:auto"><button id="panelToggle">Details</button> <button id="copylink">🔗 Copy view link</button></div>
 </div>
 
 <div class="wrap">
@@ -136,7 +148,6 @@
       <div class="row"><span><span class="pill dot-west"></span>Western warm field</span>
         <span class="big west" id="wN">–</span></div>
       <div class="row"><span>Edge-to-edge gap</span><span id="sep">–</span></div>
-      <div class="row"><span class="largest" id="largest"></span></div>
     </div>
     <div class="stat">
       <h3>Hottest in view</h3>
@@ -147,12 +158,7 @@
       <div><span class="pill dot-east"></span>Eastern cluster (hot core)</div>
       <div><span class="pill dot-west"></span>Western cluster (warm field)</div>
       <div><span class="pill dot-ctx"></span>Other located wells (context)</div>
-      <div>dashed line = edge-to-edge gap (the nearest wells of the two clusters)</div>
-      <div><span style="color:#7fd1ff">blue dot</span> = perimeter air monitor</div>
-      <div><span style="color:#7fd1ff">labeled blue dot</span> = school air monitor (Ridge Wood, on school property)</div>
-      <div><span style="color:#22e0ef">▭ cyan</span> = GFL-owned parcel (305 ac) &nbsp;·&nbsp; <span style="color:#e05cc8">▭ magenta</span> = Salem Twp-owned (164 ac)</div>
-      <div><span style="color:#ffd24a">▭ dashed gold</span> = GFL-owned expansion parcel, Section 12 (250 ac of land, not the smaller proposed waste footprint)</div>
-      <div><span style="color:#f0932b">▭ orange</span> = schools (Salem Elementary; Ridge Wood dashed = approx.)</div>
+      <div><span class="pill" style="background:#7fd1ff"></span>perimeter air monitor</div>
       <div>Marker size ∝ peak temperature. A few retired wells sit at their redrill successor's location (noted in hover).</div>
       <div><b>Threshold</b> shows only wells at/above 131 or 145°F (by peak-ever in Overall, or that-year's max in a given year). The <b>ever-hot</b> footer count keeps its definition: reached ≥131°F in any year.</div>
     </div>
@@ -169,7 +175,7 @@ const YEARS = ["Overall","2021","2022","2023","2024","2025","2026"];
 // Run B = actual coordinates + rebore approximation (more located wells in 2021: 15 vs 9;
 // the two-cluster finding holds in both runs).
 const RUN = D.runB;
-let base = "sat", showCtx = true, showExp = true, thr = 131;
+let base = "sat", showCtx = false, showExp = true, thr = 131;
 
 // a well's temperature for the current period: peak-ever (Overall) or that-year's max
 function wellVal(w, yi){ return yi===0 ? w.peak : (w.years[YEARS[yi]] ?? -1); }
@@ -184,7 +190,7 @@ function readHash(){ const o={}; location.hash.replace(/^#/,"").split("&").forEa
 const H = readHash();
 if(+H.t===145) thr=145;
 if(H.b==="street") base="street";
-if(H.ctx==="0") showCtx=false;
+if(H.ctx!=null) showCtx=(H.ctx==="1");
 if(H.exp==="0") showExp=false;
 const yi0 = (H.y!=null && +H.y>=0 && +H.y<=6) ? +H.y : 0;
 function setSeg(id,val){ document.querySelectorAll("#"+id+" button").forEach(b=>{const k=Object.keys(b.dataset)[0]; b.classList.toggle("on", b.dataset[k]===String(val));}); }
@@ -244,22 +250,21 @@ function build(){
     gap = Math.round(gap);
   }
   const eN = eastWells.length, wN = westWells.length;
-  const largest = eN>=wN ? "east" : "west";
 
   overlay.clearLayers();
   // real Section-13 current-landfill parcels (Washtenaw County GIS): GFL-owned + Salem-Township-owned
-  L.polygon(PARCELS.gfl.ring, {color:"#22e0ef",weight:3,opacity:0.95,fill:false})
-    .bindTooltip(`GFL operator-owned parcel, ${PARCELS.gfl.acres} ac`,{sticky:true}).addTo(overlay);
+  L.polygon(PARCELS.gfl.ring, {color:"#22e0ef",weight:3,opacity:0.95,fillColor:"#22e0ef",fillOpacity:0.07})
+    .bindTooltip(`GFL-owned parcel, ${PARCELS.gfl.acres} ac`,{sticky:true}).addTo(overlay);
   L.polygon(PARCELS.salem.ring, {color:"#e05cc8",weight:2,opacity:0.95,fillColor:"#e05cc8",fillOpacity:0.07})
-    .bindTooltip(`Salem Township-owned parcel, ${PARCELS.salem.acres} ac (the eastern hot core straddles this boundary)`,{sticky:true}).addTo(overlay);
+    .bindTooltip(`Salem Township-owned parcel, ${PARCELS.salem.acres} ac`,{sticky:true}).addTo(overlay);
   // Section-12 proposed-expansion parcel (GFL-owned), dashed = not yet built
   if(showExp){
     L.polygon(PARCELS.expansion.ring, {color:"#ffd24a",weight:2.5,opacity:0.95,dashArray:"7 6",fillColor:"#caa020",fillOpacity:0.22})
-      .bindTooltip(`Expansion parcel: GFL-owned land, Section 12, ${PARCELS.expansion.acres} ac (the owned parcel, not the proposed waste footprint)`,{sticky:true}).addTo(overlay);
+      .bindTooltip(`Expansion parcel: GFL-owned land, Section 12, ${PARCELS.expansion.acres} ac`,{sticky:true}).addTo(overlay);
   }
   // schools (orange markup); Ridge Wood dashed = roughly hand-drawn (approx.)
   Object.values(SCHOOLS).forEach(s=>{
-    const label = s.name + (s.approx?" (approx.)":"") + (s.note?`<br>(${s.note})`:"");
+    const label = s.name + (s.note?`<br>(${s.note})`:"");
     L.polygon(s.ring, {color:"#f0932b",weight:2,opacity:0.95,dashArray:s.approx?"6 5":null,
       fillColor:"#f0932b",fillOpacity:0.4})
       .bindTooltip(label, {className:"school-label",permanent:true,direction:"center"}).addTo(overlay);
@@ -288,15 +293,21 @@ function build(){
   });
   // Ridge Wood Elementary H2S air monitor; coordinate read from Google Maps imagery
   // (the small equipment enclosure on the school property, east of the parking lot)
-  L.circleMarker([42.406585, -83.532022], {radius:7, color:"#ffffff", weight:2,
-    fillColor:"#7fd1ff", fillOpacity:1})
-    .bindTooltip("School Air Monitor", {className:"monitor-label", permanent:true, direction:"right", offset:[8,0]}).addTo(overlay);
-  // hot wells
+  tip(L.circleMarker([42.406585, -83.532022], {radius:6, color:"#7fd1ff", weight:1.5,
+    fillColor:"#7fd1ff", fillOpacity:0.5}), "Ridge Wood: school air monitor").addTo(overlay);
+  // hot wells. Label the temperature to match the view: in Overall show the
+  // peak-ever value and the year it peaked; in a year view show THAT year's
+  // reading with that year, so the temperature and the year always agree.
   function drawHot(wells,color){
     wells.forEach(w=>{
+      const yrs = Object.keys(w.years);
+      let pk = yrs.length ? yrs.reduce((a,b)=> w.years[b]>w.years[a] ? b : a) : null;
+      if(pk && w.years[pk] !== w.peak) pk = null;   // peak came from an unlisted year → don't assert one
+      const temp = overall ? `peak ${w.peak}°F${pk?` (${pk})`:""}`
+                           : `${w.years[yr]}°F · ${yr}`;
       tip(L.circleMarker([w.lat,w.lon],{radius:radFor(w.peak),color:"#0b0f14",weight:0.8,
         fillColor:color,fillOpacity:0.9}),
-        `<b>${w.id}</b><br>peak ${w.peak}°F${overall?"":" · "+yr}${w.exact?"":"<br><i>position approx (rebore)</i>"}`).addTo(overlay);
+        `<b>${w.id}</b><br>${temp}${w.exact?"":"<br><i>position approx (rebore)</i>"}`).addTo(overlay);
     });
   }
   drawHot(westWells,"#f0932b");
@@ -307,22 +318,31 @@ function build(){
       {color:"#ffffff",weight:1.5,opacity:0.85,dashArray:"4 5",interactive:true}).addTo(overlay);
     line.bindTooltip(gap+" ft apart (nearest wells)",{className:"sep-label",permanent:true,direction:"center"});
   }
-  // cluster name labels (text only, placed at the cluster centre)
-  function clusterLabel(c,cls,label){ if(!c) return;
-    const m = L.circleMarker([c[0],c[1]],{radius:0.1,opacity:0,fillOpacity:0,interactive:false}).addTo(overlay);
-    m.bindTooltip(label,{className:"centroid-label "+cls,permanent:true,direction:"center"});
+  // cluster name labels (text only, near the cluster centre). Nudge each label
+  // vertically away from the distance box (sitting on the connector midpoint) so
+  // the two never cover it. The box is wide but short, so a vertical clear is the
+  // reliable one; pushing in the away-from-box direction only ever grows the gap,
+  // so they stay clear of it at any zoom.
+  const boxMid = gapPair ? [(gapPair[0][0]+gapPair[1][0])/2, (gapPair[0][1]+gapPair[1][1])/2] : null;
+  function vNudge(c, fallback){          // fallback: -1 = up, +1 = down when level with the box
+    if(!c || !boxMid) return [0,0];
+    const dy = map.latLngToLayerPoint(L.latLng(c[0],c[1])).y
+             - map.latLngToLayerPoint(L.latLng(boxMid[0],boxMid[1])).y;
+    const dir = Math.abs(dy) < 1 ? fallback : Math.sign(dy);
+    return [0, dir * 28];               // 28px > half the box + half the label
   }
-  clusterLabel(eC,"east","East core");
-  clusterLabel(wC,"west","West field");
+  function clusterLabel(c,cls,label,off){ if(!c) return;
+    const m = L.circleMarker([c[0],c[1]],{radius:0.1,opacity:0,fillOpacity:0,interactive:false}).addTo(overlay);
+    m.bindTooltip(label,{className:"centroid-label "+cls,permanent:true,direction:"center",offset:off});
+  }
+  clusterLabel(eC,"east","East core", vNudge(eC,-1));   // level ties: East core goes up
+  clusterLabel(wC,"west","West field", vNudge(wC,+1));  // level ties: West field goes down
 
   // side panel
   document.getElementById("scope").textContent = overall ? `Overall: wells ≥${thr}°F ever` : `${yr}: wells ≥${thr}°F that year`;
   document.getElementById("eN").textContent = eN;
   document.getElementById("wN").textContent = wN;
   document.getElementById("sep").textContent = gap ? gap+" ft" : "n/a";
-  const lg = document.getElementById("largest");
-  lg.textContent = (eN||wN) ? `Largest cluster this view: ${largest==="east"?"Eastern":"Western"}` : "";
-  lg.style.color = largest==="east" ? "#e23d3d" : "#f0932b";
   const pool = [...eastWells.map(w=>({...w,side:"E"})), ...westWells.map(w=>({...w,side:"W"}))]
     .sort((a,b)=>b.peak-a.peak).slice(0,6);
   document.getElementById("top").innerHTML = pool.map(w=>
@@ -353,6 +373,12 @@ document.querySelectorAll("#thr button").forEach(b=>b.addEventListener("click",(
   document.querySelectorAll("#thr button").forEach(x=>x.classList.remove("on"));
   b.classList.add("on"); thr=+b.dataset.thr; build(); writeHash(); }));
 document.getElementById("copylink").addEventListener("click", copyLink);
+const asidePanel = document.querySelector("aside"), panelToggle = document.getElementById("panelToggle");
+panelToggle.addEventListener("click", ()=>{
+  const open = asidePanel.classList.toggle("open");
+  panelToggle.classList.toggle("on", open);
+  panelToggle.textContent = open ? "Hide details" : "Details";
+});
 
 build();
 writeHash();
