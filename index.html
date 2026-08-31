@@ -84,6 +84,9 @@
   #preview { width: 100%; min-height: 150px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
   .note { font-size: .85rem; color: #666; margin-top: 1.5rem; }
   @media (prefers-color-scheme: dark) { .note { color: #9a9a9a; } }
+  .disclosure { border: 1px solid #d8d5cd; background: #f6f4ef; border-radius: 8px; padding: .7rem .9rem; margin: 0 0 1.25rem; font-size: .9rem; color: #444; }
+  .disclosure a { color: #2b5fb3; }
+  @media (prefers-color-scheme: dark) { .disclosure { border-color: #34353a; background: #1c1d20; color: #bdbdbd; } .disclosure a { color: #7fb4ea; } }
   #status { font-size: .9rem; margin-left: .1rem; align-self: center; }
   /* Issue picker */
   .issues { display: grid; gap: .5rem; margin-top: .3rem; }
@@ -108,6 +111,8 @@
 
   <h1>Write the Washtenaw County Commissioners</h1>
   <p class="lede">The nine County Commissioners help decide the Arbor Hills Landfill plan. A short letter from a constituent carries real weight. This letter points to Bloomberg's national investigation and the site's own monitoring record to ask for independent oversight and automatic public disclosure, not assurances that depend on what the operator chooses to submit. Add a line in your own words, then send it to the county commissioners and state legislators at once, from your own email.</p>
+
+  <div class="disclosure">Data visualizations and regulatory records are maintained separately at <a href="https://arborhillsmonitor.org/">Arbor Hills Monitor</a>. The Monitor's datasets and code are reproducible; the analysis and policy requests on this site are advocacy prepared by a resident.</div>
 
   <p id="counter" hidden style="font-weight:600;color:#1d6f42;margin:0 0 1.25rem"></p>
 
@@ -186,7 +191,7 @@
   </div>
 
   <div class="nudge" style="border-left-color:#2a78d6;background:rgba(42,120,214,.08)">
-    <strong>Want to explore the readings yourself?</strong> Open the <a href="wellfield-explorer/">interactive wellfield explorer</a>. Plot any well's wellhead temperature, oxygen, and methane-to-carbon-dioxide ratio over time against the subsurface elevated temperature thresholds, one well at a time or a whole thermal cluster at once. All figures are the operator's own EGLE-filed wellhead readings.
+    <strong>Want to explore the readings yourself?</strong> Open the <a href="https://arborhillsmonitor.org/wellfield-explorer/">interactive wellfield explorer</a> on Arbor Hills Monitor. Plot any well's wellhead temperature, oxygen, and methane-to-carbon-dioxide ratio over time against the subsurface elevated temperature thresholds, one well at a time or a whole thermal cluster at once. All figures are the operator's own EGLE-filed wellhead readings.
   </div>
 
   <p class="note"><strong>Privacy:</strong> this tool runs entirely in your browser. Your letter is sent from your own email account. Nothing you type here is stored or sent anywhere else.</p>
