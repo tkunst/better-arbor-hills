@@ -1,7 +1,7 @@
 # CLAUDE.md — better-arbor-hills
 
 ## What this is
-The resident letter-writing tool for Arbor Hills advocacy: a single static page
+The resident letter-writing tool for Arbor Hills advocacy: a static page
 (`index.html`) that lets a Washtenaw County resident send a letter to the county
 commissioners and state legislators from their own email account. Self-owned,
 zero-backend, deployed by GitHub Pages from `main` at the repo root, live at
@@ -9,15 +9,25 @@ zero-backend, deployed by GitHub Pages from `main` at the repo root, live at
 
 ## Relationship to `arbor-hills-monitor` (read this)
 This repo is **advocacy**. The `arbor-hills-monitor` repo/site is a deliberately
-**neutral, factual** regulatory monitor. Keeping them separate is a standing decision,
-not an accident. **Never** merge them, and **never** link this tool from the monitor
-site. Work here stays here.
+**neutral, factual** regulatory monitor. They are, and stay, **separate repos and
+separate sites** — never merge them. As of 2026-08-31 (Trisha's two-site ruling) they
+are **transparently cross-linked**: the Monitor homepage carries ONE clearly-labeled,
+disclosed "Public comments and policy materials" box pointing to this repo's
+`materials.html`, and this repo carries a reciprocal disclosure pointing to the Monitor.
+That labeled, disclosed cross-reference is the only link between them — **never** an
+advocacy CTA on the monitor, and never anything that blurs the evidence/advocacy line.
+Data visualizations (thermal map, wellfield explorer) now live on the **Monitor**
+(`arbor-hills-monitor/site/`); this repo's old `thermal-map/`, `thermal-map-embed/`, and
+`wellfield-explorer/` are redirects there.
 
 ## Architecture
-Everything lives in `index.html` — HTML, inline CSS, and vanilla JS. **No build step,
-no bundler, no framework, no dependencies, no external scripts or CDNs.** Keep it fully
-self-contained so it works on any static host and can never break from a third-party
-outage. If you add a JS self-test, it may live under `test/` and run with plain Node.
+The letter tool lives entirely in `index.html` — HTML, inline CSS, and vanilla JS. A
+small companion `materials.html` hub (links the public comments, the SET brief, and this
+tool; it is the target of the Monitor's cross-link box) follows the same rules. **No
+build step, no bundler, no framework, no dependencies, no external scripts or CDNs.** Keep
+every page fully self-contained so it works on any static host and can never break from a
+third-party outage. If you add a JS self-test, it may live under `test/` and run with
+plain Node.
 
 ## Tests / the gate (there is no CI)
 This repo has no `pytest`, no GitHub Actions CI. The equivalent-strength gate is:
