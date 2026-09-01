@@ -58,15 +58,13 @@ Push to `main` → GitHub Pages redeploys the repo root. Verify live with
 `curl -s -o /dev/null -w "%{http_code}" https://tkunst.github.io/better-arbor-hills/`
 (expect 200). Nothing under `docs/` or this `CLAUDE.md` affects the served page.
 
-## Embedding (`thermal-map-embed/`)
-`thermal-map-embed/index.html` is a button-free copy of `thermal-map/index.html`
-for iframe embedding on an external site (e.g. a Squarespace blog). It removes the
-"Write your commissioners" CTA and nothing else. It **shares** the data + Leaflet
-assets from `../thermal-map/` (`spatial-data.js`, `parcels.js`, `leaflet.*`), so a
-data rebuild in `thermal-map/` auto-propagates to the embed with no edit. The one
-thing that is duplicated is the presentation code (inline CSS + the map `<script>`):
-if you change the map's styling or logic in `thermal-map/index.html`, mirror it into
-`thermal-map-embed/index.html`. Embed URL: `https://tkunst.github.io/better-arbor-hills/thermal-map-embed/`.
+## Thermal map + embed — RETIRED (redirect to the Monitor)
+The thermal map now lives on **Arbor Hills Monitor**. `thermal-map/index.html` and
+`thermal-map-embed/index.html` are canonical + meta-refresh **redirects** to
+`https://arborhillsmonitor.org/thermal-map/` and `/thermal-map-embed/`; the local
+Leaflet assets (`leaflet.*`, `parcels.js`, `spatial-data.js`, `images/`) were removed.
+Edit and rebuild the map in the `arbor-hills-monitor` repo (`site/thermal-map/`), not
+here. (The wellfield explorer moved the same way — see the Monitor's `site/`.)
 
 ## Forbidden
 - No backend code, secrets, or credentials committed.
