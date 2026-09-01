@@ -1,0 +1,28 @@
+name: links
+
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "**/*.html"
+      - .github/lychee.toml
+      - .github/workflows/links.yml
+  push:
+    branches: [main]
+    paths:
+      - "**/*.md"
+      - "**/*.html"
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --config .github/lychee.toml
+            './**/*.md'
+            './**/*.html'
+          fail: true
