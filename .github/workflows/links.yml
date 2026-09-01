@@ -22,6 +22,7 @@ jobs:
         with:
           args: >-
             --no-progress
+            --root-dir ${{ github.workspace }}
             --config .github/lychee.toml
             './**/*.md'
             './**/*.html'
