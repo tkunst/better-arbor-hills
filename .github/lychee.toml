@@ -1,0 +1,17 @@
+# Treat these as success even if unreachable from CI.
+exclude = [
+  "^/",          # root-absolute links (e.g. /favicon.svg) — correctness depends on the
+                 # deployment base (project path today, subdomain root after migration),
+                 # not on repo layout, so don't filesystem-check them here.
+  "^file://",
+  "^mailto:",
+]
+
+exclude_path = []
+
+max_retries = 2
+retry_wait_time = 2
+timeout = 20
+
+# Accept these status codes as OK (some sites 403/429 bots).
+accept = ["200..=299", "403", "429"]
