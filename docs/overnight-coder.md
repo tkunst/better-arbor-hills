@@ -23,6 +23,7 @@ one paste, one continuous session that carries the build through to a live deplo
 This loop is **pre-authorized to merge to `main` and push (deploy) without asking**,
 provided every gate in Step 8 passes. That is the whole point of an unattended run. It
 does **not** authorize:
+
 - merging past an **open medium/high security finding** — ever (Step 6 is a hard stop);
 - shipping a **new external integration live** — anything that sends resident data or
   talks to a backend ships **dormant/disabled** (empty config, hidden control) until a
@@ -44,6 +45,7 @@ as this document was in effect and every Step-8 gate was actually met.
 ## Procedure
 
 ### 1. Setup
+
 - `cd` into this repo (`/Volumes/Samsung-Pro-2TB/repos/better-arbor-hills`).
 - `git status` — the check that matters is **uncommitted changes to tracked files**, or an
   in-progress branch that isn't this loop's own prior work; either means stop and leave a
@@ -52,12 +54,14 @@ as this document was in effect and every Step-8 gate was actually met.
 - `git fetch origin`, checkout `main`, `git pull --ff-only` — start from a known-good base.
 
 ### 2. Create a branch
+
 - Check for an existing open branch/PR for this goal (`gh pr list --state open`,
   `git branch -a`) from an interrupted prior run; if one exists, don't start a competing
   second attempt — that's the human's to resolve.
 - Short, descriptive branch name tied to the goal (e.g. `fire-rotation-phase1`). Branch off `main`.
 
 ### 3. Iterate on the goal and its checks
+
 - If the goal is multi-step, use `TaskCreate` to keep a long unattended run legible.
 - **Cap the iteration at roughly 6 write-test-fix cycles.** If it isn't converging by then,
   stop rather than grinding — that's a Step-3 stop (see "What 'stopped for a human' looks
@@ -76,6 +80,7 @@ as this document was in effect and every Step-8 gate was actually met.
   don't sweep in unrelated files.
 
 ### 4. Commit (and optionally open a PR)
+
 - Commit message: explain *why*, not just *what* (match recent commits — `git log -5`).
 - This is a solo repo with no branch protection and no CI, so a PR is **optional** — its
   only value here is legibility. You may `gh pr create` for a readable record, but there is
@@ -84,6 +89,7 @@ as this document was in effect and every Step-8 gate was actually met.
   as the review artifact.
 
 ### 5. Independent code review (a subagent, run locally on the diff)
+
 - **Spawn a fresh subagent** (`code-reviewer` if registered, else `general-purpose`) and
   give it **only** the diff (`git diff main...HEAD`) and the review task — not this session's
   reasoning. That no-context, diff-only read is what makes it independent. Ask for findings
@@ -93,6 +99,7 @@ as this document was in effect and every Step-8 gate was actually met.
 - Record the outcome (a short note in the commit/PR body) so the review is legible later.
 
 ### 6. Security review (a subagent on the diff)
+
 - **Do not rely on the `/security-review` skill for this repo** — that skill's cwd is
   hard-pinned to the Lotext workspace root and cannot target this repo. Instead spawn a
   **security-focused subagent** given the same diff, and ask specifically about: XSS via
@@ -105,7 +112,9 @@ as this document was in effect and every Step-8 gate was actually met.
   round up and escalate** (fail-safe).
 
 ### 7. Convergence loop (3-round cap)
+
 A fix can introduce its own issue, so after applying fixes re-run Steps 5 and 6:
+
 - Re-check → nothing open, no security findings → done, go to Step 8.
 - Re-check → new non-security findings → fix, loop again.
 - Re-check → any medium/high security finding → stop per Step 6, whatever round it is.
@@ -114,6 +123,7 @@ A fix can introduce its own issue, so after applying fixes re-run Steps 5 and 6:
   wrong, not that a 4th round will fix it.
 
 ### 8. Merge and deploy (only reached with zero open items)
+
 - Confirm the JS self-test is green and the browser checklist passed on the latest commit,
   and that Steps 5 and 6 came back clean (or their findings were resolved).
 - Merge to `main`: `git checkout main && git merge --ff-only <branch>` (or
@@ -127,12 +137,15 @@ A fix can introduce its own issue, so after applying fixes re-run Steps 5 and 6:
   is what the human reads first.
 
 ### 9. Backlog housekeeping (only if a backlog fed you)
+
 If the goal came from a tracked backlog, update it (mark done / move to an archive) so the
 next review doesn't have to. If it was an ad-hoc paste, skip this. Best-effort: a failure
 here must never undo the merge — say so in your closing note and stop.
 
 ## What "stopped for a human" looks like
+
 Every stop after Step 2 ends the same way, so there's one place to check:
+
 - If real code exists (even incomplete/failing), commit it as-is, clearly marked WIP in the
   message, push the branch, and open a **draft PR** if one isn't open.
 - If no code survived (a pure feasibility conclusion), commit a short write-up under `docs/`
