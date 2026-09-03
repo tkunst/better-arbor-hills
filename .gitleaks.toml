@@ -1,0 +1,20 @@
+# gitleaks config for better-arbor-hills.
+#
+# Keep the FULL default gitleaks ruleset; allowlist only the Cloudflare Web
+# Analytics beacon token. That token is a PUBLIC, client-side site tag embedded
+# in every page's HTML by design (it ships in view-source to every visitor via
+# the `data-cf-beacon` snippet and is not a credential). gitleaks otherwise
+# flags its 32-hex string under the generic `generic-api-key` rule.
+#
+# Scope is deliberately narrow: the allowlist matches only lines containing the
+# `data-cf-beacon=` snippet, so every other secret rule stays fully active.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Cloudflare Web Analytics beacon token (public client-side tag, not a secret)"
+regexTarget = "line"
+regexes = [
+  '''data-cf-beacon=''',
+]
