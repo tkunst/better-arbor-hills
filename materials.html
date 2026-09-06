@@ -31,6 +31,19 @@
   .soon { color: #888; font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; }
   .disclosure { border: 1px solid #d8d5cd; background: #f6f4ef; border-radius: 8px; padding: .75rem .95rem; margin: 1.75rem 0 0; font-size: .9rem; color: #444; }
   @media (prefers-color-scheme: dark) { .disclosure { border-color: #34353a; background: #1c1d20; color: #bdbdbd; } }
+  .cta { display: block; border: 2px solid #1d6f42; background: #edf5ef; border-radius: 12px; padding: 1.05rem 1.25rem; margin: 0 0 1.7rem; text-decoration: none; color: inherit; transition: background .15s ease, box-shadow .15s ease; }
+  .cta:hover { background: #e2efe7; box-shadow: 0 3px 12px rgba(29,111,66,.16); }
+  .cta .cta-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #1d6f42; margin: 0 0 .3rem; }
+  .cta .cta-title { font-size: 1.28rem; font-weight: 700; color: #1a1a1a; margin: 0; line-height: 1.25; }
+  .cta .arrow { color: #1d6f42; }
+  .cta .cta-sub { font-size: .95rem; color: #3f5a48; margin: .35rem 0 0; }
+  @media (prefers-color-scheme: dark) {
+    .cta { border-color: #3f9e6b; background: #15241b; }
+    .cta:hover { background: #1a2c21; }
+    .cta .cta-eyebrow, .cta .arrow { color: #6fd39c; }
+    .cta .cta-title { color: #f0f0f0; }
+    .cta .cta-sub { color: #9db3a5; }
+  }
 </style>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -41,6 +54,12 @@
 
   <h1>Public comments and policy materials</h1>
   <p class="lede">Public comments, evidence briefs, and proposed policy protections on the Arbor Hills Landfill, prepared by Trisha Kunst, a resident living less than one mile from the proposed expansion border. These materials express the author's views. The underlying regulatory records, datasets, and data visualizations are maintained separately at <a href="https://arborhillsmonitor.org/">Arbor Hills Monitor</a>.</p>
+
+  <a class="cta" href="index.html">
+    <div class="cta-eyebrow">Take action now</div>
+    <div class="cta-title">Write your commissioners <span class="arrow">&rarr;</span></div>
+    <div class="cta-sub">Send a letter to the county commissioners and state legislators, straight from your own email, in one click.</div>
+  </a>
 
   <ul class="materials">
     <li>
@@ -62,10 +81,6 @@
     <li>
       <div class="t">Proposed minimum siting protections <span class="soon">Coming soon</span></div>
       <div class="d">A proposed set of temperature-monitoring and subsurface-event protections for the Materials Management Plan's minimum siting criteria.</div>
-    </li>
-    <li>
-      <div class="t"><a href="index.html">Write your commissioners</a></div>
-      <div class="d">A one-click tool to send a letter to the county commissioners and state legislators from your own email.</div>
     </li>
   </ul>
 
