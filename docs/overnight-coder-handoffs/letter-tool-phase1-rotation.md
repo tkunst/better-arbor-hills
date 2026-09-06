@@ -19,7 +19,7 @@ signup. Ship it live and correct so Trisha can email her Washtenaw friends the l
 - **Deadline: ~7:00pm ET today (2026-08-23).**
 - **"Send tonight" = Trisha personally emails her friends the tool's LINK.** The tool sends
   nothing itself. So the only thing that gates 7pm is: the tool is **live, correct, and not
-  embarrassing** at <https://tkunst.github.io/better-arbor-hills/>.
+  embarrassing** at <https://policy.arborhillsmonitor.org/>.
 - **Done = the Critical Path below is live, on the starter content in §Content.** It does
   NOT need Trisha's expanded content or any signup backend — those are non-blocking.
 

@@ -6,7 +6,7 @@ The resident letter-writing tool for Arbor Hills advocacy: a static page
 (`index.html`) that lets a Washtenaw County resident send a letter to the county
 commissioners and state legislators from their own email account. Self-owned,
 zero-backend, deployed by GitHub Pages from `main` at the repo root, live at
-**<https://tkunst.github.io/better-arbor-hills/>**.
+**<https://policy.arborhillsmonitor.org/>**.
 
 ## Relationship to `arbor-hills-monitor` (read this)
 
@@ -75,7 +75,7 @@ never provisions a backend or holds a secret.
 ## Deploy
 
 Push to `main` → GitHub Pages redeploys the repo root. Verify live with
-`curl -s -o /dev/null -w "%{http_code}" https://tkunst.github.io/better-arbor-hills/`
+`curl -s -o /dev/null -w "%{http_code}" https://policy.arborhillsmonitor.org/`
 (expect 200). Nothing under `docs/` or this `CLAUDE.md` affects the served page.
 
 ## Thermal map + embed — RETIRED (redirect to the Monitor)

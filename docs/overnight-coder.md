@@ -130,7 +130,7 @@ A fix can introduce its own issue, so after applying fixes re-run Steps 5 and 6:
   `gh pr merge <n> --rebase --delete-branch` if you opened a PR — always pass an explicit
   merge method so an unattended run never hangs on a prompt). Then `git push`.
 - **Verify the deploy live:** GitHub Pages redeploys the root on push. Confirm
-  `curl -s -o /dev/null -w "%{http_code}" https://tkunst.github.io/better-arbor-hills/`
+  `curl -s -o /dev/null -w "%{http_code}" https://policy.arborhillsmonitor.org/`
   returns 200 and the page reflects the change (allow a minute for CDN propagation; retry).
 - Leave a short closing note (commit body or PR comment): what shipped, anything still gated
   behind a dormant flag / manual step a human must do, and any residual risk accepted. This
