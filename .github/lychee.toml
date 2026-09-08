@@ -5,6 +5,11 @@ exclude = [
                  # not on repo layout, so don't filesystem-check them here.
   "^file://",
   "^mailto:",
+  # legislature.mi.gov serves a cert chain that lychee's rustls client rejects as
+  # UnknownIssuer, while curl/browsers (system CA bundle) trust it fine (verified
+  # HTTP 200, ssl_verify_result=0). These are stable statutory permalinks lychee
+  # cannot check reliably, so exclude the host rather than fail CI on a TLS quirk.
+  'legislature\.mi\.gov',
 ]
 
 exclude_path = []
