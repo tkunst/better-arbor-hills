@@ -12,6 +12,8 @@ on:
     paths:
       - "**/*.md"
       - "**/*.html"
+      - .github/lychee.toml
+      - .github/workflows/links.yml
 
 jobs:
   lychee:
