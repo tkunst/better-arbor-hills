@@ -24,16 +24,22 @@ ok('no rotation/issue-picker identifiers remain live',
 // --- Paragraph content (traceable-to-record anchors) ---
 ok('names the minimum siting criteria lever',
    html.includes('minimum siting criteria'));
-ok('cites the Bloomberg investigation',
-   html.includes('Bloomberg Businessweek') && html.includes('BLOOMBERG_URL'));
-ok('links the SET evidence brief',
-   html.includes('SET_BRIEF_URL') && html.includes('set-brief-2026-h1.html'));
-ok('cites Full Circle Future',
-   html.includes('Too Hot to Ignore') && html.includes('FCF_URL'));
-ok('states the March 14, 2025 AHW272R4 chemistry panel',
-   html.includes('March 14, 2025') && html.includes('AHW272R4') && html.includes('177 degrees F'));
-ok('the independent-review condition requires county/state selection and payment, not the operator',
-   html.includes('selected, retained and paid directly by Washtenaw County or the State of Michigan'));
+ok('cites the March 14, 2025 AHW272R4 177 degree F wellhead temperature reading',
+   html.includes('March 14, 2025') && html.includes('AHW272R4') &&
+   html.includes('177°F') && html.includes('wellhead temperature'));
+ok('states the 180 degree F HOV compliance-classification gap',
+   html.includes('180°F Higher Operating Value') &&
+   html.includes('not classified as a temperature exceedance'));
+ok('lists the three requested minimum-criteria protections',
+   html.includes('Continuous wellhead monitoring') &&
+   html.includes('regardless of an approved HOV') &&
+   html.includes('Subsurface Elevated-Temperature and Smolder Prevention and Response Plans'));
+ok('links the proposed-protections page and the Part 115 minimum-criteria brief',
+   html.includes('https://arborhillsmonitor.org/proposed-protections/') &&
+   html.includes('https://policy.arborhillsmonitor.org/mmp-minimum-criteria-brief.html'));
+ok('states EGLE must independently determine MMP consistency (the independent-oversight ask)',
+   html.includes('independently determine whether a proposed facility is consistent') &&
+   html.includes('MCL 324.11585'));
 
 // --- Loader: the single letter is wired at load ---
 ok('loadLetter() sets subject + boiler from the fixed constants',
