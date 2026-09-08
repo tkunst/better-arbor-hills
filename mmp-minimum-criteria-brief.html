@@ -1,0 +1,306 @@
+<!doctype html>
+<!--
+  PART 115 MMP MINIMUM-CRITERIA BRIEF (policy subdomain).
+  Converted faithfully from Trisha Kunst's discussion brief:
+  Lotext documents/arbor-hills/arbor-hills-article-ideas/Michigan_MMP_Minimum_Criteria_Textual_Case.md
+  Prepared September 8, 2026.
+
+  Self-contained static page, no build step, matches this repo's architecture (see CLAUDE.md):
+  everything in one file, no external JS/CSS/fonts, works on any static host.
+
+  This is NOT the letter tool (index.html) and does not touch it. Separate page, separate URL:
+  https://policy.arborhillsmonitor.org/mmp-minimum-criteria-brief.html
+
+  VOICE: no em-dashes (Arbor Hills voice guide). Source em-dashes rendered as " -- ".
+  SOURCE FIDELITY: the legal analysis, citations, and hedges are reproduced verbatim from the
+  source brief; only formatting (markdown -> HTML), dash style, and the title/subtitle wording
+  (per Trisha's page-title direction) were changed. Every checkable claim traces to the source.
+  This page is a durable legal analysis, not a dated public-comment submission; the preparation
+  date and any later revision date appear on the page itself, not in the URL.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why MMP Minimum Siting Criteria Need Not Be Limited to Geography · Arbor Hills</title>
+<meta name="description" content="A textual and structural analysis of Michigan Part 115: why a county Materials Management Plan's minimum siting criteria need not be limited to geography, how EGLE must apply the applicable MMP during permit and license review, and where county planning authority ends and state regulatory authority begins.">
+<meta name="robots" content="index,follow">
+<!-- Social share preview. No representative image for a text brief; use summary card, omit og:image. -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://policy.arborhillsmonitor.org/mmp-minimum-criteria-brief.html">
+<meta property="og:title" content="Why MMP Minimum Siting Criteria Need Not Be Limited to Geography">
+<meta property="og:description" content="A textual and structural analysis of Michigan Part 115.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Why MMP Minimum Siting Criteria Need Not Be Limited to Geography">
+<meta name="twitter:description" content="A textual and structural analysis of Michigan Part 115.">
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0; padding: 1.5rem; background: #fbfaf7; color: #1a1a1a;
+  }
+  @media (prefers-color-scheme: dark) { body { background: #17181a; color: #e9e9e9; } }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  a { color: #1d5fb3; }
+  @media (prefers-color-scheme: dark) { a { color: #6fa8f5; } }
+
+  .topnav { font-size: .9rem; margin: 0 0 1.2rem; }
+  .kicker { font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #1d6f42; margin: 0 0 .4rem; }
+  @media (prefers-color-scheme: dark) { .kicker { color: #4fbf80; } }
+  h1 { font-size: 1.8rem; margin: .1rem 0 .35rem; line-height: 1.22; }
+  .subtitle { font-size: 1.12rem; color: #444; margin: 0 0 .8rem; font-weight: 600; }
+  @media (prefers-color-scheme: dark) { .subtitle { color: #c4c4c4; } }
+  .meta { font-size: .88rem; color: #666; margin: 0 0 .3rem; }
+  .byline { font-size: .85rem; color: #666; margin: 0 0 1.4rem; }
+  @media (prefers-color-scheme: dark) { .meta, .byline { color: #999; } }
+
+  h2 { font-size: 1.32rem; margin: 2.4rem 0 .5rem; line-height: 1.3; border-top: 1px solid #e4e1d8; padding-top: 1.5rem; }
+  @media (prefers-color-scheme: dark) { h2 { border-top-color: #333; } }
+  h3 { font-size: 1.1rem; margin: 1.8rem 0 .4rem; line-height: 1.32; }
+  h4 { font-size: .98rem; margin: 1.3rem 0 .3rem; color: #b3411f; }
+  @media (prefers-color-scheme: dark) { h4 { color: #e0895f; } }
+  p { margin: 0 0 1rem; }
+  ul, ol { margin: 0 0 1rem; padding-left: 1.3rem; }
+  li { margin: 0 0 .5rem; }
+  strong { font-weight: 700; }
+
+  blockquote { margin: 1rem 0; padding: .7rem 1.1rem; border-left: 3px solid #cbb96a; background: #fdf9ec; border-radius: 6px; font-style: italic; }
+  @media (prefers-color-scheme: dark) { blockquote { border-left-color: #6a5f2a; background: #201d12; } }
+
+  .callout { display: block; border: 1px solid #cdb37f; background: #fdf6e8; border-radius: 10px; padding: .85rem 1.1rem; margin: 1.6rem 0; text-decoration: none; color: inherit; }
+  .callout:hover { background: #f8edd6; }
+  .callout .eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #b3411f; margin: 0 0 .25rem; }
+  .callout .title { font-size: 1.05rem; font-weight: 700; color: #1d5fb3; }
+  @media (prefers-color-scheme: dark) {
+    .callout { border-color: #6a5a34; background: #241f13; }
+    .callout:hover { background: #2c2617; }
+    .callout .eyebrow { color: #e0895f; }
+    .callout .title { color: #6fa8f5; }
+  }
+
+  .formulation { margin: 1.2rem 0; }
+  .formulation .flabel { font-weight: 700; margin: 0 0 .3rem; }
+
+  .authorities li { font-size: .95rem; }
+
+  .pagenav { border-top: 1px solid #e4e1d8; margin-top: 2.6rem; padding-top: 1.2rem; }
+  @media (prefers-color-scheme: dark) { .pagenav { border-top-color: #333; } }
+  .pagenav .kicker { margin-bottom: .6rem; }
+  .pagenav ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .5rem .9rem; }
+  .pagenav li { margin: 0; }
+
+  .footer-note { font-size: .85rem; color: #666; margin-top: 2.2rem; border-top: 1px solid #e4e1d8; padding-top: 1rem; font-style: italic; }
+  @media (prefers-color-scheme: dark) { .footer-note { color: #999; border-top-color: #333; } }
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e2f695d2d7d14823ae0e87745a56a750"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<div class="wrap">
+
+  <p class="topnav"><a href="materials.html">&larr; All policy materials</a></p>
+
+  <p class="kicker">Part 115 &middot; Materials Management Plans</p>
+  <h1>Why MMP Minimum Siting Criteria Need Not Be Limited to Geography</h1>
+  <p class="subtitle">A textual and structural analysis of Michigan Part 115</p>
+  <p class="meta">Discussion brief for counsel, legislators, and policy staff. Prepared September 8, 2026.</p>
+  <p class="byline">by Trisha Kunst, a resident living less than one mile from the proposed expansion border</p>
+
+  <a class="callout" href="https://arborhillsmonitor.org/proposed-protections/" target="_blank" rel="noopener">
+    <div class="eyebrow">The concrete proposal this brief supports</div>
+    <div class="title">View the proposed minimum siting protections &rarr;</div>
+  </a>
+
+  <h2>Question presented</h2>
+  <p>Does Part 115 of Michigan's Natural Resources and Environmental Protection Act limit a county Materials Management Plan's "minimum siting criteria" to maps, setbacks, zoning, and other purely geographic rules? Or may an MMP also require objective, facility-specific design and performance commitments -- such as monitoring capability, emergency planning, and corrective-action protocols -- as conditions for finding a proposed landfill or landfill expansion consistent with the plan?</p>
+
+  <h2>Short answer</h2>
+  <p>The better reading is that Part 115 does <strong>not</strong> confine minimum siting criteria to geography. The statute requires every locally prepared MMP to contain a siting process with "a set of minimum criteria," but it does not modify that phrase with "geographic," "locational," "zoning," or a closed list of permissible subjects. It then makes satisfaction of those criteria part of the legal test for whether a proposed facility is consistent with the MMP. For a facility requiring a construction permit or operating license, EGLE must independently evaluate that consistency during its permit or license review.</p>
+  <p>That structure supports objective, facility-specific conditions tied to the proposed <strong>development</strong> -- including the design, equipment, plans, and enforceable commitments through which the facility will be constructed and safely operated. The fact that a criterion is more protective or adds a requirement beyond a statewide floor does not, by itself, create a conflict. Michigan conflict-preemption doctrine distinguishes an additional compatible condition from a rule that forbids what state law affirmatively permits or authorizes what state law forbids.</p>
+  <p>There is an important boundary. Additivity is not a complete answer by itself. A county must still act within the authority Part 115 delegates, and a criterion must have a genuine relationship to siting or development. The strongest formulation is therefore not that the county will inspect, direct, or punish ongoing landfill operations. It is that an applicant must demonstrate, before receiving a consistency determination for a new landfill or expansion, that the proposed development incorporates specified objective protections, with EGLE retaining permitting, technical review, inspection, and enforcement authority.</p>
+  <p>No reported Michigan appellate decision located as of this writing construes the scope of the new MMP minimum-criteria provisions enacted by 2022 PA 250. The position is therefore a substantial textual argument, not a settled judicial holding.</p>
+
+  <h2>The statutory architecture</h2>
+  <p>The relevant provisions form a coordinated decision system:</p>
+  <ol>
+    <li><strong>Local plan preparation.</strong> Each county must have an approved MMP. A local planning committee directs preparation of the plan and must identify "relevant local materials management policies and priorities." The designated planning agency prepares the plan under that direction. MCL 324.11571, 324.11573, and 324.11574.</li>
+    <li><strong>A mandatory siting process with minimum criteria.</strong> Every MMP must include a siting process, MCL 324.11578(1)(r), and "[a]n MMP shall include a siting process with a set of minimum criteria for the purposes of section 11585(3)," MCL 324.11579(1).</li>
+    <li><strong>Local and state consistency determinations.</strong> For a facility that is not automatically consistent, the CAA or other entity named in the MMP and EGLE must determine that the MMP authorizes that facility type, that the facility followed the procedure and met the minimum criteria, and that it either obtained host-community approval or met the MMP's supplemental criteria. MCL 324.11585(3)-(4).</li>
+    <li><strong>EGLE must read and apply the applicable MMP during permit and license review.</strong> EGLE "shall determine" whether the facility is consistent with the MMP "through an independent evaluation" as part of its review of an application for registration, approval under a general permit, a construction permit, or an operating license. The applicant must submit documentation of consistency. MCL 324.11585(5). EGLE cannot perform that statutory duty without examining the applicable county MMP, identifying the criteria that govern the proposed facility type, interpreting those criteria, and deciding whether the application satisfies them.</li>
+    <li><strong>The MMP therefore becomes part of EGLE's permit and license decision.</strong> EGLE generally must deny the application unless the applicable MMP has been approved and the facility is consistent with it. A person also may not operate a materials management facility unless the facility has the required state authorization, complies with that authorization, and is consistent with the MMP, subject to stated exceptions. MCL 324.11508(1)-(2). The MMP is not merely background information: it supplies legal criteria that EGLE must be able to understand and apply before issuing the state authorization.</li>
+  </ol>
+  <p>This is not an advisory county wish list. Nor is it a grant of county enforcement jurisdiction over landfills. It is a locally authored, state-approved planning instrument that supplies part of the decisional rule for a state permit or license. The local entity applies it first; EGLE must then read the same MMP and independently apply it to the applicant's documentation. That structure has an important drafting consequence: the MMP's criteria must be sufficiently clear, objective, and administrable for EGLE to determine what they require. Ambiguous criteria invite inconsistent interpretations, unexplained departures, and uneven permit decisions -- the very problems an objective written consistency standard should prevent.</p>
+
+  <h2>Argument</h2>
+
+  <h3>I. The Legislature required "minimum criteria," not "minimum geographic criteria"</h3>
+  <p>The textual starting point is MCL 324.11579(1). The Legislature could have required "minimum geographic criteria," "minimum location criteria," or compliance with zoning and specified setbacks. It did not. It chose the broader phrase "a set of minimum criteria."</p>
+  <p>That omission matters because nearby provisions show that the Legislature knew how to write narrowly when it wanted to do so. MCL 324.11555(5), for example, expressly addresses more restrictive local <strong>location requirements</strong> for certain composting facilities. MCL 324.11578(3) uses precise distance-based distinctions -- two miles for a proposed landfill and one mile for certain other facilities -- when prescribing notice to an adjacent municipality. The Legislature's use of specific locational language in those provisions, but not in MCL 324.11579(1), weighs against silently inserting a geography-only limit into "minimum criteria."</p>
+  <p>The larger consistency section reinforces the point. MCL 324.11585(1) creates a distinct zoning-based route for certain disposal areas that do not require a Part 115 license or permit and for materials-utilization facilities. MCL 324.11585(3) separately creates the minimum-criteria route for a materials management facility that is not automatically consistent. If the latter route meant only ordinary zoning and geography, much of the separate statutory treatment would be duplicative.</p>
+  <p>The word "development" also reaches farther than latitude and longitude. Part 115 repeatedly applies the siting system to a proposed <strong>facility or expansion</strong>. A landfill expansion may remain on the same parcel while changing the footprint, elevation, engineering, capacity, environmental controls, and risk profile. Indeed, the transition provision expressly says proposed landfill expansions must follow the existing plan's siting process until a new MMP is approved. MCL 324.11508(2)(b). A reading that reduces "siting" to choosing a point on a map does not comfortably account for regulation of development at a location already fixed.</p>
+  <p>The construction-permit provisions point in the same direction. MCL 324.11510(2)(d) directs EGLE to review the proposed disposal area's "site, plans, and application," allows a construction permit to contain a stipulation specifically applicable to the "site and operation," and treats an expansion, capacity enlargement, boundary change, or conversion to a different disposal-area type as a new proposal requiring a new construction permit. That provision does not define MMP authority, but it confirms that the statutory concept of proposed landfill development is not exhausted by the parcel's location.</p>
+  <p>Accordingly, "siting" supplies an outer boundary, but not a geography-only definition. A criterion should govern whether and on what development conditions a proposed facility or expansion may be found consistent. Design features, monitoring infrastructure, emergency-response plans, and commitments incorporated into the proposed development can fit that role even though they have consequences after operations begin. Setbacks, buffers, stormwater structures, and gas-control systems also continue to matter after opening; duration does not transform a development condition into an unauthorized county inspection program.</p>
+
+  <h3>II. The statute assigns local authorship and state review, allowing county-by-county variation without transferring EGLE's regulatory role</h3>
+  <p>The division of responsibility appears deliberate.</p>
+  <p>The planning committee must identify "relevant local materials management policies and priorities" and direct the DPA's preparation of the MMP. MCL 324.11573(a), (c). The DPA prepares the plan through consultation with municipalities, facility operators, neighboring counties, and the public. MCL 324.11574. County and municipal approvals precede EGLE's approval, and EGLE must approve a submitted MMP if it complies with Part 115. MCL 324.11575.</p>
+  <p>At the project stage, the CAA or designated entity makes a written consistency determination. MCL 324.11585(3)-(4). EGLE then conducts its own independent evaluation as part of the applicable registration, general-permit, construction-permit, or operating-license review. MCL 324.11585(5). The applicant, not the county, must place consistency documentation in the state application.</p>
+  <p>The necessary implication is that EGLE must consult and apply the <strong>applicable county's approved MMP</strong> when reviewing a covered facility. Those plans need not contain identical criteria. EGLE's January 2026 siting guide confirms that the siting process and criteria "may differ by facility type and/or county" and should be "objective and measurable." The guide also tells planners to "[a]dd additional appropriate criteria as needed." Although guidance is not binding law and does not specifically approve operational standards, it strongly refutes the premise that every county must use a single closed statewide list of factors.</p>
+  <p>This system permits local variation while preserving statewide administration:</p>
+  <ul>
+    <li>the county identifies local priorities and writes objective development-eligibility criteria;</li>
+    <li>EGLE reviews the MMP for compliance with Part 115 before approving it;</li>
+    <li>the local entity makes the initial facility-consistency determination;</li>
+    <li>EGLE independently determines consistency during its own authorization review; and</li>
+    <li>EGLE retains technical permitting, licensing, inspection, corrective-action, and enforcement functions under Part 115.</li>
+  </ul>
+  <p>That is shared decision architecture, not county usurpation of EGLE's police power.</p>
+
+  <h3>III. An additional compatible criterion is not invalid merely because it is more protective than the statewide floor</h3>
+  <p>MCL 324.11583 states three circumstances in which a local ordinance, law, rule, regulation, policy, or practice is not enforceable. Two are especially relevant: it is unenforceable if it "conflicts with part 115," or if it regulates the "location or development" of a materials management facility and "is not part of or not consistent with" the county MMP.</p>
+  <p>The Legislature thus treated <strong>actual conflict</strong> and <strong>absence from or inconsistency with the MMP</strong> as separate defects. That wording is difficult to square with the categorical proposition that any local provision beyond a state minimum automatically conflicts. If every additional condition were necessarily a conflict, the distinct MMP-consistency route in subsection (b) would do little work.</p>
+  <p>MCL 324.11583 is not, standing alone, an affirmative grant of unlimited regulatory power. But it is important evidence of how the statutory system is meant to operate: inclusion in the MMP removes one express ground of unenforceability, while subsection (a) continues to invalidate a provision that truly conflicts with Part 115.</p>
+  <p>Michigan's modern conflict-preemption decisions support the same distinction. A direct conflict generally exists when local law prohibits what state law permits or permits what state law prohibits. In <em>DeRuiter v Township of Byron</em>, 505 Mich 130 (2020), the Michigan Supreme Court rejected the argument that every additional local condition contradicted a state regulatory statute. The Court explained that local law may "add to the conditions" without prohibiting the activity state law permits, and held that the challenged zoning restriction added to and complemented the state act. See also <em>Michigan Gun Owners, Inc v Ann Arbor Public Schools</em>, 502 Mich 695 (2018) (discussing the distinction between conflict preemption and field preemption).</p>
+  <p>Those decisions do not decide county authority under Part 115; the source and scope of delegated authority still must be shown. Here, however, the delegation is not inferred from silence alone. Part 115 affirmatively requires local plan writers to create minimum criteria, makes those criteria part of the state-law consistency test, and directs EGLE to apply that test. In that setting, a criterion should not be deemed conflicting merely because it demands more than a statewide floor. The proper questions are whether the criterion is within the siting/development function, whether simultaneous compliance is possible, and whether the state statute affirmatively guarantees the applicant the very thing the criterion forbids.</p>
+
+  <h3>IV. Criteria may be tailored to facility type and documented county conditions</h3>
+  <p>MCL 324.11585 repeatedly refers to a "specific facility" or "type of facility." Subsection (2) allows an MMP to identify a specific facility or facility type as automatically consistent. Subsection (3)(a) asks whether the MMP authorizes "that type" of facility to be sited. The statute therefore does not require one uniform set of criteria for every kind of materials management facility.</p>
+  <p>EGLE's January 2026 guide makes the point explicit: "The siting process and criteria may differ by facility type and/or county, if applicable." It also advises that the criteria should be objective and measurable. The guidance is not a judicial construction and does not answer how far a particular performance criterion may go. It is nevertheless the administering agency's published description of a decentralized system in which criteria vary rather than a single statewide checklist.</p>
+  <p>The planning committee's duty to identify relevant <strong>local</strong> materials-management policies and priorities would be oddly constrained if it could respond only to generic map features. Local conditions can include population density, nearby sensitive receptors, hydrogeology, emergency-response resources, cumulative facility burden, documented incidents, and the characteristics of a proposed facility type. The resulting criterion still must address the proposed siting or development and remain compatible with state law, but the factual predicate may be county specific.</p>
+  <p>The Arbor Hills history does not itself establish the scope of MCL 324.11579, but it provides significant risk context. A proposed expansion at a landfill with a documented history of elevated-temperature conditions, regulatory higher-operating-value approvals, nearby receptors, or unusual waste streams presents a different local development question from a greenfield materials-recovery facility elsewhere. Requiring an applicant to address that documented risk in the proposed design and permit package is a rational use of objective, facility-specific criteria -- provided the criterion remains compatible with Part 115 and leaves technical administration to EGLE.</p>
+
+  <h3>V. The Legislature made several facility-specific choices that should not be erased by interpretation</h3>
+  <p>Part 115 repeatedly distinguishes among landfills, municipal solid-waste incinerators, materials-utilization facilities, and particular subtypes. Those distinctions provide some of the strongest evidence that MMP criteria may be tailored by facility type.</p>
+
+  <h4>A. The anti-exclusion rule is written for materials-utilization facilities, not landfills</h4>
+  <p>MCL 324.11579(3) prohibits siting criteria that are more restrictive than state law <strong>if a materials-utilization facility could not be developed anywhere in the planning area under those criteria</strong>. "Materials-utilization facility" is a defined category that includes materials-recovery facilities, composting facilities, anaerobic digesters, and innovative-technology facilities. A landfill is a disposal area, not a materials-utilization facility.</p>
+  <p>The broader defined term "materials management facility" includes disposal areas, materials-utilization facilities, and waste-diversion centers. The Legislature used that broader term throughout MCL 324.11585 when it intended to reach the full universe. Its choice of the narrower "materials-utilization facility" in MCL 324.11579(3) is therefore presumptively meaningful.</p>
+  <p>The same pattern appears in MCL 324.11555(5): a local unit may impose compost-facility location requirements more restrictive than the statutory setbacks, but not requirements so restrictive that a qualifying facility cannot be established. The Legislature did not write a parallel landfill anti-exclusion clause.</p>
+  <p>This does not mean a county may use landfill criteria as a disguised absolute ban. Other legal limits remain, including Part 115's scope, conflict preemption, constitutional constraints, reasonableness, and EGLE's plan-approval review. But a court should not extend a carefully drafted MUF or composting protection to landfills by implication when the Legislature used defined terms and knew how to cover all materials management facilities.</p>
+  <p>Equally important, MCL 324.11579(3) would be largely unnecessary if "more restrictive than state law" always meant "conflicting with state law." The subsection assumes that more-restrictive criteria can exist and prohibits only a defined subset: those that make development of a MUF impossible anywhere in the planning area. Giving that limitation independent work supports the proposition that compatible, more-protective criteria are not categorically forbidden.</p>
+
+  <h4>B. The capacity exemptions are deliberately different</h4>
+  <p>MCL 324.11579(2) says a materials-utilization facility need not be sited if the CAA or DPA demonstrates sufficient available capacity to address the managed materials identified by the MMP.</p>
+  <p>MCL 324.11585(6), by contrast, says a landfill other than a captive Type III landfill -- or a municipal solid-waste incinerator -- need not be sited if the CAA demonstrates through the MMP that the planning area has at least <strong>66 months of available solid-waste disposal capacity</strong>.</p>
+  <p>The Legislature did not use one generic capacity rule. It selected a precise 66-month measure for landfill and incinerator disposal capacity and a different, materials-based sufficiency test for MUFs. The distinction confirms that the siting system is facility-category specific. It also undercuts an argument that the county must apply one undifferentiated set of criteria to every facility type.</p>
+
+  <h4>C. EGLE's substitute-plan provision preserves locally chosen additions</h4>
+  <p>If the local planning process fails and EGLE prepares the MMP, MCL 324.11580(2) says the state-prepared plan "need not contain" a requirement that a proposed facility meet <strong>additional siting criteria</strong> or obtain host-community approval under MCL 324.11585(3)(c). This provision does not itself define the permissible content of minimum criteria. It does, however, show that the Legislature expected locally produced plans to contain discretionary, locally chosen layers that a state-prepared substitute plan may omit.</p>
+  <p>That choice makes sense only if local plan preparation has substantive significance. The MMP is not merely a county clerk's reproduction of statewide licensing rules.</p>
+
+  <h4>D. Minimum criteria and supplemental criteria perform different jobs</h4>
+  <p>Under MCL 324.11585(3), a nonautomatic facility must meet the MMP's minimum criteria in all events. It must then either obtain host-community approval or meet the plan's supplemental criteria for facilities lacking such approval.</p>
+  <p>The distinction is important for drafting. A protection intended to apply to every proposed landfill or expansion belongs in the minimum criteria, not solely in the supplemental criteria. Otherwise, host approval could substitute for that protection. The Legislature's separate treatment of the two sets also shows that "minimum criteria" should not be read as an empty procedural label.</p>
+
+  <h3>VI. The strongest legal form is a development condition, not a parallel county operating code</h3>
+  <p>The principal counterargument is serious. Part 115 extensively regulates landfill engineering, construction, licensing, monitoring, inspections, corrective action, and enforcement. Older Michigan cases recognized the pervasiveness of the state solid-waste scheme and, in some contexts, preempted local attempts to regulate landfill operations. See, e.g., <em>Southeastern Oakland County Incinerator Authority v Avon Township</em>, 144 Mich App 39 (1985).</p>
+  <p>At the same time, <em>County of Saginaw v John Sexton Corp of Michigan</em>, 232 Mich App 202 (1998), rejected total field preemption of a county landfill surcharge. Applying the predecessor statute, the court observed that supplementary regulation adapted to local conditions may survive when it does not interfere with the state scheme. The decision also recognized that landfill locations and features differ and that local regulatory needs may vary. Its discussion of the predecessor provisions is instructive, but it did not construe the new MMP sections enacted in 2022.</p>
+  <p>These authorities suggest a drafting line:</p>
+  <div class="formulation">
+    <p class="flabel">Legally stronger formulation</p>
+    <blockquote>Before a new Type II landfill or a horizontal or vertical expansion is determined consistent with the MMP, the applicant must demonstrate that the proposed development and its application to EGLE include [specified objective monitoring infrastructure, professionally prepared response plans, performance commitments, and reporting capabilities]. Those elements must be incorporated into the facility's EGLE-approved engineering plans, construction permit, operating license, or other enforceable state authorization, as applicable.</blockquote>
+  </div>
+  <div class="formulation">
+    <p class="flabel">Legally weaker formulation</p>
+    <blockquote>The county shall continuously inspect landfill operations, decide when technical corrective action is required, prescribe the operator's response, issue operational violations, and impose penalties independent of EGLE.</blockquote>
+  </div>
+  <p>The first formulation uses the MMP for the role the statute expressly gives it: deciding whether a proposed development is eligible for a consistency finding. It makes EGLE's existing permit process the vehicle for technical review and enforcement. The second creates a parallel local environmental regulatory program and therefore invites the strongest field-preemption and delegated-authority challenges.</p>
+  <p>Corrective-action deadlines require particular care. A criterion may require the applicant to submit an objective, professionally supported response protocol with stated triggers, escalation steps, and outer timeframes as part of the proposed development package. It is more vulnerable if it authorizes a county body to choose technical remedies in real time or to supersede an EGLE-approved plan.</p>
+
+  <h3>VII. The geography-only reading leaves too much statutory language without useful work</h3>
+  <p>A geography-only interpretation creates several structural problems:</p>
+  <ul>
+    <li>It adds a word -- "geographic" -- that MCL 324.11579(1) does not contain.</li>
+    <li>It minimizes "development," especially as applied to expansions at an existing location.</li>
+    <li>It blurs the distinction between MCL 324.11585(1)'s zoning route and subsection (3)'s minimum-criteria route.</li>
+    <li>It gives insufficient effect to the Legislature's use of "specific facility or type of facility" and its category-specific capacity and anti-exclusion provisions.</li>
+    <li>It makes the MUF-only limitation in MCL 324.11579(3) difficult to explain, because a blanket rule against all more-protective criteria would already do the work.</li>
+    <li>It diminishes the planning committee's statutory duty to identify local materials-management policies and priorities.</li>
+    <li>It weakens the significance of EGLE's mandatory independent consistency review; a simple parcel-and-zoning check would not require the more elaborate facility-specific structure the Legislature enacted.</li>
+  </ul>
+  <p>Michigan courts ordinarily read a statute as a whole, give effect to every word and clause, and avoid making provisions surplusage. They also start with the text rather than inserting an unstated limitation. Applied here, those principles favor a bounded but substantive reading of "minimum criteria."</p>
+
+  <h2>Responses to the principal counterarguments</h2>
+
+  <h3>"Siting means location, so the criteria must be spatial"</h3>
+  <p>"Siting" cannot be read in isolation from "development," "expansion," and the multi-step consistency system. The guide itself describes the siting process as deciding whether a proposed facility <strong>or expansion</strong> is allowed to be developed. Some criteria will naturally be spatial, but neither the statute nor EGLE's guidance makes the examples exclusive.</p>
+
+  <h3>"Technical subjects belong exclusively to EGLE"</h3>
+  <p>EGLE retains technical administration. A criterion can define what an applicant must include in a proposed development without making the county the technical regulator. The legal question is not whether the subject has technical content; setbacks, liners, gas systems, groundwater controls, and emergency infrastructure all do. The better question is who reviews, incorporates, and enforces the requirement. Routing it through EGLE's permit or license preserves the statutory allocation of authority.</p>
+
+  <h3>"Any rule stricter than state law conflicts with Part 115"</h3>
+  <p>That is too broad. Michigan conflict-preemption doctrine does not equate every additional requirement with contradiction, and Part 115 itself expressly contemplates some requirements "more restrictive than state law" before limiting only a particular exclusionary result for MUFs. The more accurate rule is: a nonconflicting additional requirement is not invalid <strong>merely because</strong> it adds protection, but it must still fall within delegated MMP authority and must not frustrate an affirmative state authorization or occupy a field reserved exclusively to EGLE.</p>
+
+  <h3>"MCL 324.11583 is only a preemption clause, not a grant of power"</h3>
+  <p>Correct -- but incomplete. The affirmative authority comes from MCL 324.11573, 324.11578, 324.11579, and 324.11585: local priority setting, mandatory plan preparation, required minimum criteria, and consistency determinations. MCL 324.11583 then identifies limits. Reading those provisions together avoids treating a negative preemption clause as the sole source of authority while still giving its distinction between conflict and MMP inconsistency real effect.</p>
+
+  <h3>"EGLE can override any county determination"</h3>
+  <p>EGLE must independently evaluate consistency; it is not bound by the CAA's conclusion. But that does not make county criteria irrelevant or permit EGLE to disregard an approved MMP. MCL 324.11585(3) requires consistency "as determined by the CAA or other entity specified by the MMP <strong>and by the department</strong>." MCL 324.11585(5) requires the applicant to document consistency, and MCL 324.11508(2) directs EGLE to deny authorization absent an approved plan and a consistent facility. EGLE's independence concerns who decides; it does not erase the criteria to be applied.</p>
+
+  <h3>"Older landfill cases establish total state control"</h3>
+  <p>They establish a real caution against parallel local operational regulation, not a definitive interpretation of the 2022 MMP text. The present Legislature enacted a detailed local-plan/state-approval/state-consistency system after those cases. The new text must be construed on its own terms. Moreover, <em>County of Saginaw</em> rejected total field preemption in a landfill context and recognized room for compatible local measures adapted to local conditions.</p>
+
+  <h2>Recommended drafting guardrails</h2>
+  <p>To maximize legal defensibility, minimum criteria should:</p>
+  <ol>
+    <li><strong>Apply prospectively to a proposed facility or defined expansion.</strong> Tie the requirement to a consistency-triggering development rather than attempting to rewrite the current operating license of an existing facility outside a new application.</li>
+    <li><strong>Identify the covered facility type.</strong> For example, apply elevated-temperature protections specifically to Type II landfills and their horizontal or vertical expansions, not to unrelated composting or recycling facilities.</li>
+    <li><strong>State the local development rationale.</strong> Connect each criterion to documented county conditions: proximity to homes or schools, hydrogeology, prior elevated-temperature events, emergency-response limitations, unusual waste history, or cumulative facility burden.</li>
+    <li><strong>Use objective, measurable terms.</strong> Define thresholds, instruments, data frequency, plan components, professional qualifications, reporting intervals, and completion milestones. Avoid open-ended "satisfactory to the county" language where a technical standard can be stated.</li>
+    <li><strong>Require a demonstration in the application.</strong> The applicant should show that the protection is part of the proposed design, engineering plan, emergency plan, or monitoring system before consistency is granted.</li>
+    <li><strong>Integrate with EGLE authorization.</strong> Require the commitment to be reflected in EGLE-approved plans, permit conditions, license terms, or another state-enforceable instrument to the extent legally available.</li>
+    <li><strong>Preserve EGLE's role.</strong> State expressly that EGLE retains permitting, licensing, inspection, enforcement, and approval of technically appropriate corrective measures under Part 115.</li>
+    <li><strong>Avoid contradiction.</strong> Include a savings clause providing that the criterion will be applied consistently with Part 115 and applicable federal law, and that an irreconcilable conflict will be resolved in favor of controlling law without invalidating the remainder.</li>
+    <li><strong>Build an administrative record.</strong> For each criterion, document its development nexus, technical basis, objective measurability, local need, feasibility, and compatibility with state and federal requirements. Ask EGLE to identify any claimed conflict by exact statutory, regulatory, or permit provision rather than by generalized reference to "state authority."</li>
+  </ol>
+
+  <h2>Questions that merit formal legal or legislative investigation</h2>
+  <p>An attorney, legislative counsel, or the Attorney General should be asked to address the following precise questions:</p>
+  <ol>
+    <li>What textual basis would permit a court to insert "geographic" before "minimum criteria" in MCL 324.11579(1)?</li>
+    <li>What independent role does MCL 324.11585(3)'s minimum-criteria pathway perform if it is limited to the zoning matters already treated separately in subsection (1)?</li>
+    <li>How does a geography-only reading account for proposed vertical or other expansions at an already selected landfill site?</li>
+    <li>Why did the Legislature limit MCL 324.11579(3)'s anti-exclusion rule to the defined category of materials-utilization facilities rather than "materials management facilities," the broader term it used in MCL 324.11585?</li>
+    <li>Why did it enact a landfill-specific 66-month capacity rule in MCL 324.11585(6), but a different sufficiency rule for MUFs in MCL 324.11579(2), if facility-specific treatment is impermissible?</li>
+    <li>Does <em>DeRuiter</em>'s recognition that local law may add compatible conditions apply to a state-approved MMP criterion, particularly where Part 115 expressly makes that criterion part of the state consistency determination?</li>
+    <li>Can a development criterion requiring specified protections to be incorporated into an EGLE permit be distinguished from a county ordinance that separately directs or penalizes ongoing landfill operations?</li>
+    <li>What legal effect should be given to EGLE's own statement that siting criteria may vary "by facility type and/or county" and that planners may add other appropriate criteria?</li>
+    <li>Has EGLE approved any MMP containing nongeographic design, monitoring, emergency-planning, financial, traffic-management, odor-control, or performance criteria? Agency treatment of actual plans may provide useful contemporaneous evidence, even though statutory meaning remains a judicial question.</li>
+  </ol>
+
+  <h2>Conclusion</h2>
+  <p>The strongest textual account of Part 115 is neither "counties may regulate anything" nor "counties may draw only lines on a map." The statute creates a middle position.</p>
+  <p>The Legislature required locally prepared MMPs to contain minimum criteria; directed local bodies to identify local policies and priorities; allowed criteria to operate by facility type; made those criteria part of both local and state consistency decisions; required EGLE to independently apply the applicable MMP during permitting and licensing; and preserved EGLE's ultimate regulatory and enforcement role. It also wrote targeted restrictions for MUFs and composting facilities without extending those same restrictions to landfills, and it adopted different capacity rules for the two categories.</p>
+  <p>Read as a coherent whole, Part 115 permits an MMP to do more than identify permissible geography. It can establish objective, nonconflicting, facility-specific conditions that a proposed landfill or expansion must incorporate to qualify as consistent with the county plan. The safest and most faithful implementation is to write those protections as development-eligibility criteria, supported by a local factual record and carried into EGLE's permit or license -- not as a separate county system for inspecting and policing ongoing landfill operations.</p>
+
+  <h2>Authorities and source materials</h2>
+  <ul class="authorities">
+    <li><a href="https://www.legislature.mi.gov/documents/mcl/pdf/mcl-451-1994-II-3.pdf" target="_blank" rel="noopener">Michigan Legislature, Part 115 of NREPA (official compiled text)</a>, especially MCL 324.11508, 324.11555, and 324.11571-.11585.</li>
+    <li><a href="https://www.legislature.mi.gov/documents/mcl/pdf/mcl-451-1994-II-3-115-11.pdf" target="_blank" rel="noopener">Michigan Legislature, Subpart 11 -- Materials Management Plans</a>.</li>
+    <li><a href="https://www.legislature.mi.gov/Laws/Index?ObjectName=mcl-451-1994-II-3" target="_blank" rel="noopener">Michigan Legislature, Part 115 index</a>.</li>
+    <li><a href="https://legislature.mi.gov/Laws/MCL?objectName=MCL-324-11510" target="_blank" rel="noopener">Michigan Legislature, MCL 324.11510 -- construction-permit review of proposed disposal areas</a>.</li>
+    <li><a href="https://www.michigan.gov/egle/-/media/Project/Websites/egle/Documents/Programs/MMD/Solid-Waste/Planning/Siting-Process-Guide.pdf" target="_blank" rel="noopener">EGLE, <em>A Guide to Developing a Siting Process</em> (January 2026)</a>.</li>
+    <li><a href="https://www.legislature.mi.gov/documents/2021-2022/billanalysis/Senate/pdf/2021-SFA-4454-F.pdf" target="_blank" rel="noopener">Senate Fiscal Agency, <em>Solid Waste Management</em>, analysis of the 2021-2022 bill package</a>. The analysis confirms the county-plan/EGLE-approval structure but does not squarely resolve the permissible substantive breadth of "minimum criteria."</li>
+    <li><a href="https://www.courts.michigan.gov/4ab199/siteassets/publications/msc-bound-volumes/bv_mi505_final.pdf" target="_blank" rel="noopener"><em>DeRuiter v Township of Byron</em>, 505 Mich 130 (2020)</a>.</li>
+    <li><a href="https://law.justia.com/cases/michigan/supreme-court/2018/155196.html" target="_blank" rel="noopener"><em>Michigan Gun Owners, Inc v Ann Arbor Public Schools</em>, 502 Mich 695 (2018)</a>.</li>
+    <li><a href="https://caselaw.findlaw.com/court/mi-court-of-appeals/1261720.html" target="_blank" rel="noopener"><em>County of Saginaw v John Sexton Corp of Michigan</em>, 232 Mich App 202 (1998)</a>.</li>
+    <li><a href="https://www.courts.michigan.gov/4979ac/siteassets/publications/coa-bound-volumes/101-200/bv_miapp144_final.pdf" target="_blank" rel="noopener"><em>Southeastern Oakland County Incinerator Authority v Avon Township</em>, 144 Mich App 39 (1985)</a>.</li>
+  </ul>
+
+  <nav class="pagenav">
+    <p class="kicker">Related</p>
+    <ul>
+      <li><a href="https://arborhillsmonitor.org/proposed-protections/" target="_blank" rel="noopener">Proposed protections &rarr;</a></li>
+      <li><a href="https://www.legislature.mi.gov/documents/mcl/pdf/mcl-451-1994-II-3.pdf" target="_blank" rel="noopener">Part 115 statutory text &rarr;</a></li>
+      <li><a href="https://www.michigan.gov/egle/-/media/Project/Websites/egle/Documents/Programs/MMD/Solid-Waste/Planning/Siting-Process-Guide.pdf" target="_blank" rel="noopener">EGLE siting guidance &rarr;</a></li>
+      <li><a href="materials.html">All policy materials &rarr;</a></li>
+    </ul>
+  </nav>
+
+  <p class="footer-note">This is an advocacy and issue-development brief, not a legal opinion. Counsel should verify the current statutory text, review each proposed criterion word for word, examine any newly approved MMPs and EGLE determinations, and assess county authority, preemption, constitutional limits, and available review procedures before relying on the argument in a formal proceeding.</p>
+
+</div>
+</body>
+</html>
