@@ -44,6 +44,17 @@
     .cta .cta-title { color: #f0f0f0; }
     .cta .cta-sub { color: #9db3a5; }
   }
+  /* Amber "featured" callout for the proposed-protections card. Distinct from the green action CTA. */
+  .cta.cta-alt { border-color: #b0791a; background: #fbf3e1; }
+  .cta.cta-alt:hover { background: #f7ead0; box-shadow: 0 3px 12px rgba(176,121,26,.18); }
+  .cta.cta-alt .cta-eyebrow, .cta.cta-alt .arrow { color: #8a5e12; }
+  .cta.cta-alt .cta-sub { color: #6a5320; }
+  @media (prefers-color-scheme: dark) {
+    .cta.cta-alt { border-color: #cf9f47; background: #241d10; }
+    .cta.cta-alt:hover { background: #2c2415; }
+    .cta.cta-alt .cta-eyebrow, .cta.cta-alt .arrow { color: #e6b869; }
+    .cta.cta-alt .cta-sub { color: #c5ab80; }
+  }
 </style>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -59,6 +70,12 @@
     <div class="cta-eyebrow">Take action now</div>
     <div class="cta-title">Write your commissioners <span class="arrow">&rarr;</span></div>
     <div class="cta-sub">Send a letter to the county commissioners and state legislators, straight from your own email, in one click.</div>
+  </a>
+
+  <a class="cta cta-alt" href="https://arborhillsmonitor.org/proposed-protections/">
+    <div class="cta-eyebrow">Now published</div>
+    <div class="cta-title">Proposed minimum siting protections <span class="arrow">&rarr;</span></div>
+    <div class="cta-sub">Three elevated-temperature protections a resident is asking the county to write into the Materials Management Plan's minimum siting criteria.</div>
   </a>
 
   <ul class="materials">
@@ -77,10 +94,6 @@
     <li>
       <div class="t"><a href="set-brief-2026-h1.html">2026 H1 - SET evidence brief</a></div>
       <div class="d">A resident-assembled brief on the subsurface elevated-temperature record at Arbor Hills, drawing on the operator's own EGLE-filed readings and the published literature.</div>
-    </li>
-    <li>
-      <div class="t">Proposed minimum siting protections <span class="soon">Coming soon</span></div>
-      <div class="d">A proposed set of temperature-monitoring and subsurface-event protections for the Materials Management Plan's minimum siting criteria.</div>
     </li>
   </ul>
 
