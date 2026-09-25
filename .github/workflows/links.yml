@@ -10,7 +10,7 @@ on:
       - .github/lychee.toml
       - .github/workflows/links.yml
   workflow_run:
-    workflows: ["pages build and deployment"]
+    workflows: ["pages-build-deployment"]
     types: [completed]
     branches: [main]
   workflow_dispatch:
