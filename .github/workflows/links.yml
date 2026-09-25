@@ -1,5 +1,7 @@
 name: links
 
+# On main, check links only AFTER GitHub Pages has deployed, so links to a page
+# added in the same push don't 404 before the page exists (2026-09-24).
 on:
   pull_request:
     paths:
@@ -7,19 +9,23 @@ on:
       - "**/*.html"
       - .github/lychee.toml
       - .github/workflows/links.yml
-  push:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
     branches: [main]
-    paths:
-      - "**/*.md"
-      - "**/*.html"
-      - .github/lychee.toml
-      - .github/workflows/links.yml
+  workflow_dispatch:
 
 jobs:
   lychee:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - name: Let the Pages CDN settle
+        if: github.event_name == 'workflow_run'
+        run: sleep 30
       - uses: lycheeverse/lychee-action@v2
         with:
           args: >-
