@@ -1,6 +1,12 @@
 <!doctype html>
 <!--
-  SET EVIDENCE BRIEF (county commissioners), 2026 H1 data update.
+  SET EVIDENCE BRIEF (county commissioners), 2026 H1 data update. VERSION 2 (2026-10-10,
+  Trisha-directed "version 2 updating all graphs and text"): rebuilt on the Oct. 9, 2026
+  wellfield release, which added six earlier operator reports (2021-2024). New record high
+  182.5 F (AHWW16R6, 7/20/2022) replaces the v1 "record high 177 F" claims; the trend line now
+  starts 2021 H1 and is generated from the CSV (phase2/charts/build_setbrief_linechart_svg.py in
+  the Lotext go-live job folder). Version 1 is archived unchanged at set-brief-2026-h1-v1.html.
+  Version-1 header notes follow.
   Converted from Trisha's deck: "Arbor-Hills-SET-Audience-Briefs-2026-H1-Data-Update.pptx"
   (4 slides). Self-contained static page, no build step, matches this repo's architecture
   (see CLAUDE.md): everything in one file, no external JS/CSS/fonts, works on any static host.
@@ -24,20 +30,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arbor Hills SET Evidence · 2026 H1</title>
-<meta name="description" content="Primary-record evidence on the Arbor Hills Landfill overheating event, updated through the 2026 First Semi-Annual WOI report.">
+<title>Arbor Hills SET Evidence · 2026 H1 (Version 2)</title>
+<meta name="description" content="Primary-record evidence on the Arbor Hills Landfill overheating event, updated through the 2026 First Semi-Annual WOI report and the October 2026 wellfield data release.">
 <!-- Social share preview (iMessage / Facebook / X / LinkedIn / Slack). Absolute image URL required. -->
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://policy.arborhillsmonitor.org/set-brief-2026-h1.html">
-<meta property="og:title" content="Arbor Hills SET Evidence · 2026 H1">
-<meta property="og:description" content="Primary-record evidence on the Arbor Hills Landfill overheating event, updated through the 2026 First Semi-Annual WOI report.">
+<meta property="og:title" content="Arbor Hills SET Evidence · 2026 H1 (Version 2)">
+<meta property="og:description" content="Primary-record evidence on the Arbor Hills Landfill overheating event, updated through the 2026 First Semi-Annual WOI report and the October 2026 wellfield data release.">
 <meta property="og:image" content="https://policy.arborhillsmonitor.org/img/bloomberg-national-landfill-map.png">
 <meta property="og:image:width" content="1096">
 <meta property="og:image:height" content="887">
 <meta property="og:image:alt" content="Bloomberg national map of U.S. landfills, highlighting the Arbor Hills Landfill.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Arbor Hills SET Evidence · 2026 H1">
-<meta name="twitter:description" content="Primary-record evidence on the Arbor Hills Landfill overheating event, updated through the 2026 First Semi-Annual WOI report.">
+<meta name="twitter:title" content="Arbor Hills SET Evidence · 2026 H1 (Version 2)">
+<meta name="twitter:description" content="Primary-record evidence on the Arbor Hills Landfill overheating event, updated through the 2026 First Semi-Annual WOI report and the October 2026 wellfield data release.">
 <meta name="twitter:image" content="https://policy.arborhillsmonitor.org/img/bloomberg-national-landfill-map.png">
 <style>
   :root { color-scheme: light dark; }
@@ -151,8 +157,9 @@
 <section class="hero">
   <p class="kicker">Arbor Hills SET Evidence</p>
   <h1>Bloomberg put Arbor Hills on the national map</h1>
-  <p class="lede">Local primary records now extend through June 2026, and show which decisive measurements are still missing.</p>
+  <p class="lede">Local primary records now run from March 2021 through July 2026, and show which decisive measurements are still missing.</p>
   <p class="byline">by Trisha Kunst · resident living less than one mile from the proposed expansion border</p>
+  <p class="source-line" style="margin-top:.2rem">Version 2, October 10, 2026: updated to the October 2026 wellfield data release, which added six earlier operator reports covering 2021 to 2024. Those reports contain the highest wellhead reading on record, so the charts and figures below have changed. <a href="set-brief-2026-h1-v1.html">Version 1 (August 2026)</a> is archived unchanged.</p>
 
   <a class="bloomberg-link" href="https://www.bloomberg.com/features/2026-america-overheating-landfills/" target="_blank" rel="noopener">
     <div class="bloomberg-frame">
@@ -168,12 +175,12 @@
       <p>EGLE identified an Elevated Temperature Landfill event that it said was already impairing the gas-collection system.</p>
     </div>
     <div class="card">
-      <h3>2022–23 · Direct subsurface data</h3>
-      <p>Down-hole profiling reached 178.5°F at 60 feet, much hotter than the wellhead measurement.</p>
+      <h3>2022 · Record high</h3>
+      <p>Well AHWW16R6 reached 182.5°F on July 20, 2022, the highest wellhead temperature in the 2021–2026 record. Down-hole profiling in 2022–23 reached 178.5°F at 60 feet.</p>
     </div>
     <div class="card">
-      <h3>2025 · New record high</h3>
-      <p>AHW272R4 set a new record-high wellhead temperature of 177°F. Methane at 8.1% and oxygen at 7% put the chemistry in the right zone for a subsurface elevated temperature event.</p>
+      <h3>2025 · 177°F spike</h3>
+      <p>AHW272R4 reached 177°F. Methane at 8.1% and oxygen at 7% put the chemistry in the right zone for a subsurface elevated temperature event.</p>
     </div>
   </div>
 </section>
@@ -193,15 +200,15 @@
     <div class="tl-item">
       <div class="tl-era">2022–23</div>
       <div>
-        <p class="tl-head">Heat confirmed below the surface</p>
-        <p class="tl-body">Down-hole profiles at well 312R reach 178.5°F at 60 feet, hotter than the corresponding wellhead record.</p>
+        <p class="tl-head">Record high; heat confirmed below the surface</p>
+        <p class="tl-body">July 2022: well AHWW16R6 reaches 182.5°F, the highest wellhead temperature in the 2021–2026 record. Down-hole profiles at well 312R reach 178.5°F at 60 feet, hotter than the corresponding wellhead record.</p>
       </div>
     </div>
     <div class="tl-item">
       <div class="tl-era">2025</div>
       <div>
-        <p class="tl-head">New record high; chemistry in the SET zone</p>
-        <p class="tl-body">March 2025: new all-time record high wellhead temperature of 177°F. Methane at 8.1% and oxygen at 7% put the chemistry in the right zone for a subsurface elevated temperature event.</p>
+        <p class="tl-head">177°F spike; chemistry in the SET zone</p>
+        <p class="tl-body">March 2025: well AHW272R4 reaches 177°F. Methane at 8.1% and oxygen at 7% put the chemistry in the right zone for a subsurface elevated temperature event.</p>
       </div>
     </div>
     <div class="tl-item">
@@ -296,7 +303,7 @@
     <span class="sw"><span class="dot" style="background:#fab219"></span>≥131°F elevated-temperature marker</span>
     <span class="sw"><span class="dot" style="background:#ec835a"></span>≥145°F federal default value</span>
   </div>
-  <p class="source-line">Source: Aug. 24, 2026 wellfield CSV; as-found half-year maxima; HOV caveats retained. Four consecutive Wells of Interest (WOI) periods, 2024 H2–2026 H1.</p>
+  <p class="source-line">Source: Oct. 9, 2026 wellfield CSV release (these four periods are unchanged from the Aug. 24 data); as-found half-year maxima; HOV caveats retained. Four consecutive Wells of Interest (WOI) periods, 2024 H2–2026 H1.</p>
   <p class="caveat">The 131°F and 145°F counts are analytical screening categories. They are not a count of regulatory violations.</p>
 
   <div class="nudge blue">
@@ -317,8 +324,8 @@
   <p class="kicker" style="margin-top:1.2rem">Field-wide max wellhead temperature (°F) · AHW well ID below</p>
   <div class="chart-wrap">
     <svg viewBox="0 0 900 380" role="img" aria-labelledby="linechart-title linechart-desc">
-      <title id="linechart-title">Field-wide maximum wellhead temperature by half-year, 2021 H2 through 2026 H1</title>
-      <desc id="linechart-desc">Line chart of the single highest recorded wellhead temperature each half-year, with the well ID that recorded it: 2021 H2 174.7 at well 312R, 2022 H1 171.7 at 312R, 2022 H2 169.7 at 312R, 2023 H1 156.9 at 287R, 2023 H2 158.3 at 312R, 2024 H1 152 at 312R, 2024 H2 155 at well 0279, 2025 H1 177 at 272R4, 2025 H2 160 at 263R5, 2026 H1 154.6 at 0279. Reference lines at 131, 145 and 160 degrees Fahrenheit.</desc>
+      <title id="linechart-title">Field-wide maximum wellhead temperature by half-year, 2021 H1 through 2026 H1</title>
+      <desc id="linechart-desc">Line chart of the single highest recorded wellhead temperature each half-year, with the well ID that recorded it: 2021 H1 177.5 at well 312R, 2021 H2 174.7 at 312R, 2022 H1 171.7 at 312R, 2022 H2 182.5 at 16R6, 2023 H1 156.9 at 287R, 2023 H2 158.3 at 312R, 2024 H1 154.2 at 312R, 2024 H2 155 at 0279, 2025 H1 177 at 272R4, 2025 H2 160 at 263R5, 2026 H1 154.6 at 0279. Reference lines at 131, 145 and 160 degrees Fahrenheit.</desc>
       <style>
         .gridline2 { stroke: #ddd; stroke-width: 1; }
         .axislabel2 { fill: #666; font-size: 12px; font-family: inherit; }
@@ -357,51 +364,55 @@
       <line x1="50" y1="200" x2="895" y2="200" stroke="#ec835a" stroke-width="2" stroke-dasharray="2,4"/>
       <line x1="50" y1="140" x2="895" y2="140" stroke="#d03b3b" stroke-width="2" stroke-dasharray="2,4"/>
 
-      <!-- data line -->
-      <polyline points="50,81.2 142.2,93.2 234.4,101.2 326.6,152.4 418.8,146.8 511,172 603.2,160 695.4,72 787.6,140 879.8,161.6"
+      <!-- data line (v2: generated by build_setbrief_linechart_svg.py from the Oct. 9, 2026 CSV) -->
+      <polyline points="50.0,70.0 133.0,81.2 216.0,93.2 298.9,50.0 381.9,152.4 464.9,146.8 547.9,163.2 630.9,160.0 713.8,72.0 796.8,140.0 879.8,161.6"
                 fill="none" stroke="#b3411f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
 
       <!-- points + value labels -->
-      <circle cx="50" cy="81.2" r="5" fill="#b3411f"><title>2021 H2, well 312R: 174.7°F</title></circle>
-      <text class="vallabel2" x="50" y="71.2" text-anchor="middle">174.7</text>
-      <circle cx="142.2" cy="93.2" r="5" fill="#b3411f"><title>2022 H1, well 312R: 171.7°F</title></circle>
-      <text class="vallabel2" x="142.2" y="83.2" text-anchor="middle">171.7</text>
-      <circle cx="234.4" cy="101.2" r="5" fill="#b3411f"><title>2022 H2, well 312R: 169.7°F</title></circle>
-      <text class="vallabel2" x="234.4" y="91.2" text-anchor="middle">169.7</text>
-      <circle cx="326.6" cy="152.4" r="5" fill="#b3411f"><title>2023 H1, well 287R: 156.9°F</title></circle>
-      <text class="vallabel2" x="326.6" y="142.4" text-anchor="middle">156.9</text>
-      <circle cx="418.8" cy="146.8" r="5" fill="#b3411f"><title>2023 H2, well 312R: 158.3°F</title></circle>
-      <text class="vallabel2" x="418.8" y="136.8" text-anchor="middle">158.3</text>
-      <circle cx="511" cy="172" r="5" fill="#b3411f"><title>2024 H1, well 312R: 152°F</title></circle>
-      <text class="vallabel2" x="511" y="162" text-anchor="middle">152</text>
-      <circle cx="603.2" cy="160" r="5" fill="#b3411f"><title>2024 H2, well 0279: 155°F</title></circle>
-      <text class="vallabel2" x="603.2" y="150" text-anchor="middle">155</text>
-      <circle cx="695.4" cy="72" r="5" fill="#b3411f"><title>2025 H1, well 272R4: 177°F</title></circle>
-      <text class="vallabel2" x="695.4" y="62" text-anchor="middle">177</text>
-      <circle cx="787.6" cy="140" r="5" fill="#b3411f"><title>2025 H2, well 263R5: 160°F</title></circle>
-      <text class="vallabel2" x="787.6" y="130" text-anchor="middle">160</text>
+      <circle cx="50.0" cy="70.0" r="5" fill="#b3411f"><title>2021 H1, well 312R: 177.5°F</title></circle>
+      <text class="vallabel2" x="50.0" y="60.0" text-anchor="middle" style="text-anchor:start">177.5</text>
+      <circle cx="133.0" cy="81.2" r="5" fill="#b3411f"><title>2021 H2, well 312R: 174.7°F</title></circle>
+      <text class="vallabel2" x="133.0" y="71.2" text-anchor="middle">174.7</text>
+      <circle cx="216.0" cy="93.2" r="5" fill="#b3411f"><title>2022 H1, well 312R: 171.7°F</title></circle>
+      <text class="vallabel2" x="216.0" y="83.2" text-anchor="middle">171.7</text>
+      <circle cx="298.9" cy="50.0" r="5" fill="#b3411f"><title>2022 H2, well 16R6: 182.5°F</title></circle>
+      <text class="vallabel2" x="298.9" y="40.0" text-anchor="middle">182.5</text>
+      <circle cx="381.9" cy="152.4" r="5" fill="#b3411f"><title>2023 H1, well 287R: 156.9°F</title></circle>
+      <text class="vallabel2" x="381.9" y="142.4" text-anchor="middle">156.9</text>
+      <circle cx="464.9" cy="146.8" r="5" fill="#b3411f"><title>2023 H2, well 312R: 158.3°F</title></circle>
+      <text class="vallabel2" x="464.9" y="136.8" text-anchor="middle">158.3</text>
+      <circle cx="547.9" cy="163.2" r="5" fill="#b3411f"><title>2024 H1, well 312R: 154.2°F</title></circle>
+      <text class="vallabel2" x="547.9" y="153.2" text-anchor="middle">154.2</text>
+      <circle cx="630.9" cy="160.0" r="5" fill="#b3411f"><title>2024 H2, well 0279: 155°F</title></circle>
+      <text class="vallabel2" x="630.9" y="150.0" text-anchor="middle">155</text>
+      <circle cx="713.8" cy="72.0" r="5" fill="#b3411f"><title>2025 H1, well 272R4: 177°F</title></circle>
+      <text class="vallabel2" x="713.8" y="62.0" text-anchor="middle">177</text>
+      <circle cx="796.8" cy="140.0" r="5" fill="#b3411f"><title>2025 H2, well 263R5: 160°F</title></circle>
+      <text class="vallabel2" x="796.8" y="130.0" text-anchor="middle">160</text>
       <circle cx="879.8" cy="161.6" r="5" fill="#b3411f"><title>2026 H1, well 0279: 154.6°F</title></circle>
       <text class="vallabel2" x="879.8" y="151.6" text-anchor="middle" style="text-anchor:end">154.6</text>
 
       <!-- x-axis category labels (2-line: period / well id) -->
-      <text class="catlabel2" x="50" y="325" text-anchor="middle">2021 H2</text>
-      <text class="catlabel2b" x="50" y="338" text-anchor="middle">312R</text>
-      <text class="catlabel2" x="142.2" y="325" text-anchor="middle">2022 H1</text>
-      <text class="catlabel2b" x="142.2" y="338" text-anchor="middle">312R</text>
-      <text class="catlabel2" x="234.4" y="325" text-anchor="middle">2022 H2</text>
-      <text class="catlabel2b" x="234.4" y="338" text-anchor="middle">312R</text>
-      <text class="catlabel2" x="326.6" y="325" text-anchor="middle">2023 H1</text>
-      <text class="catlabel2b" x="326.6" y="338" text-anchor="middle">287R</text>
-      <text class="catlabel2" x="418.8" y="325" text-anchor="middle">2023 H2</text>
-      <text class="catlabel2b" x="418.8" y="338" text-anchor="middle">312R</text>
-      <text class="catlabel2" x="511" y="325" text-anchor="middle">2024 H1</text>
-      <text class="catlabel2b" x="511" y="338" text-anchor="middle">312R</text>
-      <text class="catlabel2" x="603.2" y="325" text-anchor="middle">2024 H2</text>
-      <text class="catlabel2b" x="603.2" y="338" text-anchor="middle">0279</text>
-      <text class="catlabel2" x="695.4" y="325" text-anchor="middle">2025 H1</text>
-      <text class="catlabel2b" x="695.4" y="338" text-anchor="middle">272R4</text>
-      <text class="catlabel2" x="787.6" y="325" text-anchor="middle">2025 H2</text>
-      <text class="catlabel2b" x="787.6" y="338" text-anchor="middle">263R5</text>
+      <text class="catlabel2" x="50.0" y="325" text-anchor="middle">2021 H1</text>
+      <text class="catlabel2b" x="50.0" y="338" text-anchor="middle">312R</text>
+      <text class="catlabel2" x="133.0" y="325" text-anchor="middle">2021 H2</text>
+      <text class="catlabel2b" x="133.0" y="338" text-anchor="middle">312R</text>
+      <text class="catlabel2" x="216.0" y="325" text-anchor="middle">2022 H1</text>
+      <text class="catlabel2b" x="216.0" y="338" text-anchor="middle">312R</text>
+      <text class="catlabel2" x="298.9" y="325" text-anchor="middle">2022 H2</text>
+      <text class="catlabel2b" x="298.9" y="338" text-anchor="middle">16R6</text>
+      <text class="catlabel2" x="381.9" y="325" text-anchor="middle">2023 H1</text>
+      <text class="catlabel2b" x="381.9" y="338" text-anchor="middle">287R</text>
+      <text class="catlabel2" x="464.9" y="325" text-anchor="middle">2023 H2</text>
+      <text class="catlabel2b" x="464.9" y="338" text-anchor="middle">312R</text>
+      <text class="catlabel2" x="547.9" y="325" text-anchor="middle">2024 H1</text>
+      <text class="catlabel2b" x="547.9" y="338" text-anchor="middle">312R</text>
+      <text class="catlabel2" x="630.9" y="325" text-anchor="middle">2024 H2</text>
+      <text class="catlabel2b" x="630.9" y="338" text-anchor="middle">0279</text>
+      <text class="catlabel2" x="713.8" y="325" text-anchor="middle">2025 H1</text>
+      <text class="catlabel2b" x="713.8" y="338" text-anchor="middle">272R4</text>
+      <text class="catlabel2" x="796.8" y="325" text-anchor="middle">2025 H2</text>
+      <text class="catlabel2b" x="796.8" y="338" text-anchor="middle">263R5</text>
       <text class="catlabel2" x="879.8" y="325" text-anchor="middle">2026 H1</text>
       <text class="catlabel2b" x="879.8" y="338" text-anchor="middle">0279</text>
     </svg>
@@ -413,7 +424,7 @@
     <span class="sw"><span class="ln" style="border-color:#d03b3b"></span>160°F, infrastructure begins to soften (melt)</span>
   </div>
   <p class="caveat">The line shows the maximum valid recorded wellhead temperature across all available wells in each calendar half-year. It is not an average and does not imply continuous monitoring. The source's documented AHWW/AHW prefix inconsistency is normalized to AHW for display labels only. The three dotted reference lines are visual comparison levels, not additional observations.</p>
-  <p class="source-line">Source: four consecutive WOI periods and the full 2021 H2–2026 H1 trend, recalculated from the Aug. 24, 2026 wellfield CSV release; half-year maxima use validation_ok=yes rows and all available wells.</p>
+  <p class="source-line">Source: four consecutive WOI periods and the full 2021 H1–2026 H1 trend, recalculated from the Oct. 9, 2026 wellfield CSV release; half-year maxima use validation_ok=yes rows and all available wells. The 2021 H1 and 2022 H2 points come from operator reports first released in October 2026.</p>
 
   <p class="kicker" style="margin-top:1.6rem">Early-2025 episode: highlights from filed data</p>
   <div class="episode-stats">
@@ -465,7 +476,7 @@
         <li>EGLE AQD, Renewal of Higher Operating Value Temperature Waivers, Apr. 7, 2026: 16 HOV locations approved through May 1, 2028; AHW272R4 at 180°F.</li>
         <li>EGLE AQD, Apr. 30, 2024 HOV approval, p. 2: downhole profiles initiate for wells exceeding 165°F.</li>
         <li>EGLE AQD, Feb. 19, 2025: AHW272R4's requested 180°F HOV approved through May 1, 2026.</li>
-        <li>GFL, 2026 First Semi-Annual WOI Status Report (Jan–Jun 2026), filed July 13, 2026: 2026 GCCS upgrade design plans completed; no further WOI-area construction planned for the remainder of 2026. Source PDF included with the Aug. 24 data release.</li>
+        <li>GFL, 2026 First Semi-Annual WOI Status Report (Jan–Jun 2026), filed July 13, 2026: 2026 GCCS upgrade design plans completed; no further WOI-area construction planned for the remainder of 2026. Source PDF included with the Aug. 24 and Oct. 9 data releases.</li>
         <li>GFL, H1 2025 Semi-Annual NESHAP Report, §63.1981(h)(7)-(8): no root-cause forms required; two enhanced-monitoring wells; no down-well monitoring conducted.</li>
       </ul>
     </div>
@@ -473,8 +484,8 @@
     <div class="src-group">
       <h4>Project data and analysis (this monitoring project)</h4>
       <ul>
-        <li>Arbor Hills wellfield gas/temperature and downhole CSV release, Aug. 24, 2026 (README and CSVs); counts use as-found status-report rows and distinct well maxima by half-year.</li>
-        <li>Arbor Hills wellhead temperature trend, 2021 H2–2026 H1, recalculated from the Aug. 24, 2026 wellfield CSV release; half-year maxima use validation_ok=yes rows and all available wells.</li>
+        <li>Arbor Hills wellfield gas/temperature and downhole CSV release, Oct. 9, 2026 (README and CSVs; <a href="https://github.com/tkunst/arbor-hills-monitor/releases/tag/wellfield-data-2026-10-09">release page</a>), which supersedes the Aug. 24, 2026 release and adds six operator reports from 2021 to 2024; counts use as-found status-report rows and distinct well maxima by half-year.</li>
+        <li>Arbor Hills wellhead temperature trend, 2021 H1–2026 H1, recalculated from the Oct. 9, 2026 wellfield CSV release; half-year maxima use validation_ok=yes rows and all available wells.</li>
         <li>Arbor Hills elevated-temperature well and CO summary, 2025 H1 through 2026 H1, project analysis.</li>
         <li>Arbor Hills violations and enforcement evidence report (V10, Aug. 22, 2026), project source.</li>
       </ul>
