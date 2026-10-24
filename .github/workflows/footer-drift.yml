@@ -1,0 +1,33 @@
+name: footer-drift
+
+# Every policy page must carry the legal footer, and footer-canonical.json must match
+# the Monitor's footer/canonical-footer.json (tkunst/arbor-hills-monitor). Runs on PRs
+# and monthly, so drift is caught even in weeks nobody commits here (2026-10-24).
+on:
+  pull_request:
+    paths:
+      - "**/*.html"
+      - footer-canonical.json
+      - test/footer-check.js
+      - .github/workflows/footer-drift.yml
+  schedule:
+    - cron: "17 13 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  footer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Every page has the canonical legal footer
+        run: node test/footer-check.js
+      - name: Vendored canon matches the Monitor's canon
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/tkunst/arbor-hills-monitor/main/footer/canonical-footer.json -o /tmp/monitor-canon.json
+          if ! diff -u /tmp/monitor-canon.json footer-canonical.json; then
+            echo "::error::footer-canonical.json differs from arbor-hills-monitor footer/canonical-footer.json. Copy the Monitor's file here and update the page footers."
+            exit 1
+          fi

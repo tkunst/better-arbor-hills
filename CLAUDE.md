@@ -39,10 +39,14 @@ This repo has no `pytest`, no GitHub Actions CI. The equivalent-strength gate is
 1. A **JS self-test** (Node, no deps) over the pure functions (letter composition, the
    rotation picker, the active-issue filter, a grep-style check for the security rules
    below). It must pass.
-2. A **manual browser acceptance checklist** (documented per change).
-3. The **Step 5 independent subagent review** and **Step 6 security subagent review**
+2. **Legal footer check:** `node test/footer-check.js` must pass. Every page (except the
+   redirect stubs) carries the legal footer built from `footer-canonical.json`, a vendored
+   copy of the Monitor's `footer/canonical-footer.json`; the `footer-drift` workflow also
+   fails if the two copies differ (on PRs and monthly). New pages need the footer.
+3. A **manual browser acceptance checklist** (documented per change).
+4. The **Step 5 independent subagent review** and **Step 6 security subagent review**
    on the diff (see `docs/overnight-coder.md`).
-These four together are the gate; a green self-test alone is not enough to merge.
+These five together are the gate; a green self-test alone is not enough to merge.
 
 ## Content rule (CRITICAL — letters go to elected officials under residents' names)
 
