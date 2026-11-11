@@ -270,7 +270,7 @@ footer { margin: 2.5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--bord
     <p class="sub">A spreadsheet of every landfill in your starting point at each milestone, with your settings from step 2.</p>
     <p class="summary33" id="summary33"></p>
     <div class="dl">
-      <button type="button" class="primary" id="dl33">Download status in the 5.5-year year (CSV)</button>
+      <button type="button" class="primary" id="dl33">Download status at the end of FY2032 (CSV)</button>
       <button type="button" class="secondary" id="dlall">Download all milestones (CSV)</button>
     </div>
     <p class="hint" id="ms-hint"></p>
@@ -299,7 +299,7 @@ footer { margin: 2.5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--bord
     <li><b>Scenarios.</b> Each button adds one change to the one before: Today, then the Pine Tree Acres expansion, then 35% recycling reached by FY2032. At 35 or 45 miles, &ldquo;+ 35% recycling&rdquo; is Today plus 35% recycling, since Pine Tree Acres is not in those groups.</li>
     <li><b>Years of space left today</b> is the starting point's shared space divided by one year of its waste at the FY2025 rate (EGLE's capacity formula), after your Canadian-waste, recycling and food settings, counting any goal as already reached and Pine Tree Acres as already open if it is on. It is not the space available to Washtenaw County under its plan.</li>
     <li><b>Falls below 5.5 years</b> and <b>runs out</b> come from a year-by-year run starting in FY2026: each landfill fills, closes, and passes its customers on. 5.5 years (66 months) is the planning test a county applies to the waste it <i>generates</i>; here it is applied to the waste <i>buried</i> in the whole group of landfills only as a stress check, not as that test.</li>
-    <li><b>Landfill status downloads.</b> Each row is one landfill at the end of a milestone fiscal year: FY2030, FY2032, FY2035, FY2040, the year the chosen starting point falls below 5.5 years of space, and the year it runs out of space. The first download and the table in step 4 give each landfill's status at the end of the year the region falls below 5.5 years of space. Each row gives open or full, the fiscal year the model has it fill, and its remaining space and use at the start (EGLE FY2025 Table 4). The model does not report each landfill's remaining space at each milestone, so the file gives the FY2025 space and the fill year instead.</li>
+    <li><b>Landfill status downloads.</b> Each row is one landfill at the end of a milestone fiscal year: FY2030, FY2032, FY2035, FY2040, the year the chosen starting point falls below 5.5 years of space, and the year it runs out of space. The first download and the table in step 4 give each landfill's status at the end of FY2032, about 5.5 years after this page was built in late 2026. 5.5 years (66 months) is a common yardstick for landfill space: it is how far ahead a county plan must show it has room for its waste. Each row gives open or full, the fiscal year the model has it fill, and its remaining space and use at the start (EGLE FY2025 Table 4). The model does not report each landfill's remaining space at each milestone, so the file gives the FY2025 space and the fill year instead.</li>
     <li><b>Pine Tree Acres</b> opening in FY2030 is an estimate, not an announced date. Macomb County's Board of Commissioners approved the plan amendment that sites the expansion area on February 19, 2026, 13 to 0 (<a href="https://macombcomi.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=24798,plainText=false)" target="_blank" rel="noopener">approved minutes</a>, item 14a, pages 8 and 9). The amendment then needed approval from 67% of Macomb's communities (19). Macomb County reports that it was approved by 21 communities and submitted to EGLE for review (<a href="https://www.macombgov.org/departments/planning-and-economic-development/macomb-county-materials-management" target="_blank" rel="noopener">Macomb County Materials Management</a>). Sterling Heights' City Council approved it 7 to 0 on April 21, 2026 (<a href="https://www.sterlingheights.gov/AgendaCenter/ViewFile/Minutes/_04212026-2766" target="_blank" rel="noopener">council minutes</a>, pages 43 to 44). As of November 7, 2026, EGLE's online records show no approval of the amendment and no construction permit application. Pine Tree Acres is 47 miles from the county line, in Macomb County, so it counts only at 52 miles and in SEMCOG counties.</li>
     <li><b>Not modeled:</b> landfills outside the chosen starting point, Ohio, Indiana and Ontario sites, new expansions other than those above, and haulers changing where they send waste for price reasons.</li>
     <li><b>Credit.</b> The core model rules follow The Conservancy Initiative's "Landfill Capacity Assessment: Southeast Michigan" (October 23, 2026), prepared for the Washtenaw County Materials Management Planning Committee.</li>
@@ -1045,10 +1045,10 @@ var UI = (function () {
     UI.delta($('d-left'), a.left, BASE.left, 'left'); UI.delta($('d-below'), a.below, BASE.below, 'year'); UI.delta($('d-full'), a.full, BASE.full, 'year');
     $('readout').textContent = UI.sentence(state, a);
     UI.drawSpace($('chart'), a, $('tip'));
-    // Step 4: status in the year the group falls below 5.5 years of space (Trisha 11/10; was FY2033) and the milestone list
-    var Y5 = belowYear(state), r33 = statusRows(state, Y5), shared = r33.filter(function (r) { return !r.lf.ownOnly; }), own = r33.filter(function (r) { return r.lf.ownOnly; });
+    // Step 4: status at the end of FY2032, fixed (Trisha + Dave 11/11: a moving year invited false comparisons) and the milestone list
+    var Y5 = 2032, r33 = statusRows(state, Y5), shared = r33.filter(function (r) { return !r.lf.ownOnly; }), own = r33.filter(function (r) { return r.lf.ownOnly; });
     var open = shared.filter(function (r) { return !r.status.full; }).length;
-    $('summary33').innerHTML = (a.below !== null && a.below !== undefined ? '<b>In FY' + Y5 + '</b>, the year the region falls below 5.5 years of space (status at the end of FY' + Y5 + '): ' : '<b>At the end of FY' + Y5 + '</b>: ') + open + ' of ' + shared.length + ' shared landfills are still open' +
+    $('summary33').innerHTML = '<b>At the end of FY' + Y5 + '</b>: ' + open + ' of ' + shared.length + ' shared landfills are still open' +
       (own.length ? ' (plus ' + own.map(function (r) { return r.lf.name.replace(' Landfill', ''); }).join(', ') + ', county waste only)' : '') + '.';
     var ms = milestonesFor(state);
     $('ms-hint').textContent = 'Milestones: the end of ' + ms.map(function (Y) { return 'FY' + Y + (Y === a.below && Y === a.full ? ' (falls below 5.5 years and runs out of space)' : Y === a.below ? ' (falls below 5.5 years of space)' : Y === a.full ? ' (runs out of space)' : ''); }).join(', ') +
@@ -1060,7 +1060,6 @@ var UI = (function () {
         (st.full ? '\u25a0 ' : '\u25cb ') + UI.esc(st.text) + '</td><td>' + fills + '</td></tr>';
     });
     $('table33').innerHTML = h + '</tbody></table>';
-    $('dl33').textContent = 'Download status in FY' + Y5 + ' (CSV)';
   }
   Array.prototype.forEach.call(document.querySelectorAll('#presets button'), function (b) {
     b.addEventListener('click', function () {
@@ -1076,7 +1075,7 @@ var UI = (function () {
   $('food').addEventListener('input', function () { state.foodCut = +$('food').value; update(); });
   $('pta').addEventListener('change', function () { state.pta = $('pta').checked; state.ptaAuto = false; update(); });
   $('dlall').addEventListener('click', function () { UI.download('landfill-status-all-milestones-' + UI.fileTag(state.miles) + '.csv', csvFor(state, milestonesFor(state))); });
-  $('dl33').addEventListener('click', function () { var Y5 = belowYear(state); UI.download('landfill-status-FY' + Y5 + '-' + UI.fileTag(state.miles) + '.csv', csvFor(state, [Y5])); });
+  $('dl33').addEventListener('click', function () { var Y5 = 2032; UI.download('landfill-status-FY' + Y5 + '-' + UI.fileTag(state.miles) + '.csv', csvFor(state, [Y5])); });
   function buildPrintout() { $('printout').innerHTML = UI.printoutHTML(state, UI.printoutOpts()); }
   $('print').addEventListener('click', function () { buildPrintout(); window.print(); });
   window.addEventListener('beforeprint', buildPrintout);
