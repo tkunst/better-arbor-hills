@@ -121,6 +121,9 @@ footer { margin: 2.5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--bord
 
 .wrap { max-width: 780px; margin: 0 auto; padding: 2.2rem 16px 4rem; }
 .pinned-note { display: none; }
+.tiles { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 760px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 420px) { .tiles { grid-template-columns: 1fr; } }
 /* Tablet and wider (11/10, Trisha): pin the three answer boxes in a column at the right so changes show while scrolling. Phones keep them in step 3. */
 @media screen and (min-width: 1000px) {
   .wrap { max-width: 1080px; padding-right: 286px; }
@@ -245,6 +248,7 @@ footer { margin: 2.5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--bord
       <div class="tile"><div class="k">Years of space left today<br>(at last year's rate)</div><div class="v" id="v-left"></div><div class="d" id="d-left"></div></div>
       <div class="tile"><div class="k">Region falls below<br>5.5 years of space</div><div class="v" id="v-below"></div><div class="d" id="d-below"></div></div>
       <div class="tile"><div class="k">Region runs out<br>of space</div><div class="v" id="v-full"></div><div class="d" id="d-full"></div></div>
+      <div class="tile"><div class="k">Share of waste - Canadian<br>(by space)</div><div class="v" id="v-can"></div><div class="d" id="d-can"></div></div>
     </div>
     <p class="hint">These counts cover everything these landfills take in, including Canadian waste and other counties' waste; they are not Washtenaw County's generation.</p>
     <p class="readout" id="readout"></p>
@@ -297,6 +301,7 @@ footer { margin: 2.5rem 0 0; padding-top: 1rem; border-top: 1px solid var(--bord
       <br>&bull; <b>Recycling to 30%, then food.</b> On this page's assumption that 26% of all of it was recycled, the 100 tons are what was left of about 135 tons thrown out. Recycling 30% instead of 26% takes 4 more points of those 135 tons, about 5.4 tons, so 94.6 tons are left. About 18.9 of them are food; diverting 25% of it removes 4.7 tons, so about 89.9 tons go to the landfill.
       <br>Recycling comes off first, then the food goal applies to the food still headed to the landfill, so no ton is counted twice.</li>
     <li><b>Scenarios.</b> Each button adds one change to the one before: Today, then the Pine Tree Acres expansion, then 35% recycling reached by FY2032. At 35 or 45 miles, &ldquo;+ 35% recycling&rdquo; is Today plus 35% recycling, since Pine Tree Acres is not in those groups.</li>
+    <li><b>Share of waste - Canadian (by space)</b> shows the Canadian proportion of the space used (EGLE FY2025 Appendix D and Table 4), after your settings are applied. Pine Tree Acres and Carleton Farms are the two largest receivers of Canadian waste as of FY2025.</li>
     <li><b>Years of space left today</b> is the starting point's shared space divided by one year of its waste at the FY2025 rate (EGLE's capacity formula), after your Canadian-waste, recycling and food settings, counting any goal as already reached and Pine Tree Acres as already open if it is on. It is not the space available to Washtenaw County under its plan.</li>
     <li><b>Falls below 5.5 years</b> and <b>runs out</b> come from a year-by-year run starting in FY2026: each landfill fills, closes, and passes its customers on. 5.5 years (66 months) is the planning test a county applies to the waste it <i>generates</i>; here it is applied to the waste <i>buried</i> in the whole group of landfills only as a stress check, not as that test.</li>
     <li><b>Landfill status downloads.</b> Each row is one landfill at the end of a milestone fiscal year: FY2030, FY2032, FY2035, FY2040, the year the chosen starting point falls below 5.5 years of space, and the year it runs out of space. The first download and the table in step 4 give each landfill's status at the end of FY2032, about 5.5 years after this page was built in late 2026. 5.5 years (66 months) is a common yardstick for landfill space: it is how far ahead a county plan must show it has room for its waste. Each row gives open or full, the fiscal year the model has it fill, and its remaining space and use at the start (EGLE FY2025 Table 4). The model does not report each landfill's remaining space at each milestone, so the file gives the FY2025 space and the fill year instead.</li>
@@ -696,9 +701,18 @@ function simpleState(name) {
   var p = preset(SCENARIO_BASE[name]);
   return {scenario: name, canada: p.canada, recycle: name === 'R' ? 35 : p.recycle, goalYear: name === 'R' ? 2032 : 2030, pta: p.pta > 0, canGoals: false, miles: 52, foodCut: 0};
 }
+// Canadian waste as a share of what the shared landfills take in a year (same basis as step1: FY2025 space used, after the settings, goals as reached).
+function canShare(p) {
+  var can = 0, all = 0, cut = 1 - mcwLeft(p, 1), ca = p.canGoals ? 1 - mcwShare(p, true) * cut : 1;
+  region(p).forEach(function (lf) {
+    if (ownOnly(p, lf) && !isOff(p, lf)) return;
+    all += lf.used * intakeFactor(p, lf, 1); can += lf.used * lf.can * (p.canada / 100) * ca;
+  });
+  return all > 0 ? can / all : 0;
+}
 function answers(s) {
   var p = simpleParams(s), sim = simulate(p);
-  return {left: step1(p), below: sim.below66, full: sim.full, years: sim.years, months: p.months, n: region(p).length,
+  return {left: step1(p), can: canShare(p), below: sim.below66, full: sim.full, years: sim.years, months: p.months, n: region(p).length,
           shared: pooled(p).length, ptaCounted: ptaIn(p) || !s.pta, foodCY: foodSummary(p).cy, sim: sim, p: p};
 }
 // Which starting points include each landfill (read from the model's region rule).
@@ -801,6 +815,7 @@ var UI = (function () {
     el.className = 'd';
     if (now === null || base === null) { el.textContent = ''; return; }
     var diff = kind === 'left' ? Math.round((Math.round(now * 10) - Math.round(base * 10))) / 10 : now - base;
+    if (kind === 'pct') { var d = (Math.round(now * 1000) - Math.round(base * 1000)) / 10; el.textContent = d === 0 ? 'No change from Today' : Math.abs(d).toFixed(1) + (Math.abs(d) === 1 ? ' point ' : ' points ') + (d > 0 ? 'higher than Today' : 'lower than Today'); return; }
     if (diff === 0) { el.textContent = 'No change from Today'; return; }
     var more = diff > 0;
     el.className = 'd ' + (more ? 'better' : 'worse');
@@ -895,7 +910,7 @@ var UI = (function () {
   // Printout ("Save results and assumptions to PDF"). Pure: builds an HTML string from the state, so both pages give
   // the same report for the same settings. opts: {scenarioLabel, printedAt, assumptions: [text], cdNote: text}.
   var PAGE_VERSION = 'November 11, 2026';
-  var ASSUMPTION_LEADS = ['Data.', 'Starting points.', 'Canadian waste.', 'Recycling rates.', 'Food waste.', 'Years of space left today', 'Falls below 5.5 years', 'Pine Tree Acres', 'Not modeled:', 'Credit.'];
+  var ASSUMPTION_LEADS = ['Data.', 'Starting points.', 'Canadian waste.', 'Recycling rates.', 'Food waste.', 'Years of space left today', 'Share of waste - Canadian', 'Falls below 5.5 years', 'Pine Tree Acres', 'Not modeled:', 'Credit.'];
   function printoutHTML(state, opts) {
     var a = answers(state), ms = milestonesFor(state), h = '';
     var td = function (t) { return '<td>' + esc(t) + '</td>'; };
@@ -913,7 +928,7 @@ var UI = (function () {
     ].forEach(function (r) { h += '<tr><th>' + esc(r[0]) + '</th>' + td(r[1]) + '</tr>'; });
     h += '</tbody></table>';
     h += '<h2>Results</h2><table><tbody>';
-    [['Years of space left today (at last year’s rate)', a.left.toFixed(1)], ['Region falls below 5.5 years of space', yr(a.below)], ['Region runs out of space', yr(a.full)]]
+    [['Years of space left today (at last year’s rate)', a.left.toFixed(1)], ['Region falls below 5.5 years of space', yr(a.below)], ['Region runs out of space', yr(a.full)], ['Share of waste - Canadian (by space)', (a.can * 100).toFixed(1) + '%']]
       .forEach(function (r) { h += '<tr><th>' + esc(r[0]) + '</th>' + td(r[1]) + '</tr>'; });
     h += '</tbody></table><p>' + esc(sentence(state, a)) + '</p>';
     h += '<p class="meta">These counts cover everything these landfills take in, including Canadian waste and other counties’ waste; they are not Washtenaw County’s generation. 5.5 years is a stress check, not the county planning test.</p>';
@@ -1043,6 +1058,7 @@ var UI = (function () {
     $('answer-sub').textContent = START_LONG[state.miles] + ', with your settings.';
     $('v-left').textContent = a.left.toFixed(1); $('v-below').textContent = UI.yr(a.below); $('v-full').textContent = UI.yr(a.full);
     UI.delta($('d-left'), a.left, BASE.left, 'left'); UI.delta($('d-below'), a.below, BASE.below, 'year'); UI.delta($('d-full'), a.full, BASE.full, 'year');
+    $('v-can').textContent = (a.can * 100).toFixed(1) + '%'; UI.delta($('d-can'), a.can, BASE.can, 'pct');
     $('readout').textContent = UI.sentence(state, a);
     UI.drawSpace($('chart'), a, $('tip'));
     // Step 4: status at the end of FY2032, fixed (Trisha + Dave 11/11: a moving year invited false comparisons) and the milestone list
