@@ -53,5 +53,22 @@ for (const rel of PAGES) {
     hits.join(','));
 }
 
+// Hub "Start here": the section and its nav pill are hidden while the list has no
+// items, and shown once it has some (Trisha 11/12).
+{
+  const hub = fs.readFileSync(path.join(root, 'mmpc/index.html'), 'utf8');
+  const sec = /<section[^>]*data-start-section[^>]*>([\s\S]*?)<\/section>/.exec(hub);
+  const pill = /<a[^>]*data-start-pill[^>]*>/.exec(hub);
+  ok('hub: Start here section and pill exist', !!sec && !!pill);
+  if (sec && pill) {
+    const items = (sec[1].match(/<li[\s>]/g) || []).length;
+    const secHidden = /\shidden[\s>]/.test(sec[0].slice(0, sec[0].indexOf('>') + 1));
+    const pillHidden = /\shidden[\s>]/.test(pill[0]);
+    ok('hub: Start here hidden exactly when it has no items (' + items + ' items)',
+      secHidden === (items === 0) && pillHidden === (items === 0));
+  }
+  ok('hub: [hidden] wins over component display rules', /\[hidden\]\s*\{\s*display:\s*none\s*!important/.test(hub));
+}
+
 console.log(`page-rules: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
