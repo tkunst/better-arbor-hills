@@ -303,11 +303,11 @@
 <aside class="rail" aria-label="Meeting and contact">
 <div class="pcard meet">
 <!-- meeting-card:start -->
-<div id="meeting-card" data-meeting-date="2026-11-18">
+<div id="meeting-card" data-meeting-date="2026-11-18" data-meeting-end="2026-11-18 11:30">
 <div data-state="upcoming">
 <p class="clab">Next meeting</p>
 <p class="mtg">MMPC &middot; Wednesday, Nov. 18, 2026</p>
-<p class="cline"><span class="todo">TODO: meeting time</span> &middot; <span class="todo">TODO: meeting location</span> &middot; Agenda <span class="todo">TODO: agenda link</span></p>
+<p class="cline">10 to 11:30 a.m. &middot; <span class="todo">TODO: meeting location</span> &middot; Agenda <span class="todo">TODO: agenda link</span></p>
 </div>
 <div data-state="past" hidden>
 <p class="clab">After the meeting</p>
@@ -319,10 +319,11 @@
 (function () {
   var c = document.getElementById("meeting-card");
   if (!c || typeof Intl === "undefined" || typeof Intl.DateTimeFormat.prototype.formatToParts !== "function") return;
-  var d = c.getAttribute("data-meeting-date");
+  var e = c.getAttribute("data-meeting-end");
   var p = {};
-  new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
-  var past = (p.year + "-" + p.month + "-" + p.day) > d;
+  new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+  if (!e || !p.hour) return;
+  var past = (p.year + "-" + p.month + "-" + p.day + " " + p.hour + ":" + p.minute) >= e;
   var u = c.querySelector("[data-state=upcoming]"), a = c.querySelector("[data-state=past]");
   if (!u || !a) return;
   u.hidden = past;
