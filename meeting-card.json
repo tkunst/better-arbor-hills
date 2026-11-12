@@ -1,0 +1,9 @@
+{
+  "_note": "The one place the next-meeting card is configured. After editing, run `node tools/meeting-card.js` to rewrite the card in every page that carries it; `node tools/meeting-card.js --check` fails if a page is out of date. null = not supplied yet (renders a visible TODO).",
+  "body": "MMPC",
+  "date": "2026-11-18",
+  "time": null,
+  "location": null,
+  "agenda_url": null,
+  "followup_url": null
+}
