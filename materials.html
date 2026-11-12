@@ -2,58 +2,120 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Public comments and policy materials · Arbor Hills</title>
-<meta name="description" content="Public comments, evidence briefs, proposed siting protections, and the resident letter-writing tool for the Arbor Hills Landfill, authored by a resident living less than one mile from the proposed expansion border.">
+<meta name="description" content="Public comments, evidence briefs, proposed siting protections, and the resident letter-writing tool for the Arbor Hills Landfill, authored by a resident living less than one mile from the proposed new landfill.">
 <meta name="robots" content="index,follow">
 <style>
-  :root { color-scheme: light dark; }
+  /* Policy-site CredibilityHeader + materials layout (design handoff 2026-11-12).
+     Colors are the design system's pol- tokens; dark values follow prefers-color-scheme. */
+  :root {
+    color-scheme: light dark;
+    --bg: #fbfaf7; --fg: #1a1a1a; --lede: #555555; --hint: #666666; --link: #2b5fb3; --link-hover: #22488a;
+    --border: #dddddd; --card-bg: #ffffff; --card-border: #e8d6c2;
+    --ubar-tint: rgba(240,147,43,0.14); --ubar-text: #4a3410; --ubar-link: #1a1a1a;
+    --pill-tint: rgba(240,147,43,0.18); --pill-tint-hover: rgba(240,147,43,0.32); --pill-border: rgba(185,95,12,0.45); --pill-text: #1a1a1a;
+    --ck-tint: rgba(240,147,43,0.20); --ck: #8a4708; --trust: #333333; --cline: #333333; --clab: #555555;
+    --soon: #6b6b6b; --tag-border: #bbbbbb; --tag-text: #444444;
+    --hub: #2b5fb3; --hub-sub: #444444;
+    --cta-border: #1d6f42; --cta-bg: #edf5ef; --cta-bg-hover: #e2efe7; --cta-eyebrow: #1d6f42; --cta-title: #1a1a1a; --cta-sub: #3f5a48;
+    --alt-border: #ef8a22; --alt-bg: #fff4e3; --alt-bg-hover: #ffe8cc; --alt-eyebrow: #9a4f08; --alt-sub: #7c4f1c;
+    --disc-bg: #f6f4ef; --disc-border: #d8d5cd; --disc-text: #444444;
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181a; --fg: #e9e9e9; --lede: #a8a8a8; --hint: #9a9a9a; --link: #7fb4ea; --link-hover: #a9cdf2;
+      --border: #333333; --card-bg: #212226; --card-border: #333333;
+      --ubar-text: #e9e9e9; --ubar-link: #e9e9e9; --pill-text: #e9e9e9;
+      --ck: #f8b85e; --trust: #e9e9e9; --cline: #e9e9e9; --clab: #a8a8a8;
+      --soon: #888888; --tag-border: #6a6b70; --tag-text: #bdbdbd;
+      --hub: #7fb4ea; --hub-sub: #bdbdbd;
+      --cta-border: #3f9e6b; --cta-bg: #15241b; --cta-bg-hover: #1a2c21; --cta-eyebrow: #6fd39c; --cta-title: #f0f0f0; --cta-sub: #9db3a5;
+      --alt-border: #f5a63e; --alt-bg: #2f2210; --alt-bg-hover: #392a15; --alt-eyebrow: #f8b85e; --alt-sub: #dcbb8c;
+      --disc-bg: #1c1d20; --disc-border: #34353a; --disc-text: #bdbdbd;
+    }
+  }
   * { box-sizing: border-box; }
-  body {
-    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    margin: 0; padding: 1.5rem; background: #fbfaf7; color: #1a1a1a;
-  }
-  @media (prefers-color-scheme: dark) { body { background: #17181a; color: #e9e9e9; } }
-  .wrap { max-width: 680px; margin: 0 auto; }
-  h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
-  .lede { color: #555; margin: 0 0 1.5rem; }
-  @media (prefers-color-scheme: dark) { .lede { color: #a8a8a8; } }
-  a { color: #2b5fb3; }
-  @media (prefers-color-scheme: dark) { a { color: #7fb4ea; } }
-  ul.materials { list-style: none; margin: 0; padding: 0; }
-  ul.materials > li {
-    border: 1px solid #ddd; border-radius: 10px; padding: .85rem 1rem; margin: 0 0 .8rem;
-  }
-  @media (prefers-color-scheme: dark) { ul.materials > li { border-color: #333; } }
-  ul.materials .t { font-weight: 600; font-size: 1.02rem; }
-  ul.materials .d { font-size: .92rem; color: #555; margin-top: .2rem; }
-  @media (prefers-color-scheme: dark) { ul.materials .d { color: #a0a0a0; } }
-  .soon { color: #888; font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; }
-  .disclosure { border: 1px solid #d8d5cd; background: #f6f4ef; border-radius: 8px; padding: .75rem .95rem; margin: 1.75rem 0 0; font-size: .9rem; color: #444; }
-  @media (prefers-color-scheme: dark) { .disclosure { border-color: #34353a; background: #1c1d20; color: #bdbdbd; } }
-  .cta { display: block; border: 2px solid #1d6f42; background: #edf5ef; border-radius: 12px; padding: 1.05rem 1.25rem; margin: 0 0 1.7rem; text-decoration: none; color: inherit; transition: background .15s ease, box-shadow .15s ease; }
-  .cta:hover { background: #e2efe7; box-shadow: 0 3px 12px rgba(29,111,66,.16); }
-  .cta .cta-eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #1d6f42; margin: 0 0 .3rem; }
-  .cta .cta-title { font-size: 1.28rem; font-weight: 700; color: #1a1a1a; margin: 0; line-height: 1.25; }
-  .cta .arrow { color: #1d6f42; }
-  .cta .cta-sub { font-size: .95rem; color: #3f5a48; margin: .35rem 0 0; }
-  @media (prefers-color-scheme: dark) {
-    .cta { border-color: #3f9e6b; background: #15241b; }
-    .cta:hover { background: #1a2c21; }
-    .cta .cta-eyebrow, .cta .arrow { color: #6fd39c; }
-    .cta .cta-title { color: #f0f0f0; }
-    .cta .cta-sub { color: #9db3a5; }
-  }
-  /* Cheerful orange "featured" callout (capacity and proposed-protections cards). Distinct from the green action CTA. */
-  .cta.cta-alt { border-color: #ef8a22; background: #fff4e3; }
-  .cta.cta-alt:hover { background: #ffe8cc; box-shadow: 0 3px 12px rgba(239,138,34,.22); }
-  .cta.cta-alt .cta-eyebrow, .cta.cta-alt .arrow { color: #b95f0c; }
-  .cta.cta-alt .cta-sub { color: #7c4f1c; }
-  @media (prefers-color-scheme: dark) {
-    .cta.cta-alt { border-color: #f5a63e; background: #2f2210; }
-    .cta.cta-alt:hover { background: #392a15; }
-    .cta.cta-alt .cta-eyebrow, .cta.cta-alt .arrow { color: #f8b85e; }
-    .cta.cta-alt .cta-sub { color: #dcbb8c; }
+  body { font: 16px/1.55 var(--sans); margin: 0; padding: 1.5rem; background: var(--bg); color: var(--fg); }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  a { color: var(--link); }
+  a:hover { color: var(--link-hover); }
+  h1, h2, h3, .promise, .mtg, .feat .ft { font-family: var(--serif); }
+  .todo { display: inline-block; font: 700 .72rem/1.4 var(--sans); letter-spacing: .03em; text-transform: uppercase; border: 1px dashed currentColor; border-radius: 4px; padding: 0 .3rem; }
+
+  /* CredibilityHeader: IndependenceBar, title row, promise, trust checks, jump nav, MeetingCard */
+  .ubar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; font-size: .9rem; padding: .55rem .9rem; border-radius: 8px; margin: 0 0 1.6rem; background: var(--ubar-tint); color: var(--ubar-text); }
+  .ubar a { font-weight: 700; text-decoration: none; color: var(--ubar-link); display: inline-flex; align-items: center; gap: .3rem; min-height: 44px; }
+  .ubar a:hover { text-decoration: underline; color: var(--ubar-link); }
+  .split { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(0,1fr); gap: 2.5rem; align-items: start; }
+  .trow { display: flex; align-items: center; gap: 16px; }
+  .trow svg { flex: 0 0 auto; width: 56px; height: 39px; }
+  .trow h1 { font-size: 2.2rem; line-height: 1.15; margin: 0; }
+  .promise { font-size: 1.3rem; line-height: 1.45; margin: 1rem 0; max-width: 640px; }
+  .trust { list-style: none; margin: 0 0 1.3rem; padding: 0; display: flex; flex-direction: column; gap: .45rem; font-size: 1rem; color: var(--trust); }
+  .trust li { display: flex; align-items: center; gap: .55rem; }
+  .ck { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; flex: 0 0 auto; background: var(--ck-tint); color: var(--ck); }
+  nav.jump { display: flex; flex-wrap: wrap; gap: .5rem; }
+  nav.jump a { display: inline-flex; align-items: center; min-height: 44px; border-radius: 999px; padding: .4rem 1rem; font-size: 1rem; text-decoration: none; color: var(--pill-text); background: var(--pill-tint); border: 1px solid var(--pill-border); }
+  nav.jump a:hover { background: var(--pill-tint-hover); color: var(--pill-text); }
+  .pcard { border-radius: 10px; padding: 1.2rem 1.3rem; background: var(--card-bg); border: 1px solid var(--card-border); border-top: 4px solid #f0932b; }
+  .clab { margin: 0 0 .4rem; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--clab); }
+  .mtg { margin: 0; font-size: 1.2rem; font-weight: 700; }
+  .cline { margin: .35rem 0 0; font-size: 1rem; color: var(--cline); }
+  .act { display: flex; align-items: center; justify-content: center; gap: .4rem; min-height: 52px; margin-top: 1rem; border-radius: 8px; font-size: 1.15rem; font-weight: 700; text-decoration: none; box-shadow: 0 2px 0 rgba(0,0,0,.28); background: #ef8a22; color: #1a1a1a; border: 1px solid #b95f0c; }
+  .act:hover { background: #f39a3c; color: #1a1a1a; }
+  .note { margin: .55rem 0 0; font-size: .88rem; color: var(--lede); }
+
+  /* Body */
+  .sec { margin-top: 2.25rem; }
+  .hdr { display: flex; align-items: center; gap: 10px; }
+  .hdr svg { flex: 0 0 auto; width: 42px; height: 29px; }
+  .hdr h2 { font-size: 1.2rem; line-height: 1.3; margin: 0; }
+  .sec-intro { color: var(--lede); font-size: .95rem; margin: .3rem 0 .9rem; }
+  .card { border: 1px solid var(--border); border-radius: 10px; padding: .4rem 1.05rem; background: var(--card-bg); }
+  .t { font-weight: 600; font-size: 1rem; line-height: 1.35; }
+  .d { font-size: .92rem; color: var(--lede); margin-top: .25rem; }
+  .meta { font-size: .8rem; color: var(--hint); margin-top: .35rem; }
+  .tag { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-radius: 999px; padding: .1rem .5rem; border: 1px solid var(--tag-border); color: var(--tag-text); margin-right: .35rem; white-space: nowrap; }
+  .tag.soon { border-color: var(--soon); color: var(--soon); }
+  ul.plain { margin: 0; padding: 0; list-style: none; }
+  ul.plain li { padding: .75rem 0; border-top: 1px solid var(--border); }
+  ul.plain li:first-child { border-top: 0; }
+  .month { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--hint); margin: 1.1rem 0 .4rem; }
+  .feat-row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin-top: 2rem; }
+  .feat { display: block; border-radius: 12px; padding: 1.05rem 1.2rem; text-decoration: none; color: inherit; border: 2px solid; transition: background .15s ease; }
+  .feat .eb { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+  .feat .ft { display: block; font-size: 1.2rem; font-weight: 700; margin-top: .25rem; line-height: 1.25; }
+  .feat .fs { display: block; font-size: .92rem; margin-top: .35rem; }
+  .feat.hub { border-color: var(--hub); background: var(--card-bg); }
+  .feat.hub .eb, .feat.hub .arrow { color: var(--hub); }
+  .feat.hub .ft { color: var(--fg); }
+  .feat.hub .fs { color: var(--hub-sub); }
+  .feat.act-green { border-color: var(--cta-border); background: var(--cta-bg); }
+  .feat.act-green:hover { background: var(--cta-bg-hover); }
+  .feat.act-green .eb, .feat.act-green .arrow { color: var(--cta-eyebrow); }
+  .feat.act-green .ft { color: var(--cta-title); }
+  .feat.act-green .fs { color: var(--cta-sub); }
+  .feat.alt { border-color: var(--alt-border); background: var(--alt-bg); }
+  .feat.alt:hover { background: var(--alt-bg-hover); }
+  .feat.alt .eb, .feat.alt .arrow { color: var(--alt-eyebrow); }
+  .feat.alt .ft { color: var(--cta-title); }
+  .feat.alt .fs { color: var(--alt-sub); }
+  .cols { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(0,1fr); gap: 2.5rem; align-items: start; }
+  .disclosure { border: 1px solid var(--disc-border); background: var(--disc-bg); border-radius: 8px; padding: .7rem .9rem; margin-top: 2.5rem; font-size: .9rem; color: var(--disc-text); }
+
+  @media (max-width: 900px) { .split, .cols { grid-template-columns: 1fr; gap: 0; } .split aside { margin-top: 1.5rem; } .feat-row { grid-template-columns: 1fr; gap: .75rem; } }
+  @media (max-width: 640px) {
+    body { padding: 1.25rem 1rem 3rem; }
+    .trow svg { width: 44px; height: 31px; }
+    .trow h1 { font-size: 1.9rem; }
+    .promise { font-size: 1.15rem; }
+    .hdr svg { width: 40px; height: 28px; }
+    .hdr h2 { font-size: 1.15rem; }
+    .sec { margin-top: 2rem; }
   }
 </style>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -62,78 +124,117 @@
 </head>
 <body>
 <div class="wrap">
-<p class="monitor-link" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:.9rem;margin:0 0 .8rem"><a href="https://arborhillsmonitor.org/">Arbor Hills Monitor &rarr;</a></p>
 
-  <h1>Public comments and policy materials</h1>
-  <p class="lede">Public comments, evidence briefs, and proposed policy protections on the Arbor Hills Landfill, prepared by Trisha Kunst, a resident living less than one mile from the proposed expansion border. These materials express the author's views. The underlying regulatory records, datasets, and data visualizations are maintained separately at <a href="https://arborhillsmonitor.org/">Arbor Hills Monitor</a>.</p>
+<div class="ubar"><span>A resident's advocacy &middot; The records and data behind it live at Arbor Hills Monitor</span><a href="https://arborhillsmonitor.org/">Arbor Hills Monitor <span aria-hidden="true">&rarr;</span></a></div>
 
-  <a class="cta cta-alt" href="capacity/">
-    <div class="cta-eyebrow">New</div>
-    <div class="cta-title">How much landfill space does Southeast Michigan have left? <span class="arrow">&rarr;</span></div>
-    <div class="cta-sub">An interactive page: choose which landfills to count, then see how Canadian waste, recycling, food waste and the Pine Tree Acres expansion change the years of space left.</div>
-  </a>
+<header class="split">
+<div>
+<div class="trow"><svg viewBox="0 0 40 28" aria-hidden="true" focusable="false"><path d="M0 28 L11 12 L18 20 L18 28 Z" fill="#f0932b"/><path d="M18 20 L25 14 L40 28 L18 28 Z" fill="#e23d3d"/><circle cx="27" cy="8" r="5" fill="#e23d3d"/></svg><h1>Public comments and policy materials</h1></div>
+<p class="promise">A resident's requests to the county and analysis of what the Arbor Hills record means, each tied to the public documents it draws on.</p>
+<ul class="trust">
+<li><span class="ck"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Every request and analysis cites the public record</li>
+<li><span class="ck"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Interpretation is labeled, kept apart from the facts it rests on</li>
+<li><span class="ck"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Written by Trisha Kunst, local data scientist</li>
+</ul>
+<nav class="jump" aria-label="On this page"><a href="#briefs">Briefs and tools</a><a href="#comments">Public comments</a><a href="#outside">Outside reporting</a></nav>
+</div>
+<aside class="pcard" aria-label="Next meeting">
+<!-- meeting-card:start -->
+<div id="meeting-card" data-meeting-date="2026-11-18">
+<div data-state="upcoming">
+<p class="clab">Next meeting</p>
+<p class="mtg">MMPC &middot; Wednesday, Nov. 18, 2026</p>
+<p class="cline"><span class="todo">TODO: meeting time</span> &middot; <span class="todo">TODO: meeting location</span> &middot; Agenda <span class="todo">TODO: agenda link</span></p>
+</div>
+<div data-state="past" hidden>
+<p class="clab">After the meeting</p>
+<p class="mtg">Thank you for attending the Nov. 18 MMPC meeting.</p>
+<p class="cline">Follow-up notes and next steps <span class="todo">TODO: follow-up notes link</span></p>
+</div>
+</div>
+<script>
+(function () {
+  var c = document.getElementById("meeting-card");
+  if (!c || typeof Intl === "undefined") return;
+  var d = c.getAttribute("data-meeting-date");
+  var t = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  var past = t > d;
+  c.querySelector("[data-state=upcoming]").hidden = past;
+  c.querySelector("[data-state=past]").hidden = !past;
+})();
+</script>
+<!-- meeting-card:end -->
+<a class="act" href="#">Ask a data scientist <span aria-hidden="true">&rarr;</span></a>
+<p class="note">Plain-language answers, posted publicly. Names stay private unless shared. <span class="todo">TODO: Google Form URL</span></p>
+</aside>
+</header>
 
-  <a class="cta" href="index.html">
-    <div class="cta-eyebrow">Take action now</div>
-    <div class="cta-title">Write your commissioners <span class="arrow">&rarr;</span></div>
-    <div class="cta-sub">Send a letter to the county commissioners and state legislators, straight from your own email, in one click.</div>
-  </a>
+<section class="feat-row" aria-label="Start here">
+<a class="feat hub" href="mmpc/">
+<span class="eb">For MMPC members</span>
+<span class="ft">The committee briefing hub <span class="arrow" aria-hidden="true">&rarr;</span></span>
+<span class="fs">Answers, the record behind them, and a direct line to a data scientist, before Nov. 18.</span>
+</a>
+<a class="feat act-green" href="index.html">
+<span class="eb">Take action now</span>
+<span class="ft">Write your commissioners <span class="arrow" aria-hidden="true">&rarr;</span></span>
+<span class="fs">Send a letter to the county commissioners and state legislators, straight from your own email, in one click.</span>
+</a>
+<a class="feat alt" href="https://policy.arborhillsmonitor.org/proposed-protections/">
+<span class="eb">Now published</span>
+<span class="ft">Proposed minimum siting protections <span class="arrow" aria-hidden="true">&rarr;</span></span>
+<span class="fs">Three elevated-temperature protections a resident is asking the county to write into the Materials Management Plan's minimum siting criteria.</span>
+</a>
+</section>
 
-  <a class="cta cta-alt" href="https://policy.arborhillsmonitor.org/proposed-protections/">
-    <div class="cta-eyebrow">Now published</div>
-    <div class="cta-title">Proposed minimum siting protections <span class="arrow">&rarr;</span></div>
-    <div class="cta-sub">Three elevated-temperature protections a resident is asking the county to write into the Materials Management Plan's minimum siting criteria.</div>
-  </a>
+<section class="sec" aria-labelledby="briefs">
+<div class="hdr"><svg viewBox="0 0 40 28" aria-hidden="true" focusable="false"><path d="M1 27 L11 13 L18 20 L18 27 Z" fill="#f0932b"/><path d="M18 20 L25 15 L39 27 L18 27 Z" fill="#e23d3d"/><circle cx="27" cy="8" r="5" fill="#e23d3d"/></svg><h2 id="briefs">Briefs and tools</h2></div>
+<p class="sec-intro">Longer analysis, each built on public records.</p>
+<div class="card">
+<ul class="plain">
+<li><div class="t"><a href="capacity/">How much landfill space does Southeast Michigan have left?</a></div><div class="d">An interactive page: choose which landfills to count, then see how Canadian waste, recycling, food waste and the Pine Tree Acres expansion change the years of space left. Built on EGLE's FY2025 landfill report.</div><div class="meta"><span class="tag">Tool</span>Nov. 11, 2026</div></li>
+<li><div class="t"><a href="set-brief-2026-h1.html">2026 H1: SET evidence brief</a></div><div class="d">A resident-assembled brief on the subsurface elevated-temperature record at Arbor Hills, drawing on the operator's own EGLE-filed readings and the published literature.</div><div class="meta"><span class="tag">Brief</span></div></li>
+<li><div class="t"><a href="mmp-minimum-criteria-brief.html">Part 115: MMP minimum-criteria brief</a></div><div class="d">What county minimum siting criteria can cover, how EGLE must apply the applicable MMP during permit and license review, and where county planning authority ends and state regulatory authority begins.</div><div class="meta"><span class="tag">Brief</span></div></li>
+</ul>
+</div>
+</section>
 
-  <ul class="materials">
-    <li>
-      <div class="t"><a href="public-comment-2026-08-19.html">8/19/26 Materials Management Planning Committee - written public comment</a></div>
-      <div class="d">On the Materials Management Plan minimum siting requirements. Submitted to the Washtenaw County Materials Management Planning Committee, August 19, 2026.</div>
-    </li>
-    <li>
-      <div class="t"><a href="public-comment-2026-09-02.html">9/2/26 Board of Commissioners - spoken public comment</a></div>
-      <div class="d">Delivered in person to the Washtenaw County Board of Commissioners, the body that gives final approval to the Materials Management Plan, asking the county to retain an independent expert to help set the minimum siting criteria before any expansion. September 2, 2026.</div>
-    </li>
-    <li>
-      <div class="t"><a href="public-comment-2026-09-06-n1504.html">9/6/26 EGLE Air Quality Division - public comment (Arbor Hills Energy N1504 permit renewal)</a></div>
-      <div class="d">To Michigan EGLE on the draft renewal of the Arbor Hills Energy air permit (SRN N1504, the landfill-gas turbine plant): make the plant demonstrate on every run that its fuel meets the sulfur limit, rather than relying on monthly sampling and controls housed in another operator's plan. September 6, 2026.</div>
-    </li>
-    <li>
-      <div class="t"><a href="public-comment-2026-09-09.html">9/9/26 Materials Management Planning Committee - spoken public comment</a></div>
-      <div class="d">Delivered to the Washtenaw County Materials Management Planning Committee, asking the county to write three elevated-temperature protections into the Materials Management Plan's minimum siting criteria for any new or expanded landfill. September 9, 2026.</div>
-    </li>
-    <li>
-      <div class="t"><a href="public-comment-2026-11-04.html">11/4/26 Board of Commissioners - written public comment</a></div>
-      <div class="d">Submitted to the Washtenaw County Board of Commissioners on declining gas capture, methane at the boundary probes, and unmeasured benzene at Arbor Hills, asking the Board of Public Works to use the County's 2017 Host Community Agreement. November 4, 2026.</div>
-    </li>
-    <li>
-      <div class="t"><a href="capacity/">How much landfill space does Southeast Michigan have left?</a></div>
-      <div class="d">An interactive page: choose which landfills to count, then see how Canadian waste, recycling, food waste and the Pine Tree Acres expansion change the years of space left. Built on EGLE's FY2025 landfill report. November 11, 2026.</div>
-    </li>
-    <li>
-      <div class="t"><a href="set-brief-2026-h1.html">2026 H1 - SET evidence brief</a></div>
-      <div class="d">A resident-assembled brief on the subsurface elevated-temperature record at Arbor Hills, drawing on the operator's own EGLE-filed readings and the published literature.</div>
-    </li>
-    <li>
-      <div class="t"><a href="mmp-minimum-criteria-brief.html">Part 115 - MMP minimum-criteria brief</a></div>
-      <div class="d">A textual and structural analysis explaining why county minimum siting criteria may extend beyond geography, how EGLE must apply the applicable MMP during permit and license review, and where county planning authority ends and state regulatory authority begins.</div>
-    </li>
-  </ul>
+<div class="cols">
+<section class="sec" aria-labelledby="comments">
+<div class="hdr"><svg viewBox="0 0 40 28" aria-hidden="true" focusable="false"><path d="M1 27 L11 13 L18 20 L18 27 Z" fill="#f0932b"/><path d="M18 20 L25 15 L39 27 L18 27 Z" fill="#e23d3d"/><circle cx="27" cy="8" r="5" fill="#e23d3d"/></svg><h2 id="comments">Public comments, by date</h2></div>
+<p class="sec-intro">Every written and spoken comment, newest first, with who it went to.</p>
+<div class="card">
+<p class="month">November 2026</p>
+<ul class="plain">
+<li><p style="margin:0"><span class="tag soon">Coming soon</span></p><div class="t">Nov. <span class="todo">TODO: date</span>: MMPC, written (email note)</div><div class="d"><span class="todo">TODO: one-line summary of the email note, ahead of Nov. 18</span></div></li>
+<li><div class="t"><a href="public-comment-2026-11-04.html">Nov. 4: Board of Commissioners</a></div><div class="d">On declining gas capture, methane at the boundary probes, and unmeasured benzene at Arbor Hills; asks the Board of Public Works to use the County's 2017 Host Community Agreement.</div><div class="meta"><span class="tag">Written</span>Washtenaw County Board of Commissioners</div></li>
+</ul>
+<p class="month">September 2026</p>
+<ul class="plain">
+<li><div class="t"><a href="public-comment-2026-09-09.html">Sept. 9: MMPC</a></div><div class="d">Asks the county to write three elevated-temperature protections into the Materials Management Plan's minimum siting criteria for any new or expanded landfill.</div><div class="meta"><span class="tag">Spoken</span>Washtenaw County Materials Management Planning Committee</div></li>
+<li><div class="t"><a href="public-comment-2026-09-06-n1504.html">Sept. 6: EGLE Air Quality Division</a></div><div class="d">On the draft renewal of the Arbor Hills Energy air permit (SRN N1504, the landfill-gas turbine plant): make the plant demonstrate on every run that its fuel meets the sulfur limit, rather than relying on monthly sampling and controls housed in another operator's plan.</div><div class="meta"><span class="tag">Written</span>Michigan EGLE</div></li>
+<li><div class="t"><a href="public-comment-2026-09-02.html">Sept. 2: Board of Commissioners</a></div><div class="d">Asks the county to retain an independent expert to help set the minimum siting criteria before any expansion.</div><div class="meta"><span class="tag">Spoken</span>Washtenaw County Board of Commissioners</div></li>
+</ul>
+<p class="month">August 2026</p>
+<ul class="plain" style="margin-bottom:.4rem">
+<li><div class="t"><a href="public-comment-2026-08-19.html">Aug. 19: MMPC</a></div><div class="d">On the Materials Management Plan minimum siting requirements.</div><div class="meta"><span class="tag">Written</span>Washtenaw County Materials Management Planning Committee</div></li>
+</ul>
+</div>
+</section>
 
-  <h2 style="font-size: 1.15rem; margin: 1.75rem 0 .25rem;">Outside reporting</h2>
-  <p class="lede" style="margin-bottom: .75rem;">Writing about Arbor Hills by other authors and organizations.</p>
-  <ul class="materials">
-    <li>
-      <div class="t"><a href="https://wdet.org/2026/09/23/the-metro-michigan-landfills-are-heating-up-heres-what-escapes/">The Metro: Michigan landfills are heating up. Here's what escapes</a></div>
-      <div class="d">By Robyn Vincent and David Leins, WDET 101.9 FM (The Metro), September 23, 2026. On overheating Michigan landfills and what they release, including Arbor Hills.</div>
-    </li>
-    <li>
-      <div class="t"><a href="https://conservancyinitiative.org/new-blog/continuing-compliance-issues-at-arbor-hills-landfill-a-closer-look-at-recent-violations">Continuing Compliance Issues at Arbor Hills Landfill: A Closer Look at Recent Violations</a></div>
-      <div class="d">By David Drinan, Conservancy Initiative, September 25, 2026. On the Ypsilanti Community Utilities Authority's Notices of Violation for the landfill's wastewater discharges.</div>
-    </li>
-  </ul>
+<section class="sec" aria-labelledby="outside">
+<div class="hdr"><svg viewBox="0 0 40 28" aria-hidden="true" focusable="false"><path d="M1 27 L11 13 L18 20 L18 27 Z" fill="#f0932b"/><path d="M18 20 L25 15 L39 27 L18 27 Z" fill="#e23d3d"/><circle cx="27" cy="8" r="5" fill="#e23d3d"/></svg><h2 id="outside">Outside reporting</h2></div>
+<p class="sec-intro">Writing about Arbor Hills by other authors and organizations.</p>
+<div class="card">
+<ul class="plain">
+<li><div class="t"><a href="https://wdet.org/2026/09/23/the-metro-michigan-landfills-are-heating-up-heres-what-escapes/">The Metro: Michigan landfills are heating up. Here's what escapes</a></div><div class="d">On overheating Michigan landfills and what they release, including Arbor Hills.</div><div class="meta">By Robyn Vincent and David Leins, WDET 101.9 FM &middot; Sept. 23, 2026</div></li>
+<li><div class="t"><a href="https://conservancyinitiative.org/new-blog/continuing-compliance-issues-at-arbor-hills-landfill-a-closer-look-at-recent-violations">Continuing Compliance Issues at Arbor Hills Landfill: A Closer Look at Recent Violations</a></div><div class="d">On the Ypsilanti Community Utilities Authority's Notices of Violation for the landfill's wastewater discharges.</div><div class="meta">By David Drinan, Conservancy Initiative &middot; Sept. 25, 2026</div></li>
+</ul>
+</div>
+</section>
+</div>
 
-  <div class="disclosure">Regulatory records, downloadable datasets, and data visualizations for Arbor Hills are maintained separately at <a href="https://arborhillsmonitor.org/">Arbor Hills Monitor</a>. The Monitor's datasets and code are reproducible; the comments and policy requests on this page are advocacy prepared by a resident.</div>
+<div class="disclosure">Regulatory records, downloadable datasets, and data visualizations for Arbor Hills are maintained separately at <a href="https://arborhillsmonitor.org/">Arbor Hills Monitor</a>. The Monitor's datasets and code are reproducible; the comments and policy requests on this page are advocacy prepared by a resident.</div>
 
 <footer class="legal-footer" style="max-width:760px;margin:2.5rem auto 1.5rem;padding:1rem 16px 0;border-top:1px solid rgba(128,128,128,.35);font-size:0.82rem;line-height:1.5;opacity:.85">
 <p class="legal-nav" style="margin:0 0 .5rem"><a href="https://arborhillsmonitor.org/terms-of-use/">Terms</a> &middot; <a href="https://arborhillsmonitor.org/privacy-policy/">Privacy</a> &middot; <a href="https://arborhillsmonitor.org/disclaimer/">Disclaimer</a> &middot; <a href="https://arborhillsmonitor.org/corrections/">Corrections</a> &middot; <a href="https://arborhillsmonitor.org/ip-fair-use/">IP &amp; Fair Use</a></p>

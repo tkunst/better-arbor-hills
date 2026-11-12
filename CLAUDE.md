@@ -43,6 +43,10 @@ This repo has no `pytest`, no GitHub Actions CI. The equivalent-strength gate is
    redirect stubs) carries the legal footer built from `footer-canonical.json`, a vendored
    copy of the Monitor's `footer/canonical-footer.json`; the `footer-drift` workflow also
    fails if the two copies differ (on PRs and monthly). New pages need the footer.
+   `node test/meeting-card.test.js` and `node test/page-rules.test.js` cover the
+   next-meeting card (configured once in `meeting-card.json`; rebuild the card in every
+   page with `node tools/meeting-card.js`) and the page rules on `materials.html` and
+   `mmpc/index.html`.
 3. A **manual browser acceptance checklist** (documented per change).
 4. The **Step 5 independent subagent review** and **Step 6 security subagent review**
    on the diff (see `docs/overnight-coder.md`).
