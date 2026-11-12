@@ -62,8 +62,8 @@ for (const rel of PAGES) {
   ok('hub: Start here section and pill exist', !!sec && !!pill);
   if (sec && pill) {
     const items = (sec[1].match(/<li[\s>]/g) || []).length;
-    const secHidden = /\shidden[\s>]/.test(sec[0].slice(0, sec[0].indexOf('>') + 1));
-    const pillHidden = /\shidden[\s>]/.test(pill[0]);
+    const secHidden = /\shidden(="[^"]*")?[\s>]/.test(sec[0].slice(0, sec[0].indexOf('>') + 1));
+    const pillHidden = /\shidden(="[^"]*")?[\s>]/.test(pill[0]);
     ok('hub: Start here hidden exactly when it has no items (' + items + ' items)',
       secHidden === (items === 0) && pillHidden === (items === 0));
   }
