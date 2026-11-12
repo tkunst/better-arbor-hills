@@ -87,7 +87,7 @@ function link(url, text, todoLabel) {
 const CLIENT_SCRIPT = [
   '(function () {',
   '  var c = document.getElementById("meeting-card");',
-  '  if (!c || typeof Intl === "undefined") return;',
+  '  if (!c || typeof Intl === "undefined" || typeof Intl.DateTimeFormat.prototype.formatToParts !== "function") return;',
   '  var d = c.getAttribute("data-meeting-date");',
   '  var p = {};',
   '  new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });',
