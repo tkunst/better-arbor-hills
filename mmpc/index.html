@@ -167,10 +167,11 @@
     ol.start li::before { flex: 0 0 1.8rem; margin: 0; }
     .answers { gap: .7rem; }
     .fit, .fit tbody, .fit tr, .fit td, .fit tbody th { display: block; width: 100%; box-sizing: border-box; }
-    .fit tbody th { border-top: 0; padding: .5rem .9rem .1rem; font-size: 1.05rem; }
+    .fit tbody th { border-top: 0; border-bottom: 0; padding: .5rem .9rem .1rem; font-size: 1.05rem; }
     .fit thead { display: none; }
-    .fit tr { border-top: 1px solid var(--border); padding: .4rem 0; }
-    .fit tr:first-child { border-top: 0; }
+    .fit { border: 0; background: none; }
+    .fit tr { border: 1px solid var(--border); border-radius: 10px; background: var(--card-bg); padding: .5rem 0 .6rem; margin: 0 0 .75rem; }
+    .fit tr:last-child { margin-bottom: 0; }
     .fit td { border: 0; padding: .35rem .9rem; }
     .fit td::before { content: attr(data-label); display: block; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--hint); }
   }
@@ -234,7 +235,7 @@
 <tr><th scope="row">Capacity</th><td data-label="Reason raised">Southeast Michigan is running short on landfill space.</td><td data-label="What the record shows">EGLE's FY2025 landfill report, run through the capacity model: 16.2 years of space left at today's rates, counting landfills within 52 miles of the Washtenaw County line. <span class="todo">TODO: new copy from Trisha (comparison to the 5.5-year line)</span> <a href="../capacity/">Capacity model</a></td><td data-label="Does the record back it?"><span class="tag tag-gap">No</span><span class="why">16.2 years of space left.</span></td></tr>
 <tr><th scope="row">Local control</th><td data-label="Reason raised">The county wants more oversight of the landfill.</td><td data-label="What the record shows">The county's 2017 Host Community Agreement already includes an oversight clause. Public records reviewed so far show no use of it since it was signed. If the clause is too narrow, the record does not yet show the county saying so or asking to strengthen it. <a href="../public-comment-2026-11-04.html">Source</a></td><td data-label="Does the record back it?"><span class="tag tag-gap">Not so far</span><span class="why">The county has not used the oversight tool it already has.</span></td></tr>
 <tr><th scope="row">Truck emissions</th><td data-label="Reason raised">Shipping trash to a landfill farther away would add truck emissions.</td><td data-label="What the record shows">Not yet analyzed. The analysis will set the added truck miles of hauling farther against the emissions of building and running an entirely new landfill.</td><td data-label="Does the record back it?"><span class="tag">Not yet known</span><span class="why">Analysis in progress; this row updates when it is published.</span></td></tr>
-<tr><th scope="row">Revenue</th><td data-label="Reason raised">A new landfill would bring needed revenue to the county.</td><td data-label="What the record shows">Not yet analyzed. The analysis will set the host fees the county receives against the costs that come with a landfill.</td><td data-label="Does the record back it?"><span class="tag">Not yet known</span><span class="why">Analysis in progress; this row updates when it is published.</span></td></tr>
+<tr><th scope="row">Revenue</th><td data-label="Reason raised">A new landfill would bring needed revenue to the county.</td><td data-label="What the record shows">Today's landfill already pays about $3.5 million a year to Salem Township (host fees and landfill-gas payments, fiscal year ending March 31, 2025) and about $1.25 million to $1.4 million a year to Washtenaw County. The county budgets its share as about three-quarters of its Materials Management program, which pays staff and program costs in the Water Resources Commissioner's office. <a href="https://content.civicplus.com/api/assets/mi-washtenawcounty/8cefc371-4be3-4963-afee-7eba18fa7212">County budget</a> <span class="todo">TODO: Salem Township source link; refutation gate</span></td><td data-label="Does the record back it?"><span class="todo">TODO: verdict from Trisha</span></td></tr>
 </tbody>
 </table>
 </section>
