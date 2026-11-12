@@ -40,81 +40,107 @@ threw = false; try { mc.endStamp('2026-11-18', '11:30 a.m.'); } catch (e) { thre
 ok('ends must be 24-hour HH:MM', threw);
 ok('midnight is 00, not 24 (hourCycle h23)', mc.detroitStamp(new Date('2026-11-19T05:00:00Z')) === '2026-11-19 00:00');
 
-// Build-time render: exactly one state visible.
-const cfg = { body: 'MMPC', date: '2026-11-18', time: null, location: null, agenda_url: null, followup_url: null };
-const before = mc.renderCard(cfg, new Date('2026-11-12T12:00:00Z'));
-const after = mc.renderCard(cfg, new Date('2026-11-20T12:00:00Z'));
-ok('before: upcoming shown, past hidden',
-  before.includes('<div data-state="upcoming">') && before.includes('<div data-state="past" hidden>'));
-ok('after: past shown, upcoming hidden',
-  after.includes('<div data-state="upcoming" hidden>') && after.includes('<div data-state="past">'));
-ok('copy: next meeting line', before.includes('MMPC &middot; Wednesday, Nov. 18, 2026'));
-ok('copy: thank-you line', before.includes('Thank you for attending the Nov. 18 MMPC meeting.'));
-ok('unset time/location/links render as visible TODOs',
-  (before.match(/class="todo"/g) || []).length === 4);
-const filled = mc.renderCard(Object.assign({}, cfg, { time: '6:30 p.m.', location: 'Room <A>',
-  agenda_url: 'https://example.org/a?x=1&y=2' }), new Date('2026-11-12T12:00:00Z'));
+// Build-time render: two meetings -> three periods, exactly one visible.
+const M1 = { date: '2026-11-18', time: '10 to 11:30 a.m.', ends: '11:30', location: null, agenda_url: null, followup_url: null };
+const M2 = { date: '2026-12-09', time: null, ends: null, location: null, agenda_url: null, followup_url: null };
+const cfg = { body: 'MMPC', meetings: [M1, M2] };
+const visible = (html) => (html.match(/<div data-from="[^"]*" data-until="[^"]*" data-next="[^"]*">/g) || []);
+const T_BEFORE = new Date('2026-11-12T12:00:00Z');
+const T_BETWEEN = new Date('2026-11-18T16:30:00Z');   // 11:30 a.m. ET Nov. 18
+const T_AFTER = new Date('2026-12-10T05:00:00Z');     // midnight ET after Dec. 9
+const before = mc.renderCard(cfg, T_BEFORE), between = mc.renderCard(cfg, T_BETWEEN), after = mc.renderCard(cfg, T_AFTER);
+ok('three periods for two meetings', (before.match(/data-from=/g) || []).length === 3);
+ok('exactly one period visible at each time', [before, between, after].every((h) => visible(h).length === 1));
+ok('before: Nov. 18 is next', visible(before)[0].includes('data-next="the Nov. 18 meeting"'));
+ok('between: Dec. 9 is next', visible(between)[0].includes('data-next="the Dec. 9 meeting"'));
+ok('after the last: "the next meeting"', visible(after)[0].includes('data-next="the next meeting"'));
+ok('still Nov. 18 at 11:29 a.m. ET', mc.currentPeriod(cfg, new Date('2026-11-18T16:29:00Z')).next.date === '2026-11-18');
+ok('Dec. 9 (no end time) is next until midnight ET', mc.currentPeriod(cfg, new Date('2026-12-10T04:59:00Z')).next.date === '2026-12-09');
+ok('copy: next meeting line (weekday from the date)', before.includes('MMPC &middot; Wednesday, Nov. 18, 2026') && before.includes('MMPC &middot; Wednesday, Dec. 9, 2026'));
+ok('copy: thank-you lines', before.includes('Thank you for attending the Nov. 18 MMPC meeting.') && before.includes('Thank you for attending the Dec. 9 MMPC meeting.'));
+ok('between period: thank-you for Nov. 18 and next meeting Dec. 9 in one block',
+  /data-until="2026-12-09 24:00"[^>]*>\n<p class="clab">After the meeting<\/p>\n<p class="mtg">Thank you for attending the Nov. 18 MMPC meeting\.<\/p>[\s\S]*?Wednesday, Dec\. 9, 2026/.test(before));
+ok('unset values render as visible TODOs', before.includes('TODO: meeting location') && before.includes('TODO: meeting time'));
+let threwOrder = false;
+try { mc.renderCard({ body: 'MMPC', meetings: [M2, M1] }, T_BEFORE); } catch (e) { threwOrder = true; }
+ok('meetings out of date order are refused', threwOrder);
+const filled = mc.renderCard({ body: 'MMPC', meetings: [Object.assign({}, M1, { location: 'Room <A>',
+  agenda_url: 'https://example.org/a?x=1&y=2' })] }, T_BEFORE);
 let threwScheme = false;
-try { mc.renderCard(Object.assign({}, cfg, { agenda_url: 'javascript:alert(1)' }), new Date()); } catch (e) { threwScheme = true; }
-ok("non-https link in config is refused", threwScheme);
+try { mc.renderCard({ body: 'MMPC', meetings: [Object.assign({}, M1, { agenda_url: 'javascript:alert(1)' })] }, T_BEFORE); } catch (e) { threwScheme = true; }
+ok('non-https link in config is refused', threwScheme);
 ok('daylight time: still upcoming late on the day (July 1, 11:30 p.m. EDT)',
   !mc.isPast('2026-07-01', new Date('2026-07-02T03:30:00Z')));
 ok('daylight time: past just after midnight EDT (July 2, 12:30 a.m.)',
   mc.isPast('2026-07-01', new Date('2026-07-02T04:30:00Z')));
 ok('supplied values are escaped', filled.includes('Room &lt;A&gt;') && filled.includes('a?x=1&amp;y=2'));
+const page = '<h2>three things before <span data-next-meeting>old</span></h2>';
+ok('date mentions rewritten', mc.renderMentions(page, cfg, T_BETWEEN).includes('<span data-next-meeting>the Dec. 9 meeting</span>'));
 
-// Every page carries the card the config describes (same as `node tools/meeting-card.js --check`
-// would report on the build day), and exactly once.
+// Every page carries the card and mentions the config describes, on any date.
 const config = mc.loadConfig();
-ok('config date is date-only', /^\d{4}-\d{2}-\d{2}$/.test(config.date));
-if (config.ends && config.time) {
-  // "11:30" (24-hour) is shown as "11:30" before noon and "1:30" after; the end time
-  // the card swaps at must be the one the card advertises.
-  const [h, m] = config.ends.split(':').map(Number);
-  const shown = ((h % 12) || 12) + ':' + String(m).padStart(2, '0');
-  ok('config: displayed time ends at `ends` (' + shown + ')', config.time.includes(shown), config.time);
+for (const m of config.meetings) {
+  ok('config: ' + m.date + ' is date-only', /^\d{4}-\d{2}-\d{2}$/.test(m.date));
+  if (m.ends && m.time) {
+    // The end time the card swaps at must be the one the card advertises.
+    const [h, mm] = m.ends.split(':').map(Number);
+    const shown = ((h % 12) || 12) + ':' + String(mm).padStart(2, '0');
+    ok('config: ' + m.date + ' displayed time ends at `ends` (' + shown + ')', m.time.includes(shown));
+  }
 }
 for (const rel of mc.PAGES) {
   const html = fs.readFileSync(path.join(root, rel), 'utf8');
   ok(rel + ': one card', html.split(mc.START).length === 2 && html.split(mc.END).length === 2);
-  ok(rel + ': card date matches meeting-card.json', html.includes('data-meeting-date="' + config.date + '"'));
   const a = html.indexOf(mc.START), b = html.indexOf(mc.END) + mc.END.length;
   const shipped = html.slice(a, b);
-  ok(rel + ': whole card matches meeting-card.json (either state)',
-    shipped === mc.renderCard(config, new Date(Date.parse(config.date + 'T12:00:00-05:00') - 86400000)) ||
-    shipped === mc.renderCard(config, new Date(Date.parse(config.date + 'T12:00:00-05:00') + 2 * 86400000)));
+  // The shipped card equals a render for SOME moment (one per period), so the test
+  // stays true across the meetings; --check pins it to today.
+  const candidates = mc.periods(config).map((p) => p.from
+    ? new Date(Date.parse(p.from.slice(0, 10) + 'T12:00:00-05:00') + 86400000)
+    : new Date(Date.parse(config.meetings[0].date + 'T12:00:00-05:00') - 86400000));
+  ok(rel + ': whole card matches meeting-card.json', candidates.some((t) => shipped === mc.renderCard(config, t)));
+  ok(rel + ': date mentions match the card',
+    candidates.some((t) => shipped === mc.renderCard(config, t) && mc.renderMentions(html, config, t) === html));
+  ok(rel + ': no hand-typed meeting date outside the card and mentions',
+    !/Nov\. 18|Dec\. 9/.test(html.slice(0, a).replace(/<span data-next-meeting>[^<]*<\/span>/g, '') +
+      html.slice(b).replace(/<span data-next-meeting>[^<]*<\/span>/g, '')));
   ok(rel + ': ships the tested inline script', html.includes(mc.CLIENT_SCRIPT));
   ok(rel + ': no innerHTML', !/innerHTML/.test(html));
 }
 
-// Run the shipped inline script with a fake clock and document.
-function runClient(nowIso, date, ends) {
-  const states = { upcoming: { hidden: false }, past: { hidden: true } };
-  const card = {
-    getAttribute: (n) => (n === 'data-meeting-date' ? date
-      : n === 'data-meeting-end' ? mc.endStamp(date, ends) : null),
-    querySelector: (sel) => states[/data-state=(\w+)/.exec(sel)[1]],
-  };
+// Run the shipped inline script with a fake clock and fake document built from the
+// real render, then check which period shows and what the date mentions say.
+function runClient(nowIso, conf) {
+  const blocks = mc.periods(conf).map((p) => ({
+    hidden: false,
+    attrs: { 'data-from': p.from, 'data-until': p.until, 'data-next': mc.nextPhrase(p.next) },
+    getAttribute(n) { return this.attrs[n]; },
+  }));
+  const spans = [{ textContent: 'x' }, { textContent: 'y' }];
+  const card = { querySelectorAll: (sel) => (sel === '[data-from]' ? blocks : []) };
   const RealDate = Date;
   class FakeDate extends RealDate {
     constructor(...a) { if (a.length) super(...a); else super(nowIso); }
   }
   vm.runInNewContext(mc.CLIENT_SCRIPT, {
-    document: { getElementById: (id) => (id === 'meeting-card' ? card : null) },
+    document: {
+      readyState: 'complete',
+      getElementById: (id) => (id === 'meeting-card' ? card : null),
+      querySelectorAll: (sel) => (sel === '[data-next-meeting]' ? spans : []),
+    },
     Intl, Date: FakeDate,
   });
-  return states;
+  return { shown: blocks.findIndex((x) => !x.hidden), hiddenCount: blocks.filter((x) => x.hidden).length, spans };
 }
-let s = runClient('2026-11-18T23:00:00Z', '2026-11-18');
-ok('client: shows upcoming on meeting day', !s.upcoming.hidden && s.past.hidden);
-s = runClient('2026-11-19T05:00:00Z', '2026-11-18');
-ok('client: swaps to "after the meeting" at the end of the day ET', s.upcoming.hidden && !s.past.hidden);
-s = runClient('2026-11-18T16:29:00Z', '2026-11-18', '11:30');
-ok('client: with ends 11:30, still upcoming at 11:29 a.m. ET', !s.upcoming.hidden && s.past.hidden);
-s = runClient('2026-11-18T16:30:00Z', '2026-11-18', '11:30');
-ok('client: with ends 11:30, swaps at 11:30 a.m. ET', s.upcoming.hidden && !s.past.hidden);
-s = runClient('2026-11-10T12:00:00Z', '2026-11-08');
-ok('client: a past date (set in the past) shows the after state', s.upcoming.hidden && !s.past.hidden);
+let r = runClient('2026-11-18T16:29:00Z', cfg);
+ok('client: 11:29 a.m. ET Nov. 18 shows period 0, mentions "the Nov. 18 meeting"',
+  r.shown === 0 && r.hiddenCount === 2 && r.spans.every((x) => x.textContent === 'the Nov. 18 meeting'));
+r = runClient('2026-11-18T16:30:00Z', cfg);
+ok('client: 11:30 a.m. ET Nov. 18 rolls to period 1, mentions "the Dec. 9 meeting"',
+  r.shown === 1 && r.hiddenCount === 2 && r.spans.every((x) => x.textContent === 'the Dec. 9 meeting'));
+r = runClient('2026-12-10T05:00:00Z', cfg);
+ok('client: after Dec. 9 shows the last period, mentions "the next meeting"',
+  r.shown === 2 && r.spans.every((x) => x.textContent === 'the next meeting'));
 
 console.log(`\nmeeting-card: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

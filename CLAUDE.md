@@ -16,8 +16,12 @@ separate sites** — never merge them. As of 2026-08-31 (Trisha's two-site rulin
 are **transparently cross-linked**: the Monitor homepage carries ONE clearly-labeled,
 disclosed "Public comments and policy materials" box pointing to this repo's
 `materials.html`, and this repo carries a reciprocal disclosure pointing to the Monitor.
-That labeled, disclosed cross-reference is the only link between them — **never** an
-advocacy CTA on the monitor, and never anything that blurs the evidence/advocacy line.
+As of 2026-11-12 (design handoff, Credibility header) each site's top bar also carries
+one labeled cross-site link (Monitor -> "Resident's policy site", policy -> "Arbor Hills
+Monitor"). **Never** an advocacy CTA on the monitor, and never anything that blurs the
+evidence/advocacy line. Asking for questions is not advocacy (Trisha, 2026-11-12): the
+Monitor may carry an "Ask a data scientist" button, and each answer is posted on the
+site it belongs on, factual answers on the Monitor and policy answers here.
 Data visualizations (thermal map, wellfield explorer) now live on the **Monitor**
 (`arbor-hills-monitor/site/`); this repo's old `thermal-map/`, `thermal-map-embed/`, and
 `wellfield-explorer/` are redirects there.
@@ -44,8 +48,9 @@ This repo has no `pytest`, no GitHub Actions CI. The equivalent-strength gate is
    copy of the Monitor's `footer/canonical-footer.json`; the `footer-drift` workflow also
    fails if the two copies differ (on PRs and monthly). New pages need the footer.
    `node test/meeting-card.test.js` and `node test/page-rules.test.js` cover the
-   next-meeting card (configured once in `meeting-card.json`; rebuild the card in every
-   page with `node tools/meeting-card.js`) and the page rules on `materials.html` and
+   meeting card and the `<span data-next-meeting>` date mentions (configured once in
+   `meeting-card.json`, a list of meetings; rebuild every page with
+   `node tools/meeting-card.js`) and the page rules on `materials.html` and
    `mmpc/index.html`.
 3. A **manual browser acceptance checklist** (documented per change).
 4. The **Step 5 independent subagent review** and **Step 6 security subagent review**

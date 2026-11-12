@@ -196,7 +196,7 @@
 <section class="sec" aria-labelledby="capacity" style="margin-top:1.75rem">
 <div class="capacity">
 <div>
-<p class="eb">For discussion Nov. 18</p>
+<p class="eb">For discussion at <span data-next-meeting>the Nov. 18 meeting</span></p>
 <h2 id="capacity">Is there a landfill capacity crisis?</h2>
 <p class="lead">The committee has been told there is. <span class="todo">TODO: one sentence on what EGLE's FY2025 landfill report shows, with the years of space left for Southeast Michigan</span></p>
 <a class="go" href="../capacity/">Try the capacity model <span aria-hidden="true">&nbsp;&rarr;</span></a>
@@ -210,7 +210,7 @@
 </section>
 
 <section class="sec" aria-labelledby="start">
-<h2 id="start">Start here: three things before Nov. 18</h2>
+<h2 id="start">Start here: three things before <span data-next-meeting>the Nov. 18 meeting</span></h2>
 <p class="sec-intro">The few points most likely to change the committee's decision. Five minutes.</p>
 <ol class="start">
 <li><div><div class="t"><span class="todo">TODO: point 1</span></div><div class="d"><span class="todo">TODO: one-line summary and answer link</span></div></div></li>
@@ -303,31 +303,48 @@
 <aside class="rail" aria-label="Meeting and contact">
 <div class="pcard meet">
 <!-- meeting-card:start -->
-<div id="meeting-card" data-meeting-date="2026-11-18" data-meeting-end="2026-11-18 11:30">
-<div data-state="upcoming">
+<div id="meeting-card">
+<div data-from="" data-until="2026-11-18 11:30" data-next="the Nov. 18 meeting">
 <p class="clab">Next meeting</p>
 <p class="mtg">MMPC &middot; Wednesday, Nov. 18, 2026</p>
 <p class="cline">10 to 11:30 a.m. &middot; <span class="todo">TODO: meeting location</span> &middot; Agenda <span class="todo">TODO: agenda link</span></p>
 </div>
-<div data-state="past" hidden>
+<div data-from="2026-11-18 11:30" data-until="2026-12-09 24:00" data-next="the Dec. 9 meeting" hidden>
 <p class="clab">After the meeting</p>
 <p class="mtg">Thank you for attending the Nov. 18 MMPC meeting.</p>
+<p class="cline">Follow-up notes and next steps <span class="todo">TODO: follow-up notes link</span></p>
+<p class="clab" style="margin-top:1rem">Next meeting</p>
+<p class="mtg">MMPC &middot; Wednesday, Dec. 9, 2026</p>
+<p class="cline"><span class="todo">TODO: meeting time</span> &middot; <span class="todo">TODO: meeting location</span> &middot; Agenda <span class="todo">TODO: agenda link</span></p>
+</div>
+<div data-from="2026-12-09 24:00" data-until="" data-next="the next meeting" hidden>
+<p class="clab">After the meeting</p>
+<p class="mtg">Thank you for attending the Dec. 9 MMPC meeting.</p>
 <p class="cline">Follow-up notes and next steps <span class="todo">TODO: follow-up notes link</span></p>
 </div>
 </div>
 <script>
 (function () {
+  function run() {
   var c = document.getElementById("meeting-card");
   if (!c || typeof Intl === "undefined" || typeof Intl.DateTimeFormat.prototype.formatToParts !== "function") return;
-  var e = c.getAttribute("data-meeting-end");
   var p = {};
   new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
-  if (!e || !p.hour || p.dayPeriod) return;
-  var past = (p.year + "-" + p.month + "-" + p.day + " " + p.hour + ":" + p.minute) >= e;
-  var u = c.querySelector("[data-state=upcoming]"), a = c.querySelector("[data-state=past]");
-  if (!u || !a) return;
-  u.hidden = past;
-  a.hidden = !past;
+  if (!p.hour || p.dayPeriod) return;
+  var now = p.year + "-" + p.month + "-" + p.day + " " + p.hour + ":" + p.minute;
+  var blocks = c.querySelectorAll("[data-from]"), shown = null, i;
+  for (i = 0; i < blocks.length; i++) {
+    var f = blocks[i].getAttribute("data-from"), u = blocks[i].getAttribute("data-until");
+    if (!shown && (!f || now >= f) && (!u || now < u)) shown = blocks[i];
+  }
+  if (!shown) return;
+  for (i = 0; i < blocks.length; i++) blocks[i].hidden = blocks[i] !== shown;
+  var next = shown.getAttribute("data-next"), spans = document.querySelectorAll("[data-next-meeting]");
+  for (i = 0; i < spans.length; i++) spans[i].textContent = next;
+  }
+  // Date mentions can sit below the card, so wait for the whole page.
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+  else run();
 })();
 </script>
 <!-- meeting-card:end -->
