@@ -29,6 +29,16 @@ ok('upcoming the day before', !mc.isPast('2026-11-18', new Date('2026-11-17T12:0
 ok('upcoming on the day, late evening ET', !mc.isPast('2026-11-18', new Date('2026-11-19T04:59:00Z')));
 ok('past at 12:00 a.m. ET on Nov. 19', mc.isPast('2026-11-18', new Date('2026-11-19T05:00:00Z')));
 ok('past a week later', mc.isPast('2026-11-18', new Date('2026-11-25T12:00:00Z')));
+// With an end time (Nov. 18, 2026 is EST, UTC-5): swaps at 11:30 a.m. ET.
+ok('ends: upcoming during the meeting (11:29 a.m. ET)', !mc.isPast('2026-11-18', new Date('2026-11-18T16:29:00Z'), '11:30'));
+ok('ends: past at 11:30 a.m. ET', mc.isPast('2026-11-18', new Date('2026-11-18T16:30:00Z'), '11:30'));
+ok('ends: upcoming the evening before', !mc.isPast('2026-11-18', new Date('2026-11-18T03:00:00Z'), '11:30'));
+ok('ends: daylight time (July 1, 11:30 a.m. EDT = 15:30Z)',
+  !mc.isPast('2026-07-01', new Date('2026-07-01T15:29:00Z'), '11:30') &&
+  mc.isPast('2026-07-01', new Date('2026-07-01T15:30:00Z'), '11:30'));
+threw = false; try { mc.endStamp('2026-11-18', '11:30 a.m.'); } catch (e) { threw = true; }
+ok('ends must be 24-hour HH:MM', threw);
+ok('midnight is 00, not 24 (hourCycle h23)', mc.detroitStamp(new Date('2026-11-19T05:00:00Z')) === '2026-11-19 00:00');
 
 // Build-time render: exactly one state visible.
 const cfg = { body: 'MMPC', date: '2026-11-18', time: null, location: null, agenda_url: null, followup_url: null };
@@ -64,17 +74,18 @@ for (const rel of mc.PAGES) {
   const a = html.indexOf(mc.START), b = html.indexOf(mc.END) + mc.END.length;
   const shipped = html.slice(a, b);
   ok(rel + ': whole card matches meeting-card.json (either state)',
-    shipped === mc.renderCard(config, new Date(config.date + 'T12:00:00-05:00')) ||
+    shipped === mc.renderCard(config, new Date(Date.parse(config.date + 'T12:00:00-05:00') - 86400000)) ||
     shipped === mc.renderCard(config, new Date(Date.parse(config.date + 'T12:00:00-05:00') + 2 * 86400000)));
   ok(rel + ': ships the tested inline script', html.includes(mc.CLIENT_SCRIPT));
   ok(rel + ': no innerHTML', !/innerHTML/.test(html));
 }
 
 // Run the shipped inline script with a fake clock and document.
-function runClient(nowIso, date) {
+function runClient(nowIso, date, ends) {
   const states = { upcoming: { hidden: false }, past: { hidden: true } };
   const card = {
-    getAttribute: (n) => (n === 'data-meeting-date' ? date : null),
+    getAttribute: (n) => (n === 'data-meeting-date' ? date
+      : n === 'data-meeting-end' ? mc.endStamp(date, ends) : null),
     querySelector: (sel) => states[/data-state=(\w+)/.exec(sel)[1]],
   };
   const RealDate = Date;
@@ -91,6 +102,10 @@ let s = runClient('2026-11-18T23:00:00Z', '2026-11-18');
 ok('client: shows upcoming on meeting day', !s.upcoming.hidden && s.past.hidden);
 s = runClient('2026-11-19T05:00:00Z', '2026-11-18');
 ok('client: swaps to "after the meeting" at the end of the day ET', s.upcoming.hidden && !s.past.hidden);
+s = runClient('2026-11-18T16:29:00Z', '2026-11-18', '11:30');
+ok('client: with ends 11:30, still upcoming at 11:29 a.m. ET', !s.upcoming.hidden && s.past.hidden);
+s = runClient('2026-11-18T16:30:00Z', '2026-11-18', '11:30');
+ok('client: with ends 11:30, swaps at 11:30 a.m. ET', s.upcoming.hidden && !s.past.hidden);
 s = runClient('2026-11-10T12:00:00Z', '2026-11-08');
 ok('client: a past date (set in the past) shows the after state', s.upcoming.hidden && !s.past.hidden);
 

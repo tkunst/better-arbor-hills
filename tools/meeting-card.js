@@ -11,8 +11,9 @@
 // re-checks the date in the reader's browser, so the card swaps on its own after the
 // meeting day even if nobody rebuilds. With JavaScript off, the build-time state shows.
 //
-// The swap happens at the END of the meeting day (midnight America/Detroit), because
-// the meeting time is not configured yet.
+// The swap happens when the meeting ends: `ends` (HH:MM, 24-hour, America/Detroit)
+// on the meeting date. With no `ends` configured it falls back to the end of the
+// meeting day (midnight America/Detroit).
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -62,10 +63,28 @@ function detroitToday(now) {
   return parts.year + '-' + parts.month + '-' + parts.day;
 }
 
-// True once the meeting day is over in America/Detroit.
-function isPast(meetingDate, now) {
+// Now in America/Detroit as "YYYY-MM-DD HH:MM" (24-hour), from formatToParts.
+function detroitStamp(now) {
+  const parts = {};
+  new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Detroit', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(now).forEach((x) => { parts[x.type] = x.value; });
+  return parts.year + '-' + parts.month + '-' + parts.day + ' ' + parts.hour + ':' + parts.minute;
+}
+
+// "YYYY-MM-DD HH:MM" moment the card swaps; "24:00" (end of day) when no end time.
+function endStamp(meetingDate, ends) {
   parseDate(meetingDate);
-  return detroitToday(now) > meetingDate;
+  if (ends != null && !/^([01]\d|2[0-3]):[0-5]\d$/.test(ends)) {
+    throw new Error('ends must be HH:MM (24-hour), got ' + JSON.stringify(ends));
+  }
+  return meetingDate + ' ' + (ends || '24:00');
+}
+
+// True once the meeting has ended in America/Detroit.
+function isPast(meetingDate, now, ends) {
+  return detroitStamp(now) >= endStamp(meetingDate, ends);
 }
 
 function esc(s) {
@@ -88,10 +107,11 @@ const CLIENT_SCRIPT = [
   '(function () {',
   '  var c = document.getElementById("meeting-card");',
   '  if (!c || typeof Intl === "undefined" || typeof Intl.DateTimeFormat.prototype.formatToParts !== "function") return;',
-  '  var d = c.getAttribute("data-meeting-date");',
+  '  var e = c.getAttribute("data-meeting-end");',
   '  var p = {};',
-  '  new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });',
-  '  var past = (p.year + "-" + p.month + "-" + p.day) > d;',
+  '  new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });',
+  '  if (!e || !p.hour) return;',
+  '  var past = (p.year + "-" + p.month + "-" + p.day + " " + p.hour + ":" + p.minute) >= e;',
   '  var u = c.querySelector("[data-state=upcoming]"), a = c.querySelector("[data-state=past]");',
   '  if (!u || !a) return;',
   '  u.hidden = past;',
@@ -100,12 +120,13 @@ const CLIENT_SCRIPT = [
 ].join('\n');
 
 function renderCard(cfg, now) {
-  const past = isPast(cfg.date, now);
+  const past = isPast(cfg.date, now, cfg.ends);
   const timeTxt = cfg.time ? esc(cfg.time) : todo('meeting time');
   const placeTxt = cfg.location ? esc(cfg.location) : todo('meeting location');
   return [
     START,
-    '<div id="meeting-card" data-meeting-date="' + esc(cfg.date) + '">',
+    '<div id="meeting-card" data-meeting-date="' + esc(cfg.date) + '" data-meeting-end="' +
+      esc(endStamp(cfg.date, cfg.ends)) + '">',
     '<div data-state="upcoming"' + (past ? ' hidden' : '') + '>',
     '<p class="clab">Next meeting</p>',
     '<p class="mtg">' + esc(cfg.body) + ' &middot; ' + longDate(cfg.date) + '</p>',
@@ -155,7 +176,7 @@ function main(argv) {
   return stale ? 1 : 0;
 }
 
-module.exports = { longDate, shortDate, detroitToday, isPast, renderCard, replaceCard,
+module.exports = { longDate, shortDate, detroitToday, detroitStamp, endStamp, isPast, renderCard, replaceCard,
   CLIENT_SCRIPT, PAGES, START, END, loadConfig };
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));
