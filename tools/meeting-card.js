@@ -52,10 +52,14 @@ function shortDate(s) {
 }
 
 // Today's calendar date in America/Detroit, as YYYY-MM-DD.
+// Built from formatToParts, not a locale's formatted string, so a browser that
+// formats en-CA dates differently can never break the comparison.
 function detroitToday(now) {
-  return new Intl.DateTimeFormat('en-CA', {
+  const parts = {};
+  new Intl.DateTimeFormat('en-US', {
     timeZone: 'America/Detroit', year: 'numeric', month: '2-digit', day: '2-digit',
-  }).format(now);
+  }).formatToParts(now).forEach((x) => { parts[x.type] = x.value; });
+  return parts.year + '-' + parts.month + '-' + parts.day;
 }
 
 // True once the meeting day is over in America/Detroit.
@@ -74,6 +78,7 @@ function todo(label) {
 }
 
 function link(url, text, todoLabel) {
+  if (url && !/^https:\/\//.test(url)) throw new Error('link must be https: ' + JSON.stringify(url));
   if (url) return '<a href="' + esc(url) + '">' + esc(text) + '</a>';
   return esc(text) + ' ' + todo(todoLabel);
 }
@@ -84,10 +89,13 @@ const CLIENT_SCRIPT = [
   '  var c = document.getElementById("meeting-card");',
   '  if (!c || typeof Intl === "undefined") return;',
   '  var d = c.getAttribute("data-meeting-date");',
-  '  var t = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());',
-  '  var past = t > d;',
-  '  c.querySelector("[data-state=upcoming]").hidden = past;',
-  '  c.querySelector("[data-state=past]").hidden = !past;',
+  '  var p = {};',
+  '  new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });',
+  '  var past = (p.year + "-" + p.month + "-" + p.day) > d;',
+  '  var u = c.querySelector("[data-state=upcoming]"), a = c.querySelector("[data-state=past]");',
+  '  if (!u || !a) return;',
+  '  u.hidden = past;',
+  '  a.hidden = !past;',
   '})();',
 ].join('\n');
 

@@ -157,10 +157,13 @@
   var c = document.getElementById("meeting-card");
   if (!c || typeof Intl === "undefined") return;
   var d = c.getAttribute("data-meeting-date");
-  var t = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
-  var past = t > d;
-  c.querySelector("[data-state=upcoming]").hidden = past;
-  c.querySelector("[data-state=past]").hidden = !past;
+  var p = {};
+  new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+  var past = (p.year + "-" + p.month + "-" + p.day) > d;
+  var u = c.querySelector("[data-state=upcoming]"), a = c.querySelector("[data-state=past]");
+  if (!u || !a) return;
+  u.hidden = past;
+  a.hidden = !past;
 })();
 </script>
 <!-- meeting-card:end -->
