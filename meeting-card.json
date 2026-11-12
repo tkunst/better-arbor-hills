@@ -12,9 +12,9 @@
     },
     {
       "date": "2026-12-09",
-      "time": null,
+      "time": "10 a.m.",
       "ends": null,
-      "location": null,
+      "location": "4135 Washtenaw Ave, Ann Arbor, MI 48108",
       "agenda_url": null,
       "followup_url": null
     }
