@@ -67,6 +67,13 @@ ok('supplied values are escaped', filled.includes('Room &lt;A&gt;') && filled.in
 // would report on the build day), and exactly once.
 const config = mc.loadConfig();
 ok('config date is date-only', /^\d{4}-\d{2}-\d{2}$/.test(config.date));
+if (config.ends && config.time) {
+  // "11:30" (24-hour) is shown as "11:30" before noon and "1:30" after; the end time
+  // the card swaps at must be the one the card advertises.
+  const [h, m] = config.ends.split(':').map(Number);
+  const shown = ((h % 12) || 12) + ':' + String(m).padStart(2, '0');
+  ok('config: displayed time ends at `ends` (' + shown + ')', config.time.includes(shown), config.time);
+}
 for (const rel of mc.PAGES) {
   const html = fs.readFileSync(path.join(root, rel), 'utf8');
   ok(rel + ': one card', html.split(mc.START).length === 2 && html.split(mc.END).length === 2);
