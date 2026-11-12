@@ -44,6 +44,13 @@ ok('unset time/location/links render as visible TODOs',
   (before.match(/class="todo"/g) || []).length === 4);
 const filled = mc.renderCard(Object.assign({}, cfg, { time: '6:30 p.m.', location: 'Room <A>',
   agenda_url: 'https://example.org/a?x=1&y=2' }), new Date('2026-11-12T12:00:00Z'));
+let threwScheme = false;
+try { mc.renderCard(Object.assign({}, cfg, { agenda_url: 'javascript:alert(1)' }), new Date()); } catch (e) { threwScheme = true; }
+ok("non-https link in config is refused", threwScheme);
+ok('daylight time: still upcoming late on the day (July 1, 11:30 p.m. EDT)',
+  !mc.isPast('2026-07-01', new Date('2026-07-02T03:30:00Z')));
+ok('daylight time: past just after midnight EDT (July 2, 12:30 a.m.)',
+  mc.isPast('2026-07-01', new Date('2026-07-02T04:30:00Z')));
 ok('supplied values are escaped', filled.includes('Room &lt;A&gt;') && filled.includes('a?x=1&amp;y=2'));
 
 // Every page carries the card the config describes (same as `node tools/meeting-card.js --check`
@@ -54,6 +61,11 @@ for (const rel of mc.PAGES) {
   const html = fs.readFileSync(path.join(root, rel), 'utf8');
   ok(rel + ': one card', html.split(mc.START).length === 2 && html.split(mc.END).length === 2);
   ok(rel + ': card date matches meeting-card.json', html.includes('data-meeting-date="' + config.date + '"'));
+  const a = html.indexOf(mc.START), b = html.indexOf(mc.END) + mc.END.length;
+  const shipped = html.slice(a, b);
+  ok(rel + ': whole card matches meeting-card.json (either state)',
+    shipped === mc.renderCard(config, new Date(config.date + 'T12:00:00-05:00')) ||
+    shipped === mc.renderCard(config, new Date(Date.parse(config.date + 'T12:00:00-05:00') + 2 * 86400000)));
   ok(rel + ': ships the tested inline script', html.includes(mc.CLIENT_SCRIPT));
   ok(rel + ': no innerHTML', !/innerHTML/.test(html));
 }
