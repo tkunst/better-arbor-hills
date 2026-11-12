@@ -84,8 +84,9 @@ for (const m of config.meetings) {
   if (m.ends && m.time) {
     // The end time the card swaps at must be the one the card advertises.
     const [h, mm] = m.ends.split(':').map(Number);
-    const shown = ((h % 12) || 12) + ':' + String(mm).padStart(2, '0');
-    ok('config: ' + m.date + ' displayed time ends at `ends` (' + shown + ')', m.time.includes(shown));
+    const shown = ((h % 12) || 12) + ':' + String(mm).padStart(2, '0') + ' ' + (h < 12 ? 'a.m.' : 'p.m.');
+    ok('config: ' + m.date + ' displayed time ends at `ends` (' + shown + ')',
+      new RegExp('(^|[^0-9])' + shown.replace(/\./g, '\\.') + '$').test(m.time));
   }
 }
 for (const rel of mc.PAGES) {
@@ -102,7 +103,7 @@ for (const rel of mc.PAGES) {
   ok(rel + ': date mentions match the card',
     candidates.some((t) => shipped === mc.renderCard(config, t) && mc.renderMentions(html, config, t) === html));
   ok(rel + ': no hand-typed meeting date outside the card and mentions',
-    !/Nov\. 18|Dec\. 9/.test(html.slice(0, a).replace(/<span data-next-meeting>[^<]*<\/span>/g, '') +
+    !new RegExp(config.meetings.map((m) => mc.shortDate(m.date).replace(/\./g, '\\.') + '(?![0-9])').join('|')).test(html.slice(0, a).replace(/<span data-next-meeting>[^<]*<\/span>/g, '') +
       html.slice(b).replace(/<span data-next-meeting>[^<]*<\/span>/g, '')));
   ok(rel + ': ships the tested inline script', html.includes(mc.CLIENT_SCRIPT));
   ok(rel + ': no innerHTML', !/innerHTML/.test(html));
@@ -111,11 +112,15 @@ for (const rel of mc.PAGES) {
 // Run the shipped inline script with a fake clock and fake document built from the
 // real render, then check which period shows and what the date mentions say.
 function runClient(nowIso, conf) {
-  const blocks = mc.periods(conf).map((p) => ({
-    hidden: false,
-    attrs: { 'data-from': p.from, 'data-until': p.until, 'data-next': mc.nextPhrase(p.next) },
-    getAttribute(n) { return this.attrs[n]; },
-  }));
+  // Blocks come from the HTML renderCard actually writes, not from periods(), so a
+  // wrong data-from / data-until in the markup fails here.
+  const html = mc.renderCard(conf, new Date('2000-01-01T00:00:00Z'));
+  const blocks = [...html.matchAll(/<div data-from="([^"]*)" data-until="([^"]*)" data-next="([^"]*)"/g)]
+    .map((m) => ({
+      hidden: false,
+      attrs: { 'data-from': m[1], 'data-until': m[2], 'data-next': m[3] },
+      getAttribute(n) { return this.attrs[n]; },
+    }));
   const spans = [{ textContent: 'x' }, { textContent: 'y' }];
   const card = { querySelectorAll: (sel) => (sel === '[data-from]' ? blocks : []) };
   const RealDate = Date;
