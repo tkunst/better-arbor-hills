@@ -35,7 +35,7 @@ ok('lists the three requested minimum-criteria protections',
    html.includes('regardless of an approved HOV') &&
    html.includes('Subsurface Elevated-Temperature and Smolder Prevention and Response Plans'));
 ok('links the proposed-protections page and the Part 115 minimum-criteria brief',
-   html.includes('https://arborhillsmonitor.org/proposed-protections/') &&
+   html.includes('https://policy.arborhillsmonitor.org/proposed-protections/') &&
    html.includes('https://policy.arborhillsmonitor.org/mmp-minimum-criteria-brief.html'));
 ok('states EGLE must independently determine MMP consistency (the independent-oversight ask)',
    html.includes('independently determine whether a proposed facility is consistent') &&
