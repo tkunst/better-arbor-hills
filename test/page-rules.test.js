@@ -1,9 +1,9 @@
 // Page rules for the redesigned pages (Node, no deps): `node test/page-rules.test.js`.
 // Design handoff 2026-11-12, section 6: referrer + viewport meta, one h1, no em-dashes,
 // no mailto links, decorative marks aria-hidden, arrows in link text aria-hidden, and the
-// no-first-person-pronoun rule. The pronoun check reports every hit and fails on any hit
-// that is not in KNOWN_PRONOUN_HITS (required copy flagged to Trisha in the PR, not
-// reworded by the coder).
+// no-first-person-pronoun rule. Instructions addressed to the reader are allowed
+// (Trisha 11/12): the exact phrases in READER_INSTRUCTIONS are removed before the check,
+// and any other pronoun hit fails.
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -11,10 +11,10 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const PAGES = ['materials.html', 'mmpc/index.html'];
 
-const KNOWN_PRONOUN_HITS = {
-  'materials.html': ['your', 'your', 'you'], // "Write your commissioners", "straight from your own email", "Thank you for attending"
-  'mmpc/index.html': ['you'], // "Thank you for attending"
-};
+// Instructions to the reader, allowed by Trisha 11/12. Exact phrases, so a stray
+// "you" or "your" anywhere else on the page still fails.
+const READER_INSTRUCTIONS = ['Write your commissioners', 'from your own email',
+  'Thank you for attending'];
 
 let pass = 0, fail = 0;
 function ok(name, cond, extra) {
@@ -44,11 +44,12 @@ for (const rel of PAGES) {
     for (const m of html.matchAll(/<h([1-6])[\s>]/g)) { const l = +m[1]; if (l > prev + 1) return false; prev = l; }
     return true;
   })());
-  const hits = (text(html).match(/\b(we|our|ours|us|i|me|my|mine|you|your|yours)\b/gi) || [])
+  let body = text(html);
+  for (const phrase of READER_INSTRUCTIONS) body = body.split(phrase).join(' ');
+  const hits = (body.match(/\b(we|our|ours|us|i|me|my|mine|you|your|yours)\b/gi) || [])
     .map((w) => w.toLowerCase());
   console.log('  pronoun hits in ' + rel + ': ' + (hits.length ? hits.join(', ') : 'none'));
-  ok(rel + ': pronoun hits are only the known, flagged ones',
-    JSON.stringify(hits.slice().sort()) === JSON.stringify(KNOWN_PRONOUN_HITS[rel].slice().sort()),
+  ok(rel + ': no pronouns outside the allowed reader instructions', hits.length === 0,
     hits.join(','));
 }
 
