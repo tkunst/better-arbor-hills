@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arbor Hills: the committee briefing hub · Arbor Hills</title>
+<meta name="description" content="Plain-language answers to the Washtenaw County Materials Management Planning Committee's questions about the Arbor Hills Landfill, each tied to the public documents it draws on.">
+<style>
+  /* Policy-site CredibilityHeader + MMPC hub (design handoff 2026-11-12).
+     Colors are the design system's pol- tokens; dark values follow prefers-color-scheme. */
+  :root {
+    color-scheme: light dark;
+    --bg: #fbfaf7; --fg: #1a1a1a; --lede: #555555; --hint: #666666; --link: #2b5fb3; --link-hover: #22488a;
+    --border: #dddddd; --card-bg: #ffffff; --card-border: #e8d6c2; --card-border-hover: #d9b994; --card-bg-hover: #fffaf3;
+    --ubar-tint: rgba(240,147,43,0.14); --ubar-text: #4a3410; --ubar-link: #1a1a1a;
+    --pill-tint: rgba(240,147,43,0.18); --pill-tint-hover: rgba(240,147,43,0.32); --pill-border: rgba(185,95,12,0.45); --pill-text: #1a1a1a;
+    --ck-tint: rgba(240,147,43,0.20); --ck: #8a4708; --trust: #333333; --cline: #333333; --clab: #555555;
+    --htag: #1d6f42; --soon: #6b6b6b; --tag-border: #bbbbbb; --tag-text: #444444;
+    --tag-gap-border: #b95f0c; --tag-gap-text: #8a4708;
+    --hub: #2b5fb3; --hub-sub: #444444; --th-bg: #f6f4ef;
+    --alt-border: #ef8a22; --alt-bg: #fff4e3; --alt-bg-hover: #ffe8cc; --alt-eyebrow: #9a4f08; --alt-sub: #7c4f1c; --alt-title: #1a1a1a;
+    --disc-bg: #f6f4ef; --disc-border: #d8d5cd; --disc-text: #444444;
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181a; --fg: #e9e9e9; --lede: #a8a8a8; --hint: #9a9a9a; --link: #7fb4ea; --link-hover: #a9cdf2;
+      --border: #333333; --card-bg: #212226; --card-border: #333333; --card-border-hover: #6a6b70; --card-bg-hover: #26272b;
+      --ubar-text: #e9e9e9; --ubar-link: #e9e9e9; --pill-text: #e9e9e9;
+      --ck: #f8b85e; --trust: #e9e9e9; --cline: #e9e9e9; --clab: #a8a8a8;
+      --htag: #6fd39c; --soon: #888888; --tag-border: #6a6b70; --tag-text: #bdbdbd;
+      --tag-gap-border: #f5a63e; --tag-gap-text: #f8b85e;
+      --hub: #7fb4ea; --hub-sub: #bdbdbd; --th-bg: #1c1d20;
+      --alt-border: #f5a63e; --alt-bg: #2f2210; --alt-bg-hover: #392a15; --alt-eyebrow: #f8b85e; --alt-sub: #dcbb8c; --alt-title: #f0f0f0;
+      --disc-bg: #1c1d20; --disc-border: #34353a; --disc-text: #bdbdbd;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { font: 16px/1.55 var(--sans); margin: 0; padding: 2rem 1.5rem 4rem; background: var(--bg); color: var(--fg); }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  a { color: var(--link); }
+  a:hover { color: var(--link-hover); }
+  h1, h2, h3, .promise, .mtg { font-family: var(--serif); }
+  .todo { display: inline-block; font: 700 .72rem/1.4 var(--sans); letter-spacing: .03em; text-transform: uppercase; border: 1px dashed currentColor; border-radius: 4px; padding: 0 .3rem; }
+
+  /* CredibilityHeader */
+  .ubar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 16px; font-size: .9rem; padding: .45rem .9rem; border-radius: 8px; margin: 0 0 1.4rem; background: var(--ubar-tint); color: var(--ubar-text); }
+  .ubar a { font-weight: 700; text-decoration: none; color: var(--ubar-link); display: inline-flex; align-items: center; gap: .3rem; min-height: 44px; }
+  .ubar a:hover { text-decoration: underline; color: var(--ubar-link); }
+  .htag { margin: 0 0 .5rem; font-size: .75rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--htag); }
+  .trow { display: flex; align-items: center; gap: 14px; }
+  .trow svg { flex: 0 0 auto; width: 56px; height: 39px; }
+  .trow h1 { font-size: 2.2rem; line-height: 1.15; margin: 0; }
+  .promise { font-size: 1.3rem; line-height: 1.45; margin: 1rem 0; max-width: 640px; }
+  .trust { list-style: none; margin: 0 0 1.2rem; padding: 0; display: flex; flex-direction: column; gap: .45rem; font-size: 1rem; color: var(--trust); }
+  .trust li { display: flex; align-items: center; gap: .55rem; }
+  .ck { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; flex: 0 0 auto; background: var(--ck-tint); color: var(--ck); }
+  nav.jump { display: flex; flex-wrap: wrap; gap: .5rem; }
+  nav.jump a { display: inline-flex; align-items: center; min-height: 44px; border-radius: 999px; padding: .4rem 1rem; font-size: 1rem; text-decoration: none; color: var(--pill-text); background: var(--pill-tint); border: 1px solid var(--pill-border); }
+  nav.jump a:hover { background: var(--pill-tint-hover); color: var(--pill-text); }
+  .pcard { border-radius: 10px; padding: 1.2rem 1.3rem; background: var(--card-bg); border: 1px solid var(--card-border); border-top: 4px solid #f0932b; }
+  .clab { margin: 0 0 .4rem; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--clab); }
+  .mtg { margin: 0; font-size: 1.2rem; font-weight: 700; }
+  .cline { margin: .35rem 0 0; font-size: 1rem; color: var(--cline); }
+  .act { display: flex; align-items: center; justify-content: center; gap: .4rem; min-height: 52px; margin-top: 1rem; border-radius: 8px; font-size: 1.15rem; font-weight: 700; text-decoration: none; box-shadow: 0 2px 0 rgba(0,0,0,.28); background: #ef8a22; color: #1a1a1a; border: 1px solid #b95f0c; }
+  .act:hover { background: #f39a3c; color: #1a1a1a; }
+  .note { margin: .55rem 0 0; font-size: .88rem; color: var(--lede); }
+
+  /* Layout: main + a 320px right column that stays in view. On phones the right
+     column dissolves (display: contents) so the MeetingCard sits right under the
+     header and the application file and Background come at the end. */
+  .layout { display: grid; grid-template-columns: minmax(0,1fr) 320px; gap: 0 2.5rem; align-items: start; }
+  .layout > header { grid-column: 1; grid-row: 1; }
+  .layout > main { grid-column: 1; grid-row: 2; }
+  .rail { grid-column: 2; grid-row: 1 / span 2; display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 1rem; }
+
+  /* Body */
+  .sec { margin-top: 2.25rem; }
+  h2 { font-size: 1.2rem; line-height: 1.3; margin: 0; }
+  .sec-intro { color: var(--lede); font-size: .95rem; margin: .3rem 0 .9rem; }
+  .card { border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1.05rem; background: var(--card-bg); }
+  .t { font-weight: 600; font-size: 1rem; line-height: 1.35; }
+  .d { font-size: .92rem; color: var(--lede); margin-top: .25rem; }
+  .meta { font-size: .8rem; color: var(--hint); margin-top: .35rem; }
+  .tag { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border-radius: 999px; padding: .1rem .5rem; border: 1px solid var(--tag-border); color: var(--tag-text); margin-right: .35rem; white-space: nowrap; }
+  .tag.soon { border-color: var(--soon); color: var(--soon); }
+  .tag.gap, .tag.tag-gap { border-color: var(--tag-gap-border); color: var(--tag-gap-text); }
+  .vleg { margin: 0 0 .6rem; font-size: .85rem; color: var(--lede); }
+  .fit tbody th { text-align: left; vertical-align: top; padding: .8rem .9rem; border-top: 1px solid var(--border); font-family: var(--serif); font-size: 1rem; letter-spacing: 0; text-transform: none; color: var(--fg); background: none; }
+  .fit .why { display: block; margin-top: .35rem; font-size: .85rem; color: var(--lede); }
+  .lbl { font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--hint); }
+  ul.plain { margin: 0; padding: 0; list-style: none; }
+  ul.plain li { padding: .7rem 0; border-top: 1px solid var(--border); }
+  ul.plain li:first-child { border-top: 0; }
+  .more { display: inline-block; margin-top: .5rem; font-weight: 600; font-size: .92rem; }
+  .capacity { border: 2px solid var(--hub); background: var(--card-bg); border-radius: 12px; padding: 1.25rem 1.4rem; display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 1.5rem; align-items: center; }
+  .capacity .eb { margin: 0; font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--hub); }
+  .capacity h2 { margin-top: .25rem; font-size: 1.45rem; }
+  .capacity p.lead { margin: .5rem 0 1rem; font-size: .98rem; color: var(--hub-sub); }
+  .capacity .go { display: inline-flex; align-items: center; min-height: 44px; background: #2b5fb3; color: #ffffff; font-weight: 600; text-decoration: none; border-radius: 8px; padding: .75rem 1.2rem; }
+  .capacity .go:hover { background: #22488a; color: #ffffff; }
+  .capacity .src { margin: .6rem 0 0; font-size: .82rem; color: var(--lede); }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .stat { border: 1px solid var(--border); border-radius: 8px; padding: .8rem .9rem; }
+  .stat .n { font-size: 1.9rem; font-weight: 700; line-height: 1.15; }
+  .stat .l { font-size: .82rem; color: var(--lede); }
+  ol.start { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  ol.start li { counter-increment: s; border: 1px solid var(--border); border-radius: 10px; background: var(--card-bg); padding: .9rem 1rem; }
+  ol.start li::before { content: counter(s); width: 1.8rem; height: 1.8rem; border-radius: 50%; background: #1d6f42; color: #ffffff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: .9rem; margin-bottom: .5rem; }
+  .answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .fit { width: 100%; border-collapse: collapse; background: var(--card-bg); border: 1px solid var(--border); font-size: .93rem; }
+  .fit th { text-align: left; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--hint); background: var(--th-bg); padding: .6rem .9rem; border-bottom: 1px solid var(--border); }
+  .fit td { padding: .8rem .9rem; border-top: 1px solid var(--border); vertical-align: top; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .pair > section { margin-top: 0; }
+  .kids { border: 2px solid var(--alt-border); background: var(--alt-bg); border-radius: 12px; padding: 1rem 1.05rem; margin: 0 0 1rem; }
+  .kids .eb { margin: 0; font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--alt-eyebrow); }
+  .kids .row { display: flex; align-items: baseline; gap: .5rem; margin-top: .3rem; }
+  .kids .big { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+  .kids .what { font-size: .95rem; font-weight: 600; }
+  .kids p.sub { margin: .6rem 0 0; font-size: .9rem; color: var(--alt-sub); }
+  .kids p.src { margin: .5rem 0 0; font-size: .8rem; }
+  .appfile { display: block; border: 2px solid var(--alt-border); background: var(--alt-bg); border-radius: 12px; padding: 1rem 1.05rem; text-decoration: none; color: inherit; }
+  .appfile:hover { background: var(--alt-bg-hover); color: inherit; }
+  .appfile .eb { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--alt-eyebrow); }
+  .appfile .ft { display: block; font-family: var(--serif); font-size: 1.08rem; font-weight: 700; margin-top: .25rem; color: var(--alt-title); }
+  .appfile .ft .arrow { color: var(--alt-eyebrow); }
+  .appfile .fs { display: block; font-size: .9rem; color: var(--alt-sub); margin-top: .3rem; }
+  .bg h2 { font-family: var(--sans); margin: 0 0 .5rem; }
+  .bgbox { display: flex; flex-direction: column; justify-content: center; min-height: 44px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: .85rem 1rem; text-decoration: none; color: var(--fg); }
+  .bgbox:hover { background: var(--card-bg-hover); border-color: var(--card-border-hover); color: var(--fg); }
+  .bgt { font-family: var(--serif); font-weight: 700; font-size: 1.05rem; line-height: 1.3; color: var(--link); }
+  .bgs { font-size: .88rem; color: var(--lede); margin-top: .25rem; }
+  [hidden] { display: none !important; }
+  .vh { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .disclosure { border: 1px solid var(--disc-border); background: var(--disc-bg); border-radius: 8px; padding: .7rem .9rem; margin-top: 2.5rem; font-size: .9rem; color: var(--disc-text); }
+
+  @media (max-width: 900px) {
+    .layout { display: flex; flex-direction: column; }
+    .rail { display: contents; }
+    .layout > header { order: 1; }
+    .rail > .meet { order: 2; margin-top: 1.25rem; }
+    .layout > main { order: 3; }
+    .rail > .app { order: 4; margin-top: 2rem; }
+    .rail > .bg { order: 5; margin-top: 2rem; }
+    .pair { grid-template-columns: 1fr; gap: 0; }
+    .pair > section + section { margin-top: 2rem; }
+  }
+  @media (max-width: 640px) {
+    body { padding: 1.25rem 1rem 3rem; }
+    .trow svg { width: 44px; height: 31px; }
+    .trow h1 { font-size: 1.75rem; }
+    .promise { font-size: 1.15rem; }
+    nav.jump a.pill-phone-hide { display: none; }
+    .sec { margin-top: 2rem; }
+    h2 { font-size: 1.15rem; }
+    .capacity { grid-template-columns: 1fr; padding: 1rem 1.05rem; gap: .8rem; }
+    .capacity h2 { font-size: 1.15rem; }
+    .capacity .go { display: flex; justify-content: center; }
+    .stat .n { font-size: 1.4rem; }
+    ol.start { display: block; }
+    ol.start li { display: flex; gap: .75rem; border: 0; border-top: 1px solid var(--border); border-radius: 0; background: none; padding: .7rem 0; }
+    ol.start li:first-child { border-top: 0; }
+    ol.start li::before { flex: 0 0 1.8rem; margin: 0; }
+    .answers { gap: .7rem; }
+    .fit, .fit tbody, .fit tr, .fit td, .fit tbody th { display: block; width: 100%; box-sizing: border-box; }
+    .fit tbody th { border-top: 0; border-bottom: 0; padding: .5rem .9rem .1rem; font-size: 1.05rem; }
+    .fit thead { display: none; }
+    .fit { border: 0; background: none; }
+    .fit tr { border: 1px solid var(--border); border-radius: 10px; background: var(--card-bg); padding: .5rem 0 .6rem; margin: 0 0 .75rem; }
+    .fit tr:last-child { margin-bottom: 0; }
+    .fit td { border: 0; padding: .35rem .9rem; }
+    .fit td::before { content: attr(data-label); display: block; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--hint); }
+  }
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e2f695d2d7d14823ae0e87745a56a750"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<div class="wrap">
+
+<div class="ubar"><span>A resident's advocacy &middot; The records and data behind it live at Arbor Hills Monitor</span><a href="https://arborhillsmonitor.org/">Arbor Hills Monitor <span aria-hidden="true">&rarr;</span></a></div>
+
+<div class="layout">
+
+<header>
+<p class="htag">For Washtenaw County MMPC members</p>
+<div class="trow"><svg viewBox="0 0 40 28" aria-hidden="true" focusable="false"><path d="M0 28 L11 12 L18 20 L18 28 Z" fill="#f0932b"/><path d="M18 20 L25 14 L40 28 L18 28 Z" fill="#e23d3d"/><circle cx="27" cy="8" r="5" fill="#e23d3d"/></svg><h1>Arbor Hills: the committee briefing hub</h1></div>
+<p class="promise">Plain-language answers to the committee's questions about the Arbor Hills Landfill, each tied to the public documents it draws on.</p>
+<ul class="trust">
+<li><span class="ck"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Every answer and analysis cites the public record</li>
+<li><span class="ck"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Interpretation is labeled, kept apart from the facts it rests on</li>
+<li><span class="ck"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 L6.5 12 L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Written by Trisha Kunst, local data scientist</li>
+</ul>
+<nav class="jump" aria-label="On this page"><a href="#capacity">Capacity</a><a href="#start" data-start-pill hidden>Start here</a><a href="#considerations">Considerations</a><a href="#redlines">Redlines</a><a href="#issues">Current issues</a><a href="#answers">Answers</a><a href="#comments">Public comments</a></nav>
+</header>
+
+<main>
+<section class="sec" aria-labelledby="capacity" style="margin-top:1.75rem">
+<div class="capacity">
+<div>
+<p class="eb">For discussion at <span data-next-meeting>the Nov. 18 meeting</span></p>
+<h2 id="capacity">Is there a landfill capacity crisis?</h2>
+<p class="lead">The committee has been told there is. The state's own numbers point the other way: counting landfills within 52 miles of the Washtenaw County line, EGLE's FY2025 landfill report leaves Southeast Michigan 16.2 years of space at today's rates.</p>
+<a class="go" href="../capacity/">Try the capacity model <span aria-hidden="true">&nbsp;&rarr;</span></a>
+<p class="src">Pick which landfills count; see how Canadian waste, recycling and food waste change the answer. Source: EGLE FY2025 landfill report.</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="n">16.2 yrs</div><div class="l">Space left at today's rates, landfills within 52 miles</div></div>
+<div class="stat"><div class="n">5.5 yrs</div><div class="l">The county planning line, used here as a stress check</div></div>
+</div>
+</div>
+</section>
+
+<!-- Start here: hidden (with its nav pill, data-start-pill) while the list has no items.
+     To publish: add <li> items, then remove `hidden` from this section and from the pill.
+     test/page-rules.test.js fails if the section and pill are shown with no items, or
+     hidden with items. -->
+<section class="sec" aria-labelledby="start" data-start-section hidden>
+<h2 id="start">Start here: three things before <span data-next-meeting>the Nov. 18 meeting</span></h2>
+<p class="sec-intro">The few points most likely to change the committee's decision. Five minutes.</p>
+<ol class="start"></ol>
+</section>
+
+<section class="sec" aria-labelledby="considerations">
+<h2 id="considerations">Considerations so far, and the record</h2>
+<p class="sec-intro">The four main considerations so far. Each one checks the specific reason raised against the public record. An analysis by a resident; every point links to its source.</p>
+<p class="vleg">Answers: <strong>Yes</strong> &middot; <strong>Partly</strong> &middot; <strong>No</strong> &middot; <strong>Not yet known</strong> &middot; <strong>Not so far</strong> (a stated goal the county's actions do not match yet)</p>
+<table class="fit">
+<thead><tr><th scope="col" style="width:16%">Consideration</th><th scope="col" style="width:24%">Reason raised</th><th scope="col">What the record shows</th><th scope="col" style="width:22%">Does the record back it?</th></tr></thead>
+<tbody>
+<tr><th scope="row">Capacity</th><td data-label="Reason raised">Southeast Michigan is running short on landfill space.</td><td data-label="What the record shows">EGLE's FY2025 landfill report, run through the capacity model: 16.2 years of space left at today's rates, counting landfills within 52 miles of the Washtenaw County line. <span class="todo">TODO: new copy from Trisha (comparison to the 5.5-year line)</span> <a href="../capacity/">Capacity model</a></td><td data-label="Does the record back it?"><span class="tag tag-gap">No</span><span class="why">16.2 years of space left.</span></td></tr>
+<tr><th scope="row">Local control</th><td data-label="Reason raised">The county wants more oversight of the landfill.</td><td data-label="What the record shows">The county's 2017 Host Community Agreement already includes an oversight clause. Public records reviewed so far show no use of it since it was signed. If the clause is too narrow, the record does not yet show the county saying so or asking to strengthen it. <a href="../public-comment-2026-11-04.html">Source</a></td><td data-label="Does the record back it?"><span class="tag tag-gap">Not so far</span><span class="why">The county has not used the oversight tool it already has.</span></td></tr>
+<tr><th scope="row">Truck emissions</th><td data-label="Reason raised">Shipping trash to a landfill farther away would add truck emissions.</td><td data-label="What the record shows">Not yet analyzed. The analysis will set the added truck miles of hauling farther against the emissions of building and running an entirely new landfill.</td><td data-label="Does the record back it?"><span class="tag">Not yet known</span><span class="why">Analysis in progress; this row updates when it is published.</span></td></tr>
+<tr><th scope="row">Revenue</th><td data-label="Reason raised">A new landfill would bring needed revenue to the county.</td><td data-label="What the record shows">Today's landfill already pays about $3.5 million a year to Salem Township (host fees and landfill-gas payments, fiscal year ending March 31, 2025) and about $1.25 million to $1.4 million a year to Washtenaw County. The county budgets its share as about three-quarters of its Materials Management program, which pays staff and program costs in the Water Resources Commissioner's office. <a href="https://content.civicplus.com/api/assets/mi-washtenawcounty/8cefc371-4be3-4963-afee-7eba18fa7212">County budget</a> <span class="todo">TODO: Salem Township source link; refutation gate</span></td><td data-label="Does the record back it?"><span class="todo">TODO: verdict from Trisha</span></td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="sec" aria-labelledby="redlines">
+<h2 id="redlines">Suggested Minimum Siting Requirements changes so far</h2>
+<p class="sec-intro">Wording proposed for the minimum siting criteria in the Materials Management Plan, and where each stands. Status updates after each meeting.</p>
+<div class="card">
+<ul class="plain">
+<li><div class="t">Continuous wellhead monitoring, alerting and public data</div><div class="d">Continuous temperature, oxygen, methane and carbon dioxide monitoring across the gas-collection field, with notice to the County and state within 30 minutes of a reading at or above 145&deg;F.</div><div class="meta"><span class="tag">Proposed</span>Sept. 9, 2026 &middot; <a href="../proposed-protections/">See the proposed wording</a></div></li>
+<li><div class="t">Corrective action and fire response</div><div class="d">Corrective action within 5 days of any reading at or above 145&deg;F, and no new waste within 400 feet of a well at or above 170&deg;F.</div><div class="meta"><span class="tag">Proposed</span>Sept. 9, 2026 &middot; <a href="../proposed-protections/">See the proposed wording</a></div></li>
+<li><div class="t">Required elevated-temperature and smolder-prevention plans</div><div class="d">Two engineer-certified public plans, one for subsurface elevated temperatures and one for smolder and fire prevention, reviewed at least once a year.</div><div class="meta"><span class="tag">Proposed</span>Sept. 9, 2026 &middot; <a href="../proposed-protections/">See the proposed wording</a></div></li>
+</ul>
+</div>
+</section>
+
+<section class="sec" aria-labelledby="issues">
+<h2 id="issues">Current issues at the existing Arbor Hills Landfill</h2>
+<p class="sec-intro">How today's operating landfill, south of Six Mile Road, is performing in the public record. A track record for the operator, separate from the proposed new landfill.</p>
+<div class="kids">
+<p class="eb">Children nearby</p>
+<div class="row"><span class="big">3rd</span><span class="what">of 48 Type II landfills in Michigan for students within one mile</span></div>
+<p class="src"><span class="todo">TODO: refutation gate</span></p>
+<p class="sub">The landfill ranked first, in Riverview (Wayne County), is set to close; Wayne County made that decision despite about $3M in revenue for Riverview. That will leave Arbor Hills second. <span class="todo">TODO: refutation gate</span></p>
+<p class="src">Sources <span class="todo">TODO: link</span></p>
+</div>
+<ul class="plain">
+<li><div class="t"><a href="https://arborhillsmonitor.org/methane-migration/">Methane beyond the boundary</a></div><div class="d">Boundary gas probes: 17 quarterly reports, each with a probe at or above methane's lower explosive limit.</div><div class="meta">April 2022 to June 2026 &middot; Source: operator filings with EGLE</div></li>
+<li><div class="t"><a href="https://arborhillsmonitor.org/sem-inspection-2026-06-16/">The June 16, 2026 surface-methane inspection</a></div><div class="d">EGLE found 75 areas above 500 ppm.</div><div class="meta">June 16, 2026 &middot; Source: EGLE</div></li>
+<li><div class="t"><a href="../set-brief-2026-h1.html">Elevated temperatures in the gas wells</a></div><div class="d">Wellhead temperatures have reached 182.5&deg;F (well AHWW16R6, July 20, 2022); 57 gas wells have peaked at or above 131&deg;F.</div><div class="meta">2021 to 2026 &middot; Source: operator filings with EGLE &middot; <a href="../proposed-protections/">57-well count</a></div></li>
+</ul>
+</section>
+
+<section class="sec" aria-labelledby="answers">
+<h2 id="answers">Answers to committee questions</h2>
+<p class="sec-intro">Short articles, newest first. Each one ends with its sources.</p>
+<div class="answers">
+<div class="card"><p style="margin:0 0 .3rem"><span class="tag soon">In progress</span></p><div class="t">Is the S1 stream Part 303 regulated? What that means for planners</div><div class="d">Whether the S1 stream on the site falls under Part 303, the state wetlands law, and what that would mean for siting.</div></div>
+<div class="card"><p style="margin:0 0 .3rem"><span class="tag soon">In progress</span></p><div class="t">Where compliance history is kept, according to the Attorney General</div><div class="d">Where Michigan's Attorney General says an operator's compliance history is kept, and how the committee can use it.</div></div>
+<div class="card"><p style="margin:0 0 .3rem"><span class="tag soon">In progress</span></p><div class="t">How big could the proposed new landfill get if all 251 acres were used? <span class="todo">TODO: refutation gate</span></div><div class="d">The largest landfill the site could hold if every future expansion request were approved: footprint, height and capacity.</div></div>
+<div class="card"><div class="t"><a href="../mmp-minimum-criteria-brief.html">What can county minimum siting criteria cover?</a></div><div class="d">Part 115 and the Materials Management Plan: what county criteria can require, and where county and state authority divide.</div><div class="meta"><span class="tag">Brief</span></div></div>
+</div>
+<a class="more" href="../materials.html#briefs">All briefs and answers <span aria-hidden="true">&rarr;</span></a>
+</section>
+
+<section class="sec" aria-labelledby="unanswered">
+<h2 id="unanswered">Unanswered questions</h2>
+<p class="sec-intro">Questions the record does not answer yet, and who could answer them.</p>
+<ul class="plain">
+<li><div class="t">Has the county ever used the oversight clause in its 2017 Host Community Agreement? If not, why not?</div><div class="meta">Who can answer: Washtenaw County</div></li>
+<li><div class="t">What is driving the elevated temperatures in the gas wells, and is the area affected growing?</div><div class="meta">Who can answer: GFL, with EGLE oversight</div></li>
+<li><div class="t">Why have several fence-line hydrogen-sulfide sensors reported one constant value for long stretches?</div><div class="meta">Who can answer: GFL</div></li>
+</ul>
+<a class="more" href="https://arborhillsmonitor.org/unanswered-questions/">All unanswered questions on the Monitor <span aria-hidden="true">&rarr;</span></a>
+</section>
+
+<section class="sec" aria-labelledby="comments">
+<h2 id="comments">Public comments, by date</h2>
+<p class="sec-intro">Every written and spoken comment, newest first.</p>
+<div class="card">
+<ul class="plain">
+<li><div class="t"><a href="../public-comment-2026-11-04.html">Nov. 4, 2026: Board of Commissioners, written</a></div></li>
+<li><div class="t"><a href="../public-comment-2026-09-09.html">Sept. 9, 2026: MMPC, spoken</a></div></li>
+<li><div class="t"><a href="../public-comment-2026-09-06-n1504.html">Sept. 6, 2026: EGLE Air Quality Division, written</a></div></li>
+<li><div class="t"><a href="../public-comment-2026-09-02.html">Sept. 2, 2026: Board of Commissioners, spoken</a></div></li>
+<li><div class="t"><a href="../public-comment-2026-08-19.html">Aug. 19, 2026: MMPC, written</a></div></li>
+</ul>
+</div>
+<a class="more" href="../materials.html#comments">All public comments by date <span aria-hidden="true">&rarr;</span></a>
+</section>
+</main>
+
+<aside class="rail" aria-label="Meeting and contact">
+<div class="pcard meet">
+<!-- meeting-card:start -->
+<div id="meeting-card">
+<div data-from="" data-until="2026-11-18 11:30" data-next="the Nov. 18 meeting">
+<p class="clab">Next meeting</p>
+<p class="mtg">MMPC &middot; Wednesday, Nov. 18, 2026</p>
+<p class="cline">10 to 11:30 a.m. &middot; 4135 Washtenaw Ave, Ann Arbor, MI 48108 &middot; <a href="https://washtenawcomi.portal.civicclerk.com/event/4270/files/agenda/9840">Agenda</a></p>
+</div>
+<div data-from="2026-11-18 11:30" data-until="2026-12-09 24:00" data-next="the Dec. 9 meeting" hidden>
+<p class="clab">After the meeting</p>
+<p class="mtg">Thank you for attending the Nov. 18 MMPC meeting.</p>
+<p class="cline">Follow-up notes and next steps <span class="todo">TODO: follow-up notes link</span></p>
+<p class="clab" style="margin-top:1rem">Next meeting</p>
+<p class="mtg">MMPC &middot; Wednesday, Dec. 9, 2026</p>
+<p class="cline">10 a.m. &middot; 4135 Washtenaw Ave, Ann Arbor, MI 48108 &middot; Agenda <span class="todo">TODO: agenda link</span></p>
+</div>
+<div data-from="2026-12-09 24:00" data-until="" data-next="the next meeting" hidden>
+<p class="clab">After the meeting</p>
+<p class="mtg">Thank you for attending the Dec. 9 MMPC meeting.</p>
+<p class="cline">Follow-up notes and next steps <span class="todo">TODO: follow-up notes link</span></p>
+</div>
+</div>
+<script>
+(function () {
+  function run() {
+  var c = document.getElementById("meeting-card");
+  if (!c || typeof Intl === "undefined" || typeof Intl.DateTimeFormat.prototype.formatToParts !== "function") return;
+  var p = {};
+  new Intl.DateTimeFormat("en-US", { timeZone: "America/Detroit", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+  if (!p.hour || p.dayPeriod) return;
+  var now = p.year + "-" + p.month + "-" + p.day + " " + p.hour + ":" + p.minute;
+  var blocks = c.querySelectorAll("[data-from]"), shown = null, i;
+  for (i = 0; i < blocks.length; i++) {
+    var f = blocks[i].getAttribute("data-from"), u = blocks[i].getAttribute("data-until");
+    if (!shown && (!f || now >= f) && (!u || now < u)) shown = blocks[i];
+  }
+  if (!shown) return;
+  for (i = 0; i < blocks.length; i++) blocks[i].hidden = blocks[i] !== shown;
+  var next = shown.getAttribute("data-next"), spans = document.querySelectorAll("[data-next-meeting]");
+  for (i = 0; i < spans.length; i++) spans[i].textContent = next;
+  }
+  // Date mentions can sit below the card, so wait for the whole page.
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+  else run();
+})();
+</script>
+<!-- meeting-card:end -->
+<a class="act" href="https://docs.google.com/forms/d/e/1FAIpQLScuxmT1pMlpXT0FMJndSR5AFx87rxA_HTfKeCHzzwlFuaczog/viewform">Ask a data scientist <span aria-hidden="true">&rarr;</span></a>
+<p class="note">Plain-language answers, posted publicly. No engineering background needed. Names stay private unless shared.</p>
+<p class="note">Contact: trisha@arborhillsmonitor.org</p>
+</div>
+<section class="app" aria-labelledby="application">
+<h2 id="application" class="vh">The new landfill application file</h2>
+<div class="appfile">
+<p style="margin:0 0 .35rem"><span class="tag soon">In progress</span></p>
+<span class="eb">The proposed new landfill</span>
+<span class="ft">Application materials collected so far</span>
+<span class="fs">Every document filed so far for the proposed new landfill, in one place, with dates.</span>
+</div>
+</section>
+<section class="bg" aria-labelledby="background">
+<h2 id="background" class="lbl">Background</h2>
+<a class="bgbox" href="../materials.html">
+<span class="bgt">Earlier public comments and briefs <span aria-hidden="true">&rarr;</span></span>
+<span class="bgs">Every public comment, brief and tool on the policy site, newest first.</span>
+</a>
+</section>
+</aside>
+
+</div>
+
+<div class="disclosure">Regulatory records, datasets and visualizations are kept at <a href="https://arborhillsmonitor.org/">Arbor Hills Monitor</a>. The analysis and suggestions on this page are a resident's advocacy.</div>
+
+<footer class="legal-footer" style="max-width:760px;margin:2.5rem auto 1.5rem;padding:1rem 16px 0;border-top:1px solid rgba(128,128,128,.35);font-size:0.82rem;line-height:1.5;opacity:.85">
+<p class="legal-nav" style="margin:0 0 .5rem"><a href="https://arborhillsmonitor.org/terms-of-use/">Terms</a> &middot; <a href="https://arborhillsmonitor.org/privacy-policy/">Privacy</a> &middot; <a href="https://arborhillsmonitor.org/disclaimer/">Disclaimer</a> &middot; <a href="https://arborhillsmonitor.org/corrections/">Corrections</a> &middot; <a href="https://arborhillsmonitor.org/ip-fair-use/">IP &amp; Fair Use</a></p>
+<p class="footer-disclaimer" style="margin:0 0 .5rem">These pages are advocacy and express the author&rsquo;s views. They draw on public regulatory records but do not constitute legal, medical, environmental, or professional advice. Verify all information against the cited primary sources -- including EGLE&rsquo;s own portals -- before relying on it.</p>
+<p style="margin:0">Arbor Hills Monitor, an independent project of Landfill Records Project LLC.</p>
+</footer>
+</div>
+</body>
+</html>
