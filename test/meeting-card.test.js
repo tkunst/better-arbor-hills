@@ -61,6 +61,12 @@ ok('copy: thank-you lines', before.includes('Thank you for attending the Nov. 18
 ok('between period: thank-you for Nov. 18 and next meeting Dec. 9 in one block',
   /data-until="2026-12-09 24:00"[^>]*>\n<p class="clab">After the meeting<\/p>\n<p class="mtg">Thank you for attending the Nov. 18 MMPC meeting\.<\/p>[\s\S]*?Wednesday, Dec\. 9, 2026/.test(before));
 ok('unset values render as visible TODOs', before.includes('TODO: meeting location') && before.includes('TODO: meeting time'));
+ok('unset agenda and follow-up links leave nothing on the card (no TODO, no bare label)',
+  !/TODO: (agenda|follow-up)/.test(before) && !before.includes('Agenda') && !before.includes('Follow-up notes'));
+const linked = mc.renderCard({ body: 'MMPC', meetings: [Object.assign({}, M1, { agenda_url: 'https://example.org/agenda',
+  followup_url: 'https://example.org/notes' }), M2] }, T_BEFORE);
+ok('supplied agenda and follow-up links render', linked.includes('&middot; <a href="https://example.org/agenda">Agenda</a></p>') &&
+  linked.includes('<a href="https://example.org/notes">Follow-up notes and next steps</a>'));
 let threwOrder = false;
 try { mc.renderCard({ body: 'MMPC', meetings: [M2, M1] }, T_BEFORE); } catch (e) { threwOrder = true; }
 ok('meetings out of date order are refused', threwOrder);
