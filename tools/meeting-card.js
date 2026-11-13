@@ -25,7 +25,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const CONFIG = path.join(ROOT, 'meeting-card.json');
-const PAGES = ['materials.html'];
+const PAGES = ['materials.html', 'mmpc/index.html'];
 const START = '<!-- meeting-card:start -->';
 const END = '<!-- meeting-card:end -->';
 
