@@ -1,5 +1,5 @@
 {
-  "_note": "The one place the meeting card is configured. `meetings` oldest first; each: `date` YYYY-MM-DD (America/Detroit), `ends` HH:MM 24-hour when the meeting is over (null = midnight), `time` as displayed, `location`, `agenda_url`, `followup_url` (null = not supplied yet, renders a visible TODO). After editing, run `node tools/meeting-card.js` to rewrite the card and every <span data-next-meeting> date mention; `node tools/meeting-card.js --check` fails if a page is out of date.",
+  "_note": "The one place the meeting card is configured. `meetings` oldest first; each: `date` YYYY-MM-DD (America/Detroit), `ends` HH:MM 24-hour when the meeting is over (null = midnight), `time` as displayed, `location`, `agenda_url`, `followup_url` (null = not supplied yet: the link is left off the card, no placeholder). After editing, run `node tools/meeting-card.js` to rewrite the card and every <span data-next-meeting> date mention; `node tools/meeting-card.js --check` fails if a page is out of date.",
   "body": "MMPC",
   "meetings": [
     {
