@@ -6,7 +6,9 @@
 // Configured in ONE place, meeting-card.json: a `body` (e.g. MMPC) and a list of
 // `meetings`, oldest first, each with a date (YYYY-MM-DD, America/Detroit), an optional
 // `ends` (HH:MM, 24-hour; without it the meeting counts as over at midnight), and the
-// display time, location and links (null = not supplied yet, renders a visible TODO).
+// display time and location (null = not supplied yet, renders a visible TODO) and the
+// agenda and follow-up links (null = left off the card entirely, so readers never see a
+// placeholder; Trisha 11/13).
 //
 // The card is written between <!-- meeting-card:start --> and <!-- meeting-card:end -->
 // as one block per period: before meeting 1; between each meeting and the next (a
@@ -99,10 +101,10 @@ function todo(label) {
   return '<span class="todo">TODO: ' + esc(label) + '</span>';
 }
 
-function link(url, text, todoLabel) {
+// An optional link: '' when the URL is not supplied, so the card shows nothing in its place.
+function link(url, text) {
   if (url && !/^https:\/\//.test(url)) throw new Error('link must be https: ' + JSON.stringify(url));
-  if (url) return '<a href="' + esc(url) + '">' + esc(text) + '</a>';
-  return esc(text) + ' ' + todo(todoLabel);
+  return url ? '<a href="' + esc(url) + '">' + esc(text) + '</a>' : '';
 }
 
 // The inline script. Kept in one constant so the test can run exactly what ships.
@@ -172,17 +174,18 @@ function renderBlock(cfg, b, visible) {
     '" data-next="' + esc(nextPhrase(b.next)) + '"' + (visible ? '' : ' hidden') + '>'];
   if (b.prev) {
     out.push('<p class="clab">After the meeting</p>',
-      '<p class="mtg">Thank you for attending the ' + shortDate(b.prev.date) + ' ' + body + ' meeting.</p>',
-      '<p class="cline">' + link(b.prev.followup_url, 'Follow-up notes and next steps',
-        'follow-up notes link') + '</p>');
+      '<p class="mtg">Thank you for attending the ' + shortDate(b.prev.date) + ' ' + body + ' meeting.</p>');
+    if (b.prev.followup_url) {
+      out.push('<p class="cline">' + link(b.prev.followup_url, 'Follow-up notes and next steps') + '</p>');
+    }
   }
   if (b.next) {
     const m = b.next;
     out.push('<p class="clab"' + (b.prev ? ' style="margin-top:1rem"' : '') + '>Next meeting</p>',
       '<p class="mtg">' + body + ' &middot; ' + longDate(m.date) + '</p>',
       '<p class="cline">' + (m.time ? esc(m.time) : todo('meeting time')) + ' &middot; ' +
-        (m.location ? esc(m.location) : todo('meeting location')) + ' &middot; ' +
-        link(m.agenda_url, 'Agenda', 'agenda link') + '</p>');
+        (m.location ? esc(m.location) : todo('meeting location')) +
+        (m.agenda_url ? ' &middot; ' + link(m.agenda_url, 'Agenda') : '') + '</p>');
   }
   out.push('</div>');
   return out.join('\n');
