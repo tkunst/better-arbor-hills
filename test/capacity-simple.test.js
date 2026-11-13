@@ -26,7 +26,12 @@ ok('page opens on Today (Pine Tree Acres off)', /var state = simpleState\('A'\);
 ok('no draft banner', !/class="draft">/.test(page));
 ok('legal footer present', /<footer class="legal-footer"/.test(page));
 ok('no em or en dashes', !/[–—]/.test(page));
-ok('self-contained: no external scripts or stylesheets', !/<script[^>]+src=|<link[^>]+stylesheet/i.test(page));
+// The only allowed external script is the policy site's Cloudflare Web Analytics
+// beacon (Trisha 11/12; same snippet and token as the other policy pages).
+const BEACON = /<script type='module' src='https:\/\/static\.cloudflareinsights\.com\/beacon\.min\.js' data-cf-beacon='\{"token": "e2f695d2d7d14823ae0e87745a56a750"\}'><\/script>/;
+const withoutBeacon = page.replace(BEACON, '');
+ok('self-contained: no external scripts or stylesheets (except the analytics beacon)',
+  !/<script[^>]+src=|<link[^>]+stylesheet/i.test(withoutBeacon));
 
 console.log((fail ? 'FAIL' : 'PASS') + ': ' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

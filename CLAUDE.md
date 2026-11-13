@@ -31,7 +31,8 @@ Data visualizations (thermal map, wellfield explorer) now live on the **Monitor*
 The letter tool lives entirely in `index.html` — HTML, inline CSS, and vanilla JS. A
 small companion `materials.html` hub (links the public comments, the SET brief, and this
 tool; it is the target of the Monitor's cross-link box) follows the same rules. **No
-build step, no bundler, no framework, no dependencies, no external scripts or CDNs.** Keep
+build step, no bundler, no framework, no dependencies, no external scripts or CDNs** (one exception: the Cloudflare
+Web Analytics beacon, see Forbidden below; pages must still work if it fails to load). Keep
 every page fully self-contained so it works on any static host and can never break from a
 third-party outage. If you add a JS self-test, it may live under `test/` and run with
 plain Node.
@@ -103,6 +104,9 @@ here. (The wellfield explorer moved the same way — see the Monitor's `site/`.)
 ## Forbidden
 
 - No backend code, secrets, or credentials committed.
-- No analytics, trackers, or external JS/CSS/fonts (self-contained only).
+- No analytics, trackers, or external JS/CSS/fonts (self-contained only), with one
+  exception (Trisha, 2026-11-12): the Cloudflare Web Analytics beacon (cookieless; the
+  Cloudflare site labeled `tkunst.github.io`, token `e2f695d2…`) on every content page.
+  No other analytics or external scripts.
 - No committing resident data or any real PII.
 - No touching `arbor-hills-monitor`, and no advocacy CTA added to the monitor site.
