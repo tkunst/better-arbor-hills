@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
-const PAGES = ['materials.html', 'mmpc/index.html'];
+const PAGES = ['materials.html'];
 
 // Instructions to the reader, allowed by Trisha 11/12. Exact phrases, so a stray
 // "you" or "your" anywhere else on the page still fails.
@@ -53,9 +53,10 @@ for (const rel of PAGES) {
     hits.join(','));
 }
 
-// Hub "Start here": the section and its nav pill are hidden while the list has no
+// Hub "Start here" (the hub was taken down 11/12; checks run only if it is restored): the section and its nav pill are hidden while the list has no
 // items, and shown once it has some (Trisha 11/12).
 {
+  if (!fs.existsSync(path.join(root, 'mmpc/index.html'))) { console.log('  (mmpc/ not present; hub checks skipped)'); } else {
   const hub = fs.readFileSync(path.join(root, 'mmpc/index.html'), 'utf8');
   const sec = /<section[^>]*data-start-section[^>]*>([\s\S]*?)<\/section>/.exec(hub);
   const pill = /<a[^>]*data-start-pill[^>]*>/.exec(hub);
@@ -68,6 +69,7 @@ for (const rel of PAGES) {
       secHidden === (items === 0) && pillHidden === (items === 0));
   }
   ok('hub: [hidden] wins over component display rules', /\[hidden\]\s*\{\s*display:\s*none\s*!important/.test(hub));
+}
 }
 
 console.log(`page-rules: ${pass} passed, ${fail} failed`);
