@@ -9,12 +9,14 @@ const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
-const PAGES = ['materials.html'];
+const PAGES = ['materials.html', 'new-landfill/index.html', 'new-landfill/questions.html'];
 
 // Instructions to the reader, allowed by Trisha 11/12. Exact phrases, so a stray
 // "you" or "your" anywhere else on the page still fails.
 const READER_INSTRUCTIONS = ['Write your commissioners', 'from your own email',
-  'Thank you for attending'];
+  'Thank you for attending', 'Have your say'];
+// 'Have your say' (CTA label) and permit citations whose Roman numeral reads as the pronoun "I": added 2026-11-24 for the new-landfill pages (Trisha-directed go-live).
+const CITATIONS = ['Part I-A'];
 
 let pass = 0, fail = 0;
 function ok(name, cond, extra) {
@@ -45,7 +47,7 @@ for (const rel of PAGES) {
     return true;
   })());
   let body = text(html);
-  for (const phrase of READER_INSTRUCTIONS) body = body.split(phrase).join(' ');
+  for (const phrase of READER_INSTRUCTIONS.concat(CITATIONS)) body = body.split(phrase).join(' ');
   const hits = (body.match(/\b(we|our|ours|us|i|me|my|mine|you|your|yours)\b/gi) || [])
     .map((w) => w.toLowerCase());
   console.log('  pronoun hits in ' + rel + ': ' + (hits.length ? hits.join(', ') : 'none'));
