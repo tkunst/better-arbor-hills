@@ -71,6 +71,8 @@ User-visible text (letters and UI) follows the Arbor Hills voice guide: **no em-
 (use commas, periods, or `--`), advocate-not-adversary tone, every figure traceable to
 the record, no time-bound news hooks that expire.
 
+**Section 12 waters are streams, never drains.** Never suggest that any water body on GFL's Section 12 parcel north of Six Mile Road (parcel A-01-12-400-011, Salem Township; Streams S1 and S2, its wetlands and ponds) is, or could be, a "drain" under the Drain Code: not as a claim, not as a question to an agency ("stream or a drain?"), not as a hedge. S1 and S2 are streams. Allowed: the proper names Johnson Drain / Johnson Intercounty Drain, the drainage board, and water that "drains to" somewhere. (Trisha, 2026-11-24; applies to the Monitor, the policy site and Lotext.)
+
 ## Security (resident free-text flows into URLs and the on-screen preview)
 
 - **Always** `encodeURIComponent` every value that enters a `mailto:`/compose URL.
