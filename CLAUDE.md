@@ -71,7 +71,7 @@ User-visible text (letters and UI) follows the Arbor Hills voice guide: **no em-
 (use commas, periods, or `--`), advocate-not-adversary tone, every figure traceable to
 the record, no time-bound news hooks that expire.
 
-**Section 12 waters are streams, never drains.** Never suggest that any water body on GFL's Section 12 parcel north of Six Mile Road (parcel A-01-12-400-011, Salem Township; Streams S1 and S2, its wetlands and ponds) is, or could be, a "drain" under the Drain Code: not as a claim, not as a question to an agency ("stream or a drain?"), not as a hedge. S1 and S2 are streams. Allowed: the proper names Johnson Drain / Johnson Intercounty Drain, the drainage board, and water that "drains to" somewhere. (Trisha, 2026-11-24; applies to the Monitor, the policy site and Lotext.)
+**Section 12 waters are streams, never drains.** Never suggest that any water body on GFL-owned land north of Six Mile Road in Section 12, Salem Township (county parcel A-01-12-400-011 and neighbors; Streams S1 and S2, its wetlands and ponds) is, or could be, a "drain" under the Drain Code: not as a claim, not as a question to an agency ("stream or a drain?"), not as a hedge. S1 and S2 are streams. Allowed: the proper names Johnson Drain / Johnson Intercounty Drain, the drainage board, and water that "drains to" somewhere. (Trisha, 2026-11-24; applies to the Monitor, the policy site and Lotext.) Also in our own voice, call that land "GFL-owned land north of Six Mile Road", never a "tract" or a "parcel" (it is several parcels); use those words only inside a quote from GFL or a record.
 
 ## Security (resident free-text flows into URLs and the on-screen preview)
 
